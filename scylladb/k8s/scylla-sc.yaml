@@ -1,0 +1,14 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+ name: px-vol
+ namespace: scylla
+provisioner: kubernetes.io/portworx-volume
+parameters:
+ repl: "2"
+ fs: "xfs"
+ group: "scyllaG1"
+ fg: "false"
+ priority_io: "high"
+
+

@@ -1,0 +1,141 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+ name: scylla-px-sc
+provisioner: kubernetes.io/portworx-volume
+parameters:
+ repl: "3"
+ fs: "ext4"
+ priority_io: "high"
+ io_profile: "db"
+ journal: "true"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scylla
+data:
+  ready-probe.sh: |
+    #!/bin/bash
+
+    if [[ $(nodetool status | grep $POD_IP) == *"UN"* ]]; then
+      if [[ $DEBUG ]]; then
+        echo "UN";
+      fi
+      exit 0;
+    else
+      if [[ $DEBUG ]]; then
+        echo "Not Up";
+      fi
+      exit 1;
+    fi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: scylla
+  name: scylla
+spec:
+  clusterIP: None
+  ports:
+    - port: 9042
+  selector:
+    app: scylla
+---
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: scylla
+  labels:
+    app: scylla
+spec:
+  serviceName: scylla
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scylla
+  template:
+    metadata:
+      labels:
+        app: scylla
+    spec:
+      schedulerName: stork
+      containers:
+        - name: scylla
+          image: scylladb/scylla:2.0.0
+          imagePullPolicy: IfNotPresent
+          args: ["--seeds", "scylla-0.scylla.default.svc.cluster.local"]
+          ports:
+            - containerPort: 7000
+              name: intra-node
+            - containerPort: 7001
+              name: tls-intra-node
+            - containerPort: 7199
+              name: jmx
+            - containerPort: 9042
+              name: cql
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          securityContext:
+            capabilities:
+              add:
+                - IPC_LOCK
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "PID=$(pidof scylla) && kill $PID && while ps -p $PID > /dev/null; do sleep 1; done"]
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - exec
+                - /opt/ready-probe.sh
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+          volumeMounts:
+            - name: scylla-data
+              mountPath: /var/lib/scylla
+            - name: scylla-ready-probe
+              mountPath: /opt/ready-probe.sh
+              subPath: ready-probe.sh
+      volumes:
+        - name: scylla-ready-probe
+          configMap:
+            name: scylla
+  volumeClaimTemplates:
+    - metadata:
+        name: scylla-data
+        annotations:
+          volume.beta.kubernetes.io/storage-class: scylla-px-sc
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 50Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: scylla
+  name: scylla-nodeport
+spec:
+  ports:
+    - port: 9042
+  selector:
+    app: scylla
+  type: NodePort            
+

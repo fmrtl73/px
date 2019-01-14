@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+ name: portworx-prometheus-service
+ namespace: kube-system
+ annotations:
+   prometheus.io/scrape: "true"
+spec:
+ selector:
+   name: portworx
+ clusterIP: None
+ ports:
+   - protocol: TCP
+     port: 9001
+     targetPort: 9001
+

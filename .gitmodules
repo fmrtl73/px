@@ -1,0 +1,12 @@
+[submodule "ELK/ELK/fluentd-kubernetes-daemonset"]
+	path = ELK/ELK/fluentd-kubernetes-daemonset
+	url = https://github.com/satchpx/fluentd-kubernetes-daemonset.git
+[submodule "ELK/ELK/kubernetes-elasticsearch-cluster"]
+	path = ELK/ELK/kubernetes-elasticsearch-cluster
+	url = https://github.com/satchpx/kubernetes-elasticsearch-cluster.git
+[submodule "ELK/fluentd-kubernetes-daemonset"]
+	path = ELK/fluentd-kubernetes-daemonset
+	url = https://github.com/satchpx/fluentd-kubernetes-daemonset.git
+[submodule "ELK/kubernetes-elasticsearch-cluster"]
+	path = ELK/kubernetes-elasticsearch-cluster
+	url = https://github.com/satchpx/kubernetes-elasticsearch-cluster.git

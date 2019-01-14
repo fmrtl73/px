@@ -1,0 +1,1617 @@
+[{
+ "id": "695692844168324650",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-90443835-e669-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "jaringyu",
+   "pvc": "px-mo-pvc"
+  }
+ },
+ "ctime": "2018-11-12T10:56:17Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "42949672960",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "3",
+  "cos": "high",
+  "io_profile": "db",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "fs": "xfs",
+   "io_priority": "high",
+   "io_profile": "db",
+   "repl": "3",
+   "volume.beta.kubernetes.io/storage-class": "px-mo",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 0,
+  "sticky": false,
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "288636928",
+ "last_scan": "2018-11-12T10:56:17Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-1",
+ "attached_state": "ATTACH_STATE_EXTERNAL",
+ "device_path": "worker-1",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-1",
+    "worker-2",
+    "worker-4"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-1,worker-2,worker-4",
+    "ReplicaSetCurr": "[0 1 3]",
+    "ReplicaSetCurrMid": "worker-1,worker-2,worker-4",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "1149815794264522527",
+ "source": {
+  "parent": "994117875477614119",
+  "seed": ""
+ },
+ "readonly": false,
+ "locator": {
+  "name": "yyy"
+ },
+ "ctime": "2018-11-09T00:32:03Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "2147483648",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "2",
+  "cos": "high",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "fs": "xfs",
+   "io_priority": "high",
+   "io_profile": "db",
+   "repl": "3",
+   "volume.beta.kubernetes.io/storage-class": "px-db",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 1,
+  "sticky": false,
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "0",
+ "last_scan": "2018-11-09T00:32:03Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-1",
+ "attached_state": "ATTACH_STATE_INTERNAL",
+ "device_path": "worker-1",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-2",
+    "worker-1"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-1,worker-2",
+    "ReplicaSetCurr": "[0 1]",
+    "ReplicaSetCurrMid": "worker-1,worker-2",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "207843288646448969",
+ "source": {
+  "parent": "1070829733294403777",
+  "seed": ""
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-b78f9197-e182-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "default",
+   "pvc": "data-maria-restore"
+  }
+ },
+ "ctime": "2018-11-06T05:13:52Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "5368709120",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "2",
+  "cos": "high",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "app": "maria",
+   "fg": "false",
+   "fs": "xfs",
+   "group": "scyllaG1",
+   "priority_io": "high",
+   "repl": "2",
+   "volume.beta.kubernetes.io/storage-class": "px-vol",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 1,
+  "sticky": false,
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "1778257920",
+ "last_scan": "2018-11-06T05:13:52Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-4",
+ "attached_state": "ATTACH_STATE_INTERNAL",
+ "device_path": "worker-4",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-2",
+    "worker-4"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-2,worker-4",
+    "ReplicaSetCurr": "[1 3]",
+    "ReplicaSetCurrMid": "worker-2,worker-4",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "994117875477614119",
+ "source": {
+  "parent": "236580259442002450",
+  "seed": ""
+ },
+ "readonly": false,
+ "locator": {
+  "name": "jjj"
+ },
+ "ctime": "2018-11-09T00:30:54Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "2147483648",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "2",
+  "cos": "high",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "fs": "xfs",
+   "io_priority": "high",
+   "io_profile": "db",
+   "repl": "3",
+   "volume.beta.kubernetes.io/storage-class": "px-db",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 1,
+  "sticky": false,
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "0",
+ "last_scan": "2018-11-09T00:30:54Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-1",
+ "attached_state": "ATTACH_STATE_INTERNAL",
+ "device_path": "worker-1",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-2",
+    "worker-1"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-1,worker-2",
+    "ReplicaSetCurr": "[0 1]",
+    "ReplicaSetCurrMid": "worker-1,worker-2",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "1045970744383998687",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "group": {
+  "id": "scyllaG1"
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-18fde74b-e6e6-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "scylla",
+   "pvc": "scylla-data-scylla-2"
+  }
+ },
+ "ctime": "2018-11-13T01:47:48Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "42949672960",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "3",
+  "cos": "high",
+  "io_profile": "db",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "app": "scylla",
+   "fg": "false",
+   "fs": "xfs",
+   "group": "scyllaG1",
+   "io_profile": "db",
+   "priority_io": "high",
+   "repl": "3",
+   "volume.beta.kubernetes.io/storage-class": "px-vol",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 0,
+  "sticky": false,
+  "group": {
+   "id": "scyllaG1"
+  },
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "153653248",
+ "last_scan": "2018-11-13T01:47:48Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "detached",
+ "attached_on": "",
+ "attached_state": "ATTACH_STATE_INTERNAL_SWITCH",
+ "device_path": "",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-1",
+    "worker-2",
+    "worker-4"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-1,worker-2,worker-4",
+    "ReplicaSetCurr": "[0 1 3]",
+    "ReplicaSetCurrMid": "worker-1,worker-2,worker-4",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "739617412734592112",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "group": {
+  "id": "scyllaG1"
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-b596b9a2-e6e5-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "scylla",
+   "pvc": "scylla-data-scylla-0"
+  }
+ },
+ "ctime": "2018-11-13T01:44:50Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "42949672960",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "3",
+  "cos": "high",
+  "io_profile": "db",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "app": "scylla",
+   "fg": "false",
+   "fs": "xfs",
+   "group": "scyllaG1",
+   "io_profile": "db",
+   "priority_io": "high",
+   "repl": "3",
+   "volume.beta.kubernetes.io/storage-class": "px-vol",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 0,
+  "sticky": false,
+  "group": {
+   "id": "scyllaG1"
+  },
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "165400576",
+ "last_scan": "2018-11-13T01:44:50Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "detached",
+ "attached_on": "",
+ "attached_state": "ATTACH_STATE_INTERNAL_SWITCH",
+ "device_path": "",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-1",
+    "worker-3",
+    "worker-4"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-1,worker-3,worker-4",
+    "ReplicaSetCurr": "[0 2 3]",
+    "ReplicaSetCurrMid": "worker-1,worker-3,worker-4",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "22006365797151156",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "group": {
+  "id": "joo"
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-34676f86-e271-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "default",
+   "pvc": "data-maria-1"
+  }
+ },
+ "ctime": "2018-11-07T09:40:55Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "5368709120",
+  "format": "ext4",
+  "block_size": "4096",
+  "ha_level": "2",
+  "cos": "low",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "app": "maria",
+   "group": "joo",
+   "repl": "2",
+   "snap_schedule": "periodic=60,10",
+   "volume.beta.kubernetes.io/storage-class": "portworx-repl",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "- freq: periodic\n  period: 3600000000000\n  retain: 10\n",
+  "scale": 0,
+  "sticky": false,
+  "group": {
+   "id": "joo"
+  },
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "3983380480",
+ "last_scan": "2018-11-07T09:40:55Z",
+ "format": "ext4",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-1",
+ "attached_state": "ATTACH_STATE_EXTERNAL",
+ "device_path": "worker-1",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-1",
+    "worker-2"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-1,worker-2",
+    "ReplicaSetCurr": "[0 1]",
+    "ReplicaSetCurrMid": "worker-1,worker-2",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "236580259442002450",
+ "source": {
+  "parent": "867758905421625718",
+  "seed": ""
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-38262461-e1b6-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "jaringyu",
+   "pvc": "px-db-mysql-pvc-snapclone"
+  }
+ },
+ "ctime": "2018-11-06T11:22:17Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "2147483648",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "2",
+  "cos": "high",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "fs": "xfs",
+   "io_priority": "high",
+   "io_profile": "db",
+   "repl": "3",
+   "volume.beta.kubernetes.io/storage-class": "px-db",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 1,
+  "sticky": false,
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "231247872",
+ "last_scan": "2018-11-06T11:22:17Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-1",
+ "attached_state": "ATTACH_STATE_EXTERNAL",
+ "device_path": "worker-1",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-2",
+    "worker-1"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-1,worker-2",
+    "ReplicaSetCurr": "[0 1]",
+    "ReplicaSetCurrMid": "worker-1,worker-2",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "840513060227373360",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "group": {
+  "id": "minio"
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-57d2f6eb-d741-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "default",
+   "pvc": "px-minio"
+  }
+ },
+ "ctime": "2018-10-24T04:01:11Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "107374182400",
+  "format": "ext4",
+  "block_size": "4096",
+  "ha_level": "3",
+  "cos": "low",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "app": "minio",
+   "chart": "minio-1.8.1",
+   "group": "minio",
+   "heritage": "Tiller",
+   "io_prioty": "high",
+   "io_profile": "sequential",
+   "release": "px-minio",
+   "repl": "3",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 0,
+  "sticky": false,
+  "group": {
+   "id": "minio"
+  },
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "8258523136",
+ "last_scan": "2018-10-24T04:01:11Z",
+ "format": "ext4",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-4",
+ "attached_state": "ATTACH_STATE_EXTERNAL",
+ "device_path": "worker-4",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-1",
+    "worker-2",
+    "worker-3"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-1,worker-2,worker-3",
+    "ReplicaSetCurr": "[0 1 2]",
+    "ReplicaSetCurrMid": "worker-1,worker-2,worker-3",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "867758905421625718",
+ "source": {
+  "parent": "303167852610119870",
+  "seed": ""
+ },
+ "readonly": true,
+ "locator": {
+  "name": "snapshot-0e4d70cf-e1b6-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "jaringyu",
+   "stork-snap": "3ds-v1"
+  }
+ },
+ "ctime": "2018-11-06T11:21:07Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "2147483648",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "3",
+  "cos": "high",
+  "io_profile": "db",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "fs": "xfs",
+   "io_priority": "high",
+   "io_profile": "db",
+   "repl": "3",
+   "volume.beta.kubernetes.io/storage-class": "px-db",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 1,
+  "sticky": false,
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "0",
+ "last_scan": "2018-11-06T11:21:07Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-2",
+ "attached_state": "ATTACH_STATE_INTERNAL",
+ "device_path": "worker-2",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-1",
+    "worker-2",
+    "worker-4"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-1,worker-2,worker-4",
+    "ReplicaSetCurr": "[0 1 3]",
+    "ReplicaSetCurrMid": "worker-1,worker-2,worker-4",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "210964002645473483",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "group": {
+  "id": "scyllaG1"
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-0cdd6466-de6f-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "kube-system",
+   "pvc": "grafana-volume"
+  }
+ },
+ "ctime": "2018-11-02T07:15:17Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "21474836480",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "2",
+  "cos": "high",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "fg": "false",
+   "fs": "xfs",
+   "group": "scyllaG1",
+   "priority_io": "high",
+   "repl": "2",
+   "volume.beta.kubernetes.io/storage-class": "px-vol",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 0,
+  "sticky": false,
+  "group": {
+   "id": "scyllaG1"
+  },
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "11931648",
+ "last_scan": "2018-11-02T07:15:17Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-1",
+ "attached_state": "ATTACH_STATE_EXTERNAL",
+ "device_path": "worker-1",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-2",
+    "worker-4"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-2,worker-4",
+    "ReplicaSetCurr": "[1 3]",
+    "ReplicaSetCurrMid": "worker-2,worker-4",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "303167852610119870",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-f35fcb62-e1b4-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "jaringyu",
+   "pvc": "px-db-mysql-pvc"
+  }
+ },
+ "ctime": "2018-11-06T11:13:12Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "2147483648",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "3",
+  "cos": "high",
+  "io_profile": "db",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "fs": "xfs",
+   "io_priority": "high",
+   "io_profile": "db",
+   "repl": "3",
+   "volume.beta.kubernetes.io/storage-class": "px-db",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 0,
+  "sticky": false,
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "218664960",
+ "last_scan": "2018-11-06T11:13:12Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-2",
+ "attached_state": "ATTACH_STATE_INTERNAL",
+ "device_path": "worker-2",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-1",
+    "worker-2",
+    "worker-4"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-1,worker-2,worker-4",
+    "ReplicaSetCurr": "[0 1 3]",
+    "ReplicaSetCurrMid": "worker-1,worker-2,worker-4",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "46498405721330206",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "group": {
+  "id": "joo"
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-db352b76-e270-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "default",
+   "pvc": "binlog-maria-0"
+  }
+ },
+ "ctime": "2018-11-07T09:38:17Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "5368709120",
+  "format": "ext4",
+  "block_size": "4096",
+  "ha_level": "2",
+  "cos": "low",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "app": "maria",
+   "group": "joo",
+   "repl": "2",
+   "snap_schedule": "periodic=60,10",
+   "volume.beta.kubernetes.io/storage-class": "portworx-repl",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "- freq: periodic\n  period: 3600000000000\n  retain: 10\n",
+  "scale": 0,
+  "sticky": false,
+  "group": {
+   "id": "joo"
+  },
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "1476333568",
+ "last_scan": "2018-11-07T09:38:17Z",
+ "format": "ext4",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-2",
+ "attached_state": "ATTACH_STATE_EXTERNAL",
+ "device_path": "worker-2",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-2",
+    "worker-3"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-2,worker-3",
+    "ReplicaSetCurr": "[1 2]",
+    "ReplicaSetCurrMid": "worker-2,worker-3",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "476412835805221623",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "group": {
+  "id": "joo"
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-db34cc32-e270-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "default",
+   "pvc": "data-maria-0"
+  }
+ },
+ "ctime": "2018-11-07T09:38:24Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "32212254720",
+  "format": "ext4",
+  "block_size": "4096",
+  "ha_level": "2",
+  "cos": "low",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "app": "maria",
+   "group": "joo",
+   "repl": "2",
+   "snap_schedule": "periodic=60,10",
+   "volume.beta.kubernetes.io/storage-class": "portworx-repl",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "- freq: periodic\n  period: 3600000000000\n  retain: 10\n",
+  "scale": 0,
+  "sticky": false,
+  "group": {
+   "id": "joo"
+  },
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "5497020416",
+ "last_scan": "2018-11-07T09:38:24Z",
+ "format": "ext4",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-2",
+ "attached_state": "ATTACH_STATE_EXTERNAL",
+ "device_path": "worker-2",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-1",
+    "worker-3"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-1,worker-3",
+    "ReplicaSetCurr": "[0 2]",
+    "ReplicaSetCurrMid": "worker-1,worker-3",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "305691412058530924",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "group": {
+  "id": "scyllaG1"
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-efd0a40b-e6e5-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "scylla",
+   "pvc": "scylla-data-scylla-1"
+  }
+ },
+ "ctime": "2018-11-13T01:46:33Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "42949672960",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "3",
+  "cos": "high",
+  "io_profile": "db",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "app": "scylla",
+   "fg": "false",
+   "fs": "xfs",
+   "group": "scyllaG1",
+   "io_profile": "db",
+   "priority_io": "high",
+   "repl": "3",
+   "volume.beta.kubernetes.io/storage-class": "px-vol",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 0,
+  "sticky": false,
+  "group": {
+   "id": "scyllaG1"
+  },
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "153583616",
+ "last_scan": "2018-11-13T01:46:33Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "detached",
+ "attached_on": "",
+ "attached_state": "ATTACH_STATE_INTERNAL_SWITCH",
+ "device_path": "",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-1",
+    "worker-2",
+    "worker-4"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-1,worker-2,worker-4",
+    "ReplicaSetCurr": "[0 1 3]",
+    "ReplicaSetCurrMid": "worker-1,worker-2,worker-4",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "236245552685446324",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "group": {
+  "id": "scyllaG1"
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-82d4a6f6-e3ed-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "scylla",
+   "pvc": "scylla-data-scylla-2"
+  }
+ },
+ "ctime": "2018-11-09T07:03:12Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "42949672960",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "2",
+  "cos": "high",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "app": "scylla",
+   "fg": "false",
+   "fs": "xfs",
+   "group": "scyllaG1",
+   "priority_io": "high",
+   "repl": "2",
+   "volume.beta.kubernetes.io/storage-class": "px-vol",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 0,
+  "sticky": false,
+  "group": {
+   "id": "scyllaG1"
+  },
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "23531520",
+ "last_scan": "2018-11-09T07:03:12Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-2",
+ "attached_state": "ATTACH_STATE_EXTERNAL",
+ "device_path": "worker-2",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-2",
+    "worker-3"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-2,worker-3",
+    "ReplicaSetCurr": "[1 2]",
+    "ReplicaSetCurrMid": "worker-2,worker-3",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "640519323900906660",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "group": {
+  "id": "scyllaG1"
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-ed51462d-de6e-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "kube-system",
+   "pvc": "prometheus-volume"
+  }
+ },
+ "ctime": "2018-11-02T07:14:24Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "21474836480",
+  "format": "xfs",
+  "block_size": "4096",
+  "ha_level": "2",
+  "cos": "high",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "fg": "false",
+   "fs": "xfs",
+   "group": "scyllaG1",
+   "priority_io": "high",
+   "repl": "2",
+   "volume.beta.kubernetes.io/storage-class": "px-vol",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 0,
+  "sticky": false,
+  "group": {
+   "id": "scyllaG1"
+  },
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "3961696256",
+ "last_scan": "2018-11-02T07:14:24Z",
+ "format": "xfs",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "master",
+ "attached_state": "ATTACH_STATE_EXTERNAL",
+ "device_path": "/dev/pxd/pxd640519323900906660",
+ "secure_device_path": "",
+ "attach_path": [
+  "/var/lib/kubelet/pods/c5845a42-e664-11e8-9966-b8ca3a5dc3cc/volumes/kubernetes.io~portworx-volume/pvc-ed51462d-de6e-11e8-9966-b8ca3a5dc3cc"
+ ],
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-2",
+    "worker-4"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "FullResyncBlocks": "[{1 0} {3 0} {-1 0} {-1 0} {-1 0}]",
+    "ID": "0",
+    "ReadQuorum": "1",
+    "ReadSet": "[1 3]",
+    "ReplNodePools": "0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-2,worker-4",
+    "ReplicaSetCurr": "[1 3]",
+    "ReplicaSetCurrMid": "worker-2,worker-4",
+    "ReplicaSetNext": "[1 3]",
+    "ReplicaSetNextMid": "worker-2,worker-4",
+    "ResyncBlocks": "[{1 11957} {3 5047} {-1 0} {-1 0} {-1 0}]",
+    "RuntimeState": "clean",
+    "TimestampBlocksPerNode": "[0 0 0 0 0]",
+    "TimestampBlocksTotal": "0",
+    "WriteQuorum": "2",
+    "WriteSet": "[1 3]"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "916754344497244196",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-82811769-d814-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "scylla",
+   "pvc": "scylla-data-scylla-1"
+  }
+ },
+ "ctime": "2018-10-25T05:12:46Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "10737418240",
+  "format": "ext4",
+  "block_size": "4096",
+  "ha_level": "2",
+  "cos": "low",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "app": "scylla",
+   "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"PersistentVolumeClaim\",\"metadata\":{\"annotations\":{\"volume.beta.kubernetes.io/storage-class\":\"px-vol\"},\"name\":\"portworx-pvcsc001\",\"namespace\":\"jaringyu\"},\"spec\":{\"accessModes\":[\"ReadWriteOnce\"],\"resources\":{\"requests\":{\"storage\":\"20Gi\"}}}}\n",
+   "repl": "2",
+   "volume.beta.kubernetes.io/storage-class": "px-vol",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "",
+  "scale": 0,
+  "sticky": false,
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "1532264448",
+ "last_scan": "2018-10-25T05:12:46Z",
+ "format": "ext4",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-2",
+ "attached_state": "ATTACH_STATE_EXTERNAL",
+ "device_path": "worker-2",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-2",
+    "worker-4"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-2,worker-4",
+    "ReplicaSetCurr": "[1 3]",
+    "ReplicaSetCurrMid": "worker-2,worker-4",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+},{
+ "id": "1141012654347857565",
+ "source": {
+  "parent": "",
+  "seed": ""
+ },
+ "group": {
+  "id": "joo"
+ },
+ "readonly": false,
+ "locator": {
+  "name": "pvc-34667466-e271-11e8-9966-b8ca3a5dc3cc",
+  "volume_labels": {
+   "namespace": "default",
+   "pvc": "binlog-maria-1"
+  }
+ },
+ "ctime": "2018-11-07T09:40:54Z",
+ "spec": {
+  "ephemeral": false,
+  "size": "5368709120",
+  "format": "ext4",
+  "block_size": "4096",
+  "ha_level": "2",
+  "cos": "low",
+  "io_profile": "sequential",
+  "dedupe": false,
+  "snapshot_interval": 0,
+  "volume_labels": {
+   "app": "maria",
+   "group": "joo",
+   "repl": "2",
+   "snap_schedule": "periodic=60,10",
+   "volume.beta.kubernetes.io/storage-class": "portworx-repl",
+   "volume.beta.kubernetes.io/storage-provisioner": "kubernetes.io/portworx-volume"
+  },
+  "shared": false,
+  "aggregation_level": 1,
+  "encrypted": false,
+  "passphrase": "",
+  "snapshot_schedule": "- freq: periodic\n  period: 3600000000000\n  retain: 10\n",
+  "scale": 0,
+  "sticky": false,
+  "group": {
+   "id": "joo"
+  },
+  "group_enforced": false,
+  "compressed": false,
+  "cascaded": false,
+  "journal": false,
+  "sharedv4": false,
+  "queue_depth": 32,
+  "force_unsupported_fs_type": false
+ },
+ "usage": "219672576",
+ "last_scan": "2018-11-07T09:40:54Z",
+ "format": "ext4",
+ "status": "up",
+ "state": "attached",
+ "attached_on": "worker-1",
+ "attached_state": "ATTACH_STATE_EXTERNAL",
+ "device_path": "worker-1",
+ "secure_device_path": "",
+ "replica_sets": [
+  {
+   "nodes": [
+    "worker-3",
+    "worker-4"
+   ]
+  }
+ ],
+ "runtime_state": [
+  {
+   "runtime_state": {
+    "ID": "0",
+    "ReplNodePools": "0,0",
+    "ReplRemoveMids": "",
+    "ReplicaSetCreateMid": "worker-3,worker-4",
+    "ReplicaSetCurr": "[2 3]",
+    "ReplicaSetCurrMid": "worker-3,worker-4",
+    "RuntimeState": "clean"
+   }
+  }
+ ],
+ "error": "",
+ "fs_resize_required": false
+}]
+
