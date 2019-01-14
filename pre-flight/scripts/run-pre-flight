@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+# This script is supposed to do a set of pre-flight checks before installing portworx
+HOSTNAME=$(hostname)
+LOG_FILE="/tmp/${HOSTNAME}.log"
+
+cat /dev/null > ${LOG_FILE}
+# Get os type
+echo "------------------------------ OS INFO ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+cat /etc/os-release >> ${LOG_FILE}
+
+# Get kernel version
+echo "------------------------------ KERNEL ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+uname -a >> ${LOG_FILE}
+
+# Get lsblk
+echo "-------------------------------- DISKS ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+lsblk >> ${LOG_FILE}
+
+# Get blkid
+echo "------------------------------ DISKS (blkid) ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+blkid >> ${LOG_FILE}
+
+# Get unused disks
+# Get unused partitions
+
+# Get cpu/ memory
+echo "------------------------------ CPU INFO ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+lscpu >> ${LOG_FILE}
+echo "------------------------------ MEM INFO ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+free -h >> ${LOG_FILE}
+
+# Is selinux enabled
+echo "------------------------------ SELINUX ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+getenforce 1 >> ${LOG_FILE} 2>&1
+if [ $? -ne 0 ]; then
+    # perhaps we're dealing with ubuntu/ debian
+    sestatus 1>>${LOG_FILE} 2>&1
+fi
+
+# Can I get to outside world?
+echo "------------------------------ AIRGAPPED? ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+ping -c 10 8.8.8.8 >> ${LOG_FILE}
+
+# Get docker info
+echo "------------------------------ DOCKER INFO ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+docker info 1 >> ${LOG_FILE} 2>&1
+# Can I get to docker hub
+echo "------------------------------ DOCKER HUB ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+docker pull busybox >> ${LOG_FILE}
+if [ $? -eq 0 ]; then
+    echo "docker hub is reachable" >> ${LOG_FILE}
+    docker rmi busybox 1>/dev/null 2>&1
+fi
+
+# Get network interfaces, network bandwidth
+echo "------------------------------ IP ADDR ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+ip addr show >> ${LOG_FILE}
+echo "------------------------------ DEFAULT INTERFACE ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+DEF_INF=$(route | grep default | awk '{print $NF}')
+echo "default interface is ${DEF_INF}" >> ${LOG_FILE}
+echo "------------------------------ ETHTOOL DEFAULT INTERFACE ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+ethtool ${DEF_INF} >> ${LOG_FILE}
+
+# Get disk usage
+echo "------------------------------ DISK USAGE ${HOSTNAME} -------------------------------------" >> ${LOG_FILE}
+df -h >> ${LOG_FILE}
+
+
+# END ALL
+cat ${LOG_FILE}
