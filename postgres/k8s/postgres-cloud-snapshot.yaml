@@ -1,0 +1,9 @@
+apiVersion: volumesnapshot.external-storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+  name: cloud-snapshot
+  namespace: default
+  annotations:
+    portworx/snapshot-type: cloud ## specify cloud as snapshot type
+spec:
+  persistentVolumeClaimName: postgres-data ## reference PVC name in snapshot yaml

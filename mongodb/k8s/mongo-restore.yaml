@@ -1,0 +1,14 @@
+## PVC from local snapshot
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: px-mongo-snap-clone
+  annotations:
+    snapshot.alpha.kubernetes.io/snapshot: px-mongo-snapshot ## use snapshot name
+spec:
+  accessModes:
+     - ReadWriteOnce
+  storageClassName: stork-snapshot-sc ## reference stork SC to handle cloning of volume
+  resources:
+    requests:
+      storage: 2Gi
