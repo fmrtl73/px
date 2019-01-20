@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: px-pre-flight-check
+  labels:
+    tier: tests
+    app: px-pre-flight-check
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      name: px-pfc
+  template:
+    metadata:
+      labels:
+        name: px-pfc
+    spec:
+      # Filter to specific nodes:
+      # nodeSelector:
+      #  app: px
+      hostPID: true
+      containers:
+        - resources:
+            requests:
+              cpu: 0.15
+          securityContext:
+            privileged: true
+          image: sysdig0/px-test
+          name: px-test
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: tmp
+              mountPath: /host/tmp
+      # restartPolicy: Never
+      volumes:
+        - name: tmp
+          hostPath:
+            path: /tmp
