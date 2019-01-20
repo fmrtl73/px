@@ -1,10 +1,13 @@
 kubectl apply -f px-pfc-ds.yaml
 PODS=$(kubectl get pods | grep px-pre-flight-check | awk '{print $1}')
 for POD in ${PODS}; do
+    sp="/-\|"
+    sc=0
     while [[ $(kubectl get pod ${POD} -o go-template --template "{{.status.phase}}") != "Running" ]]; do
-        sleep 1
+        printf "\b${sp:sc++:1}"
+        ((sc==${#sp})) && sc=0
+        #sleep 1
         #echo -n "."
-        printf "\b${sp:i++%${#sp}:1}"
     done
 done
 kubectl logs --selector name=px-pfc
