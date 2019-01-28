@@ -1,4 +1,4 @@
-job "storage" {
+job "minio" {
   datacenters = ["dc1"]
 
   type = "service"
@@ -21,7 +21,7 @@ job "storage" {
       driver = "docker"
 
       config {
-        image = "minio/minio:RELEASE.2017-08-05T00-00-53Z"
+        image = "minio/minio:latest"
         args = [
           "server",
           "/var/lib/minio/data"
