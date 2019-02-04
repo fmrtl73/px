@@ -1,0 +1,17 @@
+# Run psql after exec-ing to container
+version: '3.1'
+
+services:
+  db:
+    image: postgres:9.5
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: pgbench
+      PGUSER: pgbench
+      POSTGRES_PASSWORD: superpostgres
+      PGBENCH_PASSWORD: superpostgres
+
+volumes:
+  pg-data:
+    driver: pxd
