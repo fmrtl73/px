@@ -30,7 +30,7 @@ func main() {
 		menu.Executor,
 		menu.Completer,
 		prompt.OptionTitle("px-poc: interactive portworx poc client"),
-		prompt.OptionPrefix(">>> "),
+		prompt.OptionPrefix("px-shell> "),
 		prompt.OptionInputTextColor(prompt.Yellow),
 		prompt.OptionCompletionWordSeparator(completer.FilePathCompletionSeparator),
 	)

@@ -1,11 +1,9 @@
 package menu
 
 import (
-	"bytes"
 	"context"
 	"flag"
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"os/exec"
@@ -15,6 +13,7 @@ import (
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/status"
+	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
@@ -26,6 +25,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+// Executor is the main point of entry for the app, it takes a command and executes it's associated action.
 func Executor(s string) {
 	s = strings.TrimSpace(s)
 	cmdStrings := strings.Split(s, " ")
@@ -37,39 +37,51 @@ func Executor(s string) {
 		return
 	}
 	switch cmdStrings[0] {
+	case "install-px":
+		installPX()
 	case "deploy":
 		if len(cmdStrings) < 2 {
 			fmt.Println("deploy requires an application name")
+			return
 		}
 		deploy("default", cmdStrings[1])
 	case "benchmark":
 		switch cmdStrings[1] {
 		case "postgres":
-			execute("default", "postgres", "/usr/bin/psql -c 'create database pxdemo;'")
-			execute("default", "postgres", "/usr/bin/pgbench -i -s 50 pxdemo;")
-			execute("default", "postgres", "/usr/bin/psql pxdemo -c 'select count(*) from pgbench_accounts;'")
+			podExec("default", "app=postgres", "/usr/bin/psql -c 'create database pxdemo;'")
+			podExec("default", "app=postgres", "/usr/bin/pgbench -n -i -s 50 pxdemo;")
+			podExec("default", "app=postgres", "/usr/bin/psql pxdemo -c 'select count(*) from pgbench_accounts;'")
 		default:
 			fmt.Printf("%s benchmark not supported\n", cmdStrings[1])
 		}
 	case "px":
 		if len(cmdStrings) < 2 {
 			fmt.Println("deploy requires an application name")
+			return
 		}
 		switch cmdStrings[1] {
-		case "init":
+		case "connect":
 			pxInit()
 		case "snap":
 			if len(cmdStrings) < 3 {
 				fmt.Println("px snap requires an application name")
+				return
 			}
 			pxSnap(cmdStrings[2])
 		case "backup":
 			if len(cmdStrings) < 3 {
-				fmt.Println("px backup requires an application name")
+				fmt.Println("px backup requires an PVC name")
+				return
 			}
 			pxBackup(cmdStrings[2])
+		case "backup-status":
+			if len(cmdStrings) < 3 {
+				fmt.Println("px backup-status requires a PVC name")
+				return
+			}
+			pxBackupStatus(cmdStrings[2])
 		default:
-			fmt.Printf("%s benchmark not supported\n", cmdStrings[1])
+			fmt.Printf("px %s is not a valid command\n", cmdStrings[1])
 		}
 	case "pre-flight-check":
 		preflight()
@@ -92,7 +104,7 @@ func preflight() {
 		pods, err = getClient().CoreV1().Pods(ns).List(metav1.ListOptions{LabelSelector: "name=px-pfc"})
 	}
 	if pods.Items[0].Status.Phase != corev1.PodRunning {
-		watcher, err := getClient().CoreV1().Pods("default").Watch(
+		watcher, err := getClient().CoreV1().Pods(ns).Watch(
 			metav1.SingleObject(pods.Items[0].ObjectMeta),
 		)
 		handle(err)
@@ -121,7 +133,7 @@ func execCmd(cmdString string) {
 		return
 	}
 	command := cmdString[0:strings.Index(cmdString, " ")]
-	argString := cmdString[strings.Index(cmdString, " ") + 1:len(cmdString)]
+	argString := cmdString[strings.Index(cmdString, " ")+1 : len(cmdString)]
 	fmt.Printf("%s %s\n", command, strings.Split(argString, " "))
 	cmd := exec.Command(command, strings.Split(argString, " ")...)
 	cmd.Stdout = os.Stdout
@@ -171,16 +183,16 @@ func homeDir() string {
 
 func kubectlApply(path string) {
 	cmd := exec.Command("kubectl", "apply", "-f", path)
-	var out bytes.Buffer
-	cmd.Stdout = &out
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err != nil {
 		fmt.Println("Something went wrong with kubectl apply -f " + path)
-		log.Fatal(err)
+		os.Exit(1)
 	}
 }
 
-func execute(ns string, app string, cmd string) {
+func podExec(ns string, selector string, cmd string) {
 
 	clientset := getClient()
 	// Instantiate loader for kubeconfig file.
@@ -192,12 +204,10 @@ func execute(ns string, app string, cmd string) {
 	// the client objects we create.
 	restconfig, err := kubeconfig.ClientConfig()
 	handle(err)
-	pods, err := clientset.CoreV1().Pods(ns).List(metav1.ListOptions{LabelSelector: "app=" + app})
+	pods, err := clientset.CoreV1().Pods(ns).List(metav1.ListOptions{LabelSelector: selector})
 	handle(err)
 	if pods != nil && len(pods.Items) > 0 {
-		fmt.Println("pods.Items > 0")
 		pod := pods.Items[0]
-		fmt.Printf("podName = %s", pod.Name)
 		req := clientset.CoreV1().RESTClient().
 			Post().
 			Namespace(pod.Namespace).
@@ -212,21 +222,57 @@ func execute(ns string, app string, cmd string) {
 			}, scheme.ParameterCodec)
 		exec, err := remotecommand.NewSPDYExecutor(restconfig, "POST", req.URL())
 		handle(err)
-		fmt.Printf(" executing command %s \n", cmd)
-		var (
-			execOut bytes.Buffer
-			execErr bytes.Buffer
-		)
-		multiOut := io.MultiWriter(os.Stdout, &execOut)
-		multiErr := io.MultiWriter(os.Stderr, &execErr)
 
 		exec.Stream(remotecommand.StreamOptions{
-			Stdout: multiOut,
-			Stderr: multiErr,
+			Stdout: os.Stdout,
+			Stderr: os.Stderr,
 			Tty:    false,
 		})
-		fmt.Printf("\n\n ***** execErr ***** \n\n %s", execErr.String())
-		fmt.Printf("\n\n ***** execOut ***** \n\n %s", execOut.String())
+	}
+}
+func installPX() {
+	clientset := getClient()
+	pods, err := clientset.CoreV1().Pods("kube-system").List(metav1.ListOptions{LabelSelector: "name=" + "portworx"})
+	handle(err)
+	if len(pods.Items) == 0 {
+		fmt.Printf("Couldn't find portworx pods in kube-system, creating it using kubectl apply %s\n", filepath.Join(homeDir(), "dev", "px-poc", "px-spec.yaml"))
+
+		kubectlApply(filepath.Join(homeDir(), "dev", "px-poc", "px-spec.yaml"))
+
+		// WATCH for modifications made to the Pod after metadata.resourceVersion.
+		for pods, err = clientset.CoreV1().Pods("kube-system").List(metav1.ListOptions{LabelSelector: "name=portworx"}); len(pods.Items) == 0; {
+			handle(err)
+			time.Sleep(time.Millisecond * 500)
+			pods, err = clientset.CoreV1().Pods("kube-system").List(metav1.ListOptions{LabelSelector: "name=portworx"})
+		}
+		fmt.Printf("%s pod %s\n", pods.Items[0].Name, pods.Items[0].Status.Phase)
+
+		watcher, err := clientset.CoreV1().Pods("kube-system").Watch(
+			metav1.SingleObject(pods.Items[0].ObjectMeta),
+		)
+		handle(err)
+		for event := range watcher.ResultChan() {
+			switch event.Type {
+			case watch.Modified:
+				pod := event.Object.(*corev1.Pod)
+
+				// If the Pod contains a status condition Ready == True, stop watching.
+				for _, cond := range pod.Status.Conditions {
+					fmt.Printf("%s pod %s\n", pod.Name, pod.Status.Phase)
+					if cond.Type == corev1.PodReady &&
+						cond.Status == corev1.ConditionTrue {
+						fmt.Printf("Pod Ready\n")
+						watcher.Stop()
+						break
+					}
+				}
+			default:
+				panic("unexpected event type " + event.Type)
+			}
+		}
+	} else {
+		fmt.Printf("Portworx is already running in kube-sysgtem namespace, pod name = %s \n", pods.Items[0].GetName())
+		podExec("kube-system", "name=portworx", "/opt/pwx/bin/pxctl status")
 	}
 }
 func deploy(ns string, app string) {
@@ -234,7 +280,7 @@ func deploy(ns string, app string) {
 	pods, err := clientset.CoreV1().Pods(ns).List(metav1.ListOptions{LabelSelector: "app=" + app})
 	handle(err)
 	if len(pods.Items) == 0 {
-		fmt.Printf("Couldn't find %s pod in namespace %s, creating it using kubectl appy %s \n", app, ns, filepath.Join(homeDir(), "dev", "px-poc", app, "k8s", app+".yaml"))
+		fmt.Printf("Couldn't find %s pod in namespace %s, creating it using kubectl apply -f %s \n", app, ns, filepath.Join(homeDir(), "dev", "px-poc", app, "k8s", app+".yaml"))
 
 		kubectlApply(filepath.Join(homeDir(), "dev", "px-poc", app, "k8s", app+".yaml"))
 
@@ -244,6 +290,8 @@ func deploy(ns string, app string) {
 			time.Sleep(time.Millisecond * 500)
 			pods, err = clientset.CoreV1().Pods(ns).List(metav1.ListOptions{LabelSelector: "app=" + app})
 		}
+		fmt.Printf("%s pod %s\n", pods.Items[0].Name, pods.Items[0].Status.Phase)
+
 		watcher, err := clientset.CoreV1().Pods(ns).Watch(
 			metav1.SingleObject(pods.Items[0].ObjectMeta),
 		)
@@ -255,7 +303,7 @@ func deploy(ns string, app string) {
 
 				// If the Pod contains a status condition Ready == True, stop watching.
 				for _, cond := range pod.Status.Conditions {
-					fmt.Printf(".")
+					fmt.Printf("%s pod %s\n", pod.Name, pod.Status.Phase)
 					if cond.Type == corev1.PodReady &&
 						cond.Status == corev1.ConditionTrue {
 						fmt.Printf("Pod Ready\n")
@@ -322,11 +370,13 @@ func pxCreateVolume(name string) {
 	fmt.Printf("Volume 100Gi created with id %s\n", v.GetVolumeId())
 }
 func pxCreateCred() string {
+	fmt.Println("Setting up Minio Credentials for Portworx")
 	// Create Credentials
 	var cred string
 	creds := api.NewOpenStorageCredentialsClient(getPXConn())
 	credsEnum, err := creds.Enumerate(context.Background(), &api.SdkCredentialEnumerateRequest{})
 	handle(err)
+	fmt.Printf("got enumeration of creds: %s\n", credsEnum.GetCredentialIds())
 	if len(credsEnum.GetCredentialIds()) > 0 {
 		cred = credsEnum.GetCredentialIds()[0]
 		validation, verr := creds.Validate(context.Background(),
@@ -334,7 +384,7 @@ func pxCreateCred() string {
 				CredentialId: cred,
 			})
 		handle(verr)
-		fmt.Printf("Performed validation of credID %s, result = %+v\n", credID, validation)
+		fmt.Printf("Performed validation of credID %s, result = %+v\n", cred, validation)
 	} else {
 		credResponse, credErr := creds.Create(context.Background(),
 			&api.SdkCredentialCreateRequest{
@@ -350,29 +400,43 @@ func pxCreateCred() string {
 			})
 		handle(credErr)
 		cred = credResponse.GetCredentialId()
-		fmt.Printf("Credentials created with id %s\n", credID)
+		fmt.Printf("Credentials created with id %s\n", cred)
 	}
-	return credID
+	return cred
 }
 
 var credID string
 
 func getCredID() string {
+	fmt.Printf("Getting Cred ID, credID = %s\n", credID)
 	if credID == "" {
 		credID = pxCreateCred()
 	}
 	return credID
 }
 func pxSnap(pvc string) {
+	kapi := getClient().CoreV1()
+	// setup list options
+	listOptions := metav1.ListOptions{
+		FieldSelector: fields.OneTermEqualSelector("metadata.name", pvc).String(),
+	}
+	pvcs, err := kapi.PersistentVolumeClaims("default").List(listOptions)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if len(pvcs.Items) < 1 {
+		fmt.Printf("Cannot find pvc with name %s", pvc)
+	}
+
 	vclient := api.NewOpenStorageVolumeClient(getPXConn())
 	vols, err := vclient.EnumerateWithFilters(context.Background(), &api.SdkVolumeEnumerateWithFiltersRequest{
 		Locator: &api.VolumeLocator{
-			Name: pvc,
+			Name: pvcs.Items[0].Spec.VolumeName,
 		},
 	})
 	handle(err)
 	if len(vols.GetVolumeIds()) < 1 {
-		fmt.Printf("cannot find a volume with name = %s", pvc)
+		fmt.Printf("cannot find a volume with name = %s\n", pvc)
 		return
 	}
 	volID := vols.GetVolumeIds()[0]
@@ -395,15 +459,27 @@ func pxSnap(pvc string) {
 }
 
 func pxBackup(pvc string) {
+	kapi := getClient().CoreV1()
+	// setup list options
+	listOptions := metav1.ListOptions{
+		FieldSelector: fields.OneTermEqualSelector("metadata.name", pvc).String(),
+	}
+	pvcs, err := kapi.PersistentVolumeClaims("default").List(listOptions)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if len(pvcs.Items) < 1 {
+		fmt.Printf("Cannot find pvc with name %s", pvc)
+	}
 	vclient := api.NewOpenStorageVolumeClient(getPXConn())
 	vols, err := vclient.EnumerateWithFilters(context.Background(), &api.SdkVolumeEnumerateWithFiltersRequest{
 		Locator: &api.VolumeLocator{
-			Name: pvc,
+			Name: pvcs.Items[0].Spec.VolumeName,
 		},
 	})
 	handle(err)
 	if len(vols.GetVolumeIds()) < 1 {
-		fmt.Printf("cannot find a volume with name = %s", pvc)
+		fmt.Printf("cannot find a volume with name = %s\n", pvc)
 		return
 	}
 	volID := vols.GetVolumeIds()[0]
@@ -425,6 +501,80 @@ func pxBackup(pvc string) {
 	fmt.Printf("Backup started for volume %s with task id %s\n",
 		volID,
 		taskID)
+	// Now check the status of the backup
+	backupStatus, err := cloudbackups.Status(context.Background(),
+		&api.SdkCloudBackupStatusRequest{
+			VolumeId: volID,
+		})
+	if err != nil {
+		gerr, _ := status.FromError(err)
+		fmt.Printf("Error Code[%d] Message[%s]\n",
+			gerr.Code(), gerr.Message())
+		os.Exit(1)
+	}
+	for taskID, status := range backupStatus.GetStatuses() {
+		// There will be only one value in the map, but we use
+		// a for-loop as an example.
+		fmt.Printf("Backup status for taskId: %s\n"+
+			"Volume: %s\n"+
+			"Type: %s\n"+
+			"Status: %s\n",
+			taskID,
+			status.GetSrcVolumeId(),
+			status.GetOptype().String(),
+			status.GetStatus().String())
+	}
+}
+func pxBackupStatus(pvc string) {
+	kapi := getClient().CoreV1()
+	// setup list options
+	listOptions := metav1.ListOptions{
+		FieldSelector: fields.OneTermEqualSelector("metadata.name", pvc).String(),
+	}
+	pvcs, err := kapi.PersistentVolumeClaims("default").List(listOptions)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if len(pvcs.Items) < 1 {
+		fmt.Printf("Cannot find pvc with name %s", pvc)
+	}
+	vclient := api.NewOpenStorageVolumeClient(getPXConn())
+	vols, err := vclient.EnumerateWithFilters(context.Background(), &api.SdkVolumeEnumerateWithFiltersRequest{
+		Locator: &api.VolumeLocator{
+			Name: pvcs.Items[0].Spec.VolumeName,
+		},
+	})
+	handle(err)
+	if len(vols.GetVolumeIds()) < 1 {
+		fmt.Printf("cannot find a volume with name = %s\n", pvc)
+		return
+	}
+	volID := vols.GetVolumeIds()[0]
+	// Now check the status of the backup
+	cloudbackups := api.NewOpenStorageCloudBackupClient(getPXConn())
+	backupStatus, err := cloudbackups.Status(context.Background(),
+		&api.SdkCloudBackupStatusRequest{
+			VolumeId: volID,
+		})
+	if err != nil {
+		gerr, _ := status.FromError(err)
+		fmt.Printf("Error Code[%d] Message[%s]\n",
+			gerr.Code(), gerr.Message())
+		os.Exit(1)
+	}
+	for taskID, status := range backupStatus.GetStatuses() {
+		// There will be only one value in the map, but we use
+		// a for-loop as an example.
+		fmt.Printf("Backup status for taskId: %s\n"+
+			"Volume: %s\n"+
+			"Type: %s\n"+
+			"Status: %s\n",
+			taskID,
+			status.GetSrcVolumeId(),
+			status.GetOptype().String(),
+			status.GetStatus().String(),
+		)
+	}
 }
 
 func handle(err error) {
