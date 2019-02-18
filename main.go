@@ -17,7 +17,7 @@ package main
 import (
 	prompt "github.com/c-bata/go-prompt"
 	"github.com/c-bata/go-prompt/completer"
-	"github.com/portworx/px-poc/menu"
+	"github.com/portworx/px-poc/shell"
 )
 
 var (
@@ -27,10 +27,10 @@ var (
 
 func main() {
 	p := prompt.New(
-		menu.Executor,
-		menu.Completer,
+		shell.Executor,
+		shell.Completer,
 		prompt.OptionTitle("px-poc: interactive portworx poc client"),
-		prompt.OptionPrefix("px-shell> "),
+		prompt.OptionPrefix(">>> "),
 		prompt.OptionInputTextColor(prompt.Yellow),
 		prompt.OptionCompletionWordSeparator(completer.FilePathCompletionSeparator),
 	)
