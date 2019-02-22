@@ -10,9 +10,7 @@ spec:
     requests:
       storage: 12Gi
   storageClassName: px-repl3-sc
-
 ---
-
 apiVersion: batch/v1
 kind: Job
 metadata:
