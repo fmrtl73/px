@@ -1,0 +1,14 @@
+[global]
+direct=1
+rw=write
+size=10G
+ioengine=libaio
+iodepth=128
+end_fsync=1
+
+[seqwrite]
+directory=/myvol
+bs=64k
+write_bw_log=seqwrite
+write_lat_log=seqwrite
+write_iops_log=seqwrite
