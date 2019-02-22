@@ -1,0 +1,58 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+   name: px-shared-pvc
+   annotations:
+     volume.beta.kubernetes.io/storage-class: px-shared-sc
+spec:
+   accessModes:
+     - ReadWriteOnce
+   resources:
+     requests:
+       storage: 1Gi
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: px-shared-sc
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "3"
+   shared: "true"
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: file-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: file-server
+        group: file-server
+    spec:
+      containers:
+      - name: file-server
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: shared-data
+      volumes:
+      - name: shared-data
+        persistentVolumeClaim:
+          claimName: px-shared-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: file-svc
+  labels:
+    app: file-server
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: file-server

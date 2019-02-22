@@ -1,0 +1,14 @@
+[global]
+direct=1
+rw=read
+size=10G
+ioengine=libaio
+iodepth=128
+end_fsync=1
+
+[read]
+directory=/myvol
+bs=64k
+write_bw_log=read
+write_lat_log=read
+write_iops_log=read

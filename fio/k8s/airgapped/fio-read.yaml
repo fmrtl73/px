@@ -1,0 +1,76 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: test-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 12Gi
+  storageClassName: px-repl3-sc
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fio-write
+spec:
+  template:
+    spec:
+      containers:
+      - name: fio-write
+        image: antonipx/fio
+        volumeMounts:
+        - mountPath: /mnt
+          name: test-volume
+        args:
+          - "--blocksize=64k"
+          - "--filename=/mnt/fio.dat"
+          - "--ioengine=libaio"
+          - "--readwrite=write"
+          - "--size=10G"
+          - "--name=test"
+          - "--direct=1"
+          - "--iodepth=128"
+          - "--end_fsync=1"
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Never
+      volumes:
+      - name: test-volume
+        persistentVolumeClaim:
+          claimName: test-claim
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fio-read
+spec:
+  template:
+    spec:
+      containers:
+      - name: fio-read
+        image: antonipx/fio
+        volumeMounts:
+        - mountPath: /mnt
+          name: test-volume
+        args:
+          - "--blocksize=64k"
+          - "--filename=/mnt/fio.dat"
+          - "--ioengine=libaio"
+          - "--readwrite=read"
+          - "--size=10G"
+          - "--name=test"
+          - "--direct=1"
+          - "--iodepth=128"
+          - "--readonly"
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Never
+      volumes:
+      - name: test-volume
+        persistentVolumeClaim:
+          claimName: test-claim
