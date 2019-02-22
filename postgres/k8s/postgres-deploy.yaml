@@ -11,15 +11,15 @@ parameters:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-   name: postgres-data
-   annotations:
-     volume.beta.kubernetes.io/storage-class: px-postgres-sc
+  name: postgres-data
+  annotations:
+    volume.beta.kubernetes.io/storage-class: px-postgres-sc
 spec:
-   accessModes:
-     - ReadWriteOnce
-   resources:
-     requests:
-       storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
