@@ -1,26 +1,59 @@
-The commands deploys the four storage classes, pvcs, services, and PostgreSQL deployments with io priority high and medium and compression set to true and false:
+There are four tests defined (high, high-compressed, medium, medium-compressed) defined to test performance on two different storage pools (high,medium) with and without compression.
 
-```kubectl create -f psql-high.yaml
-kubectl create -f psql-high-compressed.yaml
-kubectl create -f psql-medium.yaml
-kubectl create -f psql-medium-compressed.yaml
+For each test there is a storage class, PVC, service, and PostgreSQL deployment.
+
+##High Speed Device
+Start the database:
 ```
-
-With those running you can then run the following commands to deploy and run the benchmark init command `pgbench -i -s 50 ` using a kubernetes job:
-
+kubectl create -f psql-high.yaml
+```
+When the database is running and ready you can launch a kubernetes job to initialize the database with 5 million rows of data (800MB):
 ```
 kubectl create -f pgbench-init-high.yaml
-kubectl create -f pgbench-init-high-compressed.yaml
-kubectl create -f pgbench-init-medium.yaml
-kubectl create -f pgbench-init-medium-compressed.yaml
-```
-
-And finally these commands will run the benchmark `pgbench -c 10 -j 2 -t 10000`:
-
+````
+Once the job completes successfully you can launch the kubernetes job to do the actual benchmark:
 ```
 kubectl create -f pgbench-run-high.yaml
-kubectl create -f pgbench-run-high-compressed.yaml
-kubectl create -f pgbench-run-medium.yaml
-kubectl create -f pgbench-run-medium-compressed.yaml
 ```
 
+##High Speed Device with compression
+Start the database:
+```
+kubectl create -f psql-high-compressed.yaml
+```
+When the database is running and ready you can launch a kubernetes job to initialize the database with 5 million rows of data (800MB):
+```
+kubectl create -f pgbench-init-high-compressed.yaml
+````
+Once the job completes successfully you can launch the kubernetes job to do the actual benchmark:
+```
+kubectl create -f pgbench-run-high-compressed.yaml
+```
+
+##Medium Speed Device
+Start the database:
+```
+kubectl create -f psql-medium.yaml
+```
+When the database is running and ready you can launch a kubernetes job to initialize the database with 5 million rows of data (800MB):
+```
+kubectl create -f pgbench-init-medium.yaml
+````
+Once the job completes successfully you can launch the kubernetes job to do the actual benchmark:
+```
+kubectl create -f pgbench-run-medium.yaml
+```
+
+##Medium Speed Device with compression
+Start the database:
+```
+kubectl create -f psql-medium-compressed.yaml
+```
+When the database is running and ready you can launch a kubernetes job to initialize the database with 5 million rows of data (800MB):
+```
+kubectl create -f pgbench-init-medium-compressed.yaml
+````
+Once the job completes successfully you can launch the kubernetes job to do the actual benchmark:
+```
+kubectl create -f pgbench-run-medium-compressed.yaml
+```

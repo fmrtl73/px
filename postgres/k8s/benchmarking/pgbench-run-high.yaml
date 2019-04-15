@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pgbench-run-high
+  namespace: portworx
+spec:
+  template:
+    metadata:
+      labels:
+        app: pgbench-run-high
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:9.5
+        imagePullPolicy: "IfNotPresent"
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 1000
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: pgbench
+        - name: PGUSER
+          value: pgbench
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-pass
+              key: password.txt
+        - name: PGBENCH_PASSWORD
+          value: superpostgres
+        command: ["/bin/sh"]
+        args: ["-c",  "export PGPASSWORD=$POSTGRES_PASSWORD; pgbench -h psql-high -p $PSQL_HIGH_SERVICE_PORT -U $POSTGRES_USER -c 10 -j 2 -t 10000 pxdemo"]
+      restartPolicy: Never

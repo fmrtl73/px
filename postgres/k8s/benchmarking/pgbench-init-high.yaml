@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pgbench-init-io1
+  namespace: portworx
+spec:
+  template:
+    metadata:
+      labels:
+        app: pgbench-init-io1
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:9.5
+        imagePullPolicy: "IfNotPresent"
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 1000
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: pgbench
+        - name: PGUSER
+          value: pgbench
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-pass
+              key: password.txt
+        - name: PGBENCH_PASSWORD
+          value: superpostgres
+        command: ["/bin/sh"]
+        args: ["-c",  "export PGPASSWORD=$POSTGRES_PASSWORD; psql -h psql-io1 -p $PSQL_IO1_SERVICE_PORT -U $POSTGRES_USER -c 'create database pxdemo;'; pgbench -h psql-io1 -p $PSQL_IO1_SERVICE_PORT -U $POSTGRES_USER -i -s 50 pxdemo"]
+      restartPolicy: Never
