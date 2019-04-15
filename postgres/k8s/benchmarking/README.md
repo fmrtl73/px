@@ -6,7 +6,7 @@ kubectl create -f psql-medium.yaml
 kubectl create -f psql-medium-compressed.yaml
 ```
 
-With those running you can then run the following commands to deploy and run the benchmark init command `-i -s 50 ` using a kubernetes job:
+With those running you can then run the following commands to deploy and run the benchmark init command `pgbench -i -s 50 ` using a kubernetes job:
 
 ```
 kubectl create -f pgbench-init-high.yaml
