@@ -1,6 +1,12 @@
 There are four tests defined (high, high-compressed, medium, medium-compressed) defined to test performance on two different storage pools (high,medium) with and without compression.
 
-For each test there is a storage class, PVC, service, and PostgreSQL deployment.
+Before you start, make sure you have a functioning Portworx cluster and configure it for encryption:
+```
+echo -n mysql123 > password.txt
+kubectl create secret generic postgres-pass --from-file=password.txt
+```
+
+For each test we will create a storage class with specific storage properties and then use it to create a PVC, service, and PostgreSQL deployment. The benchmark init and run steps are then deployed as client pods as part of a batch job that runs only once. The logs for the pod will contain the benchmark results.
 
 ##High Speed Device
 Start the database:
