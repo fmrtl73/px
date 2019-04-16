@@ -57,13 +57,14 @@ spec:
         app: postgres-medium-compressed
     spec:
       schedulerName: stork
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 2000
+        runAsNonRoot: true
       containers:
       - name: postgres
         image: postgres:9.5
         imagePullPolicy: "IfNotPresent"
-        securityContext:
-          allowPrivilegeEscalation: false
-          runAsUser: 1000
         ports:
         - containerPort: 5432
         env:
