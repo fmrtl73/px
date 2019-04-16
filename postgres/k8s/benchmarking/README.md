@@ -1,9 +1,9 @@
-There are four tests defined (high, high-compressed, medium, medium-compressed) defined to test performance on two different storage pools (high,medium) with and without compression.
+There are four tests defined (high, high-compressed, medium, medium-compressed) defined to test performance on two different storage pools (high,medium) with and without compression. It deploys the database and benchmark jobs for each in the portworx namespace.
 
 Before you start, make sure you have a functioning Portworx cluster and configure it for encryption:
 ```
 echo -n mysql123 > password.txt
-kubectl create secret generic postgres-pass --from-file=password.txt
+kubectl create secret generic postgres-pass --from-file=password.txt -n portworx
 ```
 
 For each test we will create a storage class with specific storage properties and then use it to create a PVC, service, and PostgreSQL deployment. The benchmark init and run steps are then deployed as client pods as part of a batch job that runs only once. The logs for the pod will contain the benchmark results.
@@ -62,4 +62,27 @@ kubectl create -f pgbench-init-medium-compressed.yaml
 Once the job completes successfully you can launch the kubernetes job to do the actual benchmark:
 ```
 kubectl create -f pgbench-run-medium-compressed.yaml
+```
+
+Once you have run all three commands you will be able to inspect the results. For example, with the medium test you will get the following:
+```
+kubectl get po -n portworx
+NAME                                         READY   STATUS      RESTARTS   AGE
+pgbench-init-medium-gqdw7                    0/1     Completed   0          7m16s
+pgbench-run-medium-2tjwx                     0/1     Completed   0          6m7s
+postgres-medium-5f7548dd6b-x2q7g             1/1     Running     0          8m4s
+postgres-medium-compressed-7dc7cf6b8-4rksn   1/1     Running     0          15m
+
+kubectl logs -n portworx pgbench-run-medium-2tjwx
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 50
+query mode: simple
+number of clients: 10
+number of threads: 2
+number of transactions per client: 10000
+number of transactions actually processed: 100000/100000
+latency average: 12.587 ms
+tps = 794.467449 (including connections establishing)
+tps = 794.486714 (excluding connections establishing)
 ```
