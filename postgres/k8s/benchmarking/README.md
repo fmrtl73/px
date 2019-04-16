@@ -2,6 +2,14 @@ There are four tests defined (high, high-compressed, medium, medium-compressed) 
 
 Before you start, make sure you have a functioning Portworx cluster and configure it for encryption:
 ```
+kubectl -n portworx create secret generic px-vol-encryption \
+  --from-literal=cluster-wide-secret-key=Il0v3Portw0rX
+PX_POD=$(kubectl get pods -l name=portworx -n kube-system -o jsonpath='{.items[0].metadata.name}')
+kubectl exec $PX_POD -n kube-system -- /opt/pwx/bin/pxctl secrets set-cluster-key \
+  --secret cluster-wide-secret-key
+```
+Also, you should set a password secret in the Portworx namespace:
+```
 echo -n mysql123 > password.txt
 kubectl create secret generic postgres-pass --from-file=password.txt -n portworx
 ```
