@@ -16,6 +16,20 @@ kubectl create secret generic postgres-pass --from-file=password.txt -n portworx
 
 For each test we will create a storage class with specific storage properties and then use it to create a PVC, service, and PostgreSQL deployment. The benchmark init and run steps are then deployed as client pods as part of a batch job that runs only once. The logs for the pod will contain the benchmark results.
 
+## High Speed Device, no encryption
+Start the database:
+```
+kubectl create -f psql-high-no-encyption.yaml
+```
+When the database is running and ready you can launch a kubernetes job to initialize the database with 5 million rows of data (800MB):
+```
+kubectl create -f pgbench-init-high-no-encyption.yaml
+````
+Once the job completes successfully you can launch the kubernetes job to do the actual benchmark:
+```
+kubectl create -f pgbench-run-high-no-encyption.yaml
+```
+
 ## High Speed Device
 Start the database:
 ```
