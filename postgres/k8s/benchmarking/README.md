@@ -8,7 +8,7 @@ kubectl create secret generic postgres-pass --from-file=password.txt -n portworx
 
 For each test we will create a storage class with specific storage properties and then use it to create a PVC, service, and PostgreSQL deployment. The benchmark init and run steps are then deployed as client pods as part of a batch job that runs only once. The logs for the pod will contain the benchmark results.
 
-##High Speed Device
+## High Speed Device
 Start the database:
 ```
 kubectl create -f psql-high.yaml
@@ -22,7 +22,7 @@ Once the job completes successfully you can launch the kubernetes job to do the 
 kubectl create -f pgbench-run-high.yaml
 ```
 
-##High Speed Device with compression
+## High Speed Device with compression
 Start the database:
 ```
 kubectl create -f psql-high-compressed.yaml
@@ -36,7 +36,7 @@ Once the job completes successfully you can launch the kubernetes job to do the 
 kubectl create -f pgbench-run-high-compressed.yaml
 ```
 
-##Medium Speed Device
+## Medium Speed Device
 Start the database:
 ```
 kubectl create -f psql-medium.yaml
@@ -50,7 +50,7 @@ Once the job completes successfully you can launch the kubernetes job to do the 
 kubectl create -f pgbench-run-medium.yaml
 ```
 
-##Medium Speed Device with compression
+## Medium Speed Device with compression
 Start the database:
 ```
 kubectl create -f psql-medium-compressed.yaml
@@ -64,6 +64,7 @@ Once the job completes successfully you can launch the kubernetes job to do the 
 kubectl create -f pgbench-run-medium-compressed.yaml
 ```
 
+## Getting Benchmark Results
 Once you have run all three commands you will be able to inspect the results. For example, with the medium test you will get the following:
 ```
 kubectl get po -n portworx
