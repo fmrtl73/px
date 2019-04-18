@@ -1,25 +1,25 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
 metadata:
-    name: psql-medium-compressed
+    name: psql-high-repl1
     namespace: portworx
 provisioner: kubernetes.io/portworx-volume
 parameters:
-   repl: "3"
+   repl: "1"
    io_profile: "db"
-   priority_io: "medium"
+   disable_io_profile_protection: "true"
+   priority_io: "high"
    secure: "true"
    journal: "true"
-   compressed: "true"
 allowVolumeExpansion: true
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-   name: px-postgres-pvc-medium-compressed
+   name: px-postgres-pvc-high-repl1
    namespace: portworx
    annotations:
-     volume.beta.kubernetes.io/storage-class: psql-medium-compressed
+     volume.beta.kubernetes.io/storage-class: psql-high-repl1
 spec:
    accessModes:
      - ReadWriteOnce
@@ -30,20 +30,20 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: psql-medium-compressed
+  name: psql-high-repl1
   namespace: portworx
 spec:
   selector:
-    app: postgres-medium-compressed
+    app: postgres-high-repl1
   ports:
   - protocol: TCP
-    port: 5433
+    port: 5434
     targetPort: 5432
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: postgres-medium-compressed
+  name: postgres-high-repl1
   namespace: portworx
 spec:
   strategy:
@@ -55,7 +55,7 @@ spec:
   template:
     metadata:
       labels:
-        app: postgres-medium-compressed
+        app: postgres-high-repl1
     spec:
       schedulerName: stork
       securityContext:
@@ -88,4 +88,4 @@ spec:
       volumes:
       - name: postgredb
         persistentVolumeClaim:
-          claimName: px-postgres-pvc-medium-compressed
+          claimName: px-postgres-pvc-high-repl1

@@ -10,6 +10,7 @@ parameters:
    priority_io: "high"
    secure: "true"
    journal: "true"
+   compressed: "true"
 allowVolumeExpansion: true
 ---
 kind: PersistentVolumeClaim
