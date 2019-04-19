@@ -1,18 +1,3 @@
-kind: StorageClass
-apiVersion: storage.k8s.io/v1beta1
-metadata:
-    name: psql-high-repl1
-    namespace: portworx
-provisioner: kubernetes.io/portworx-volume
-parameters:
-   repl: "1"
-   io_profile: "db"
-   disable_io_profile_protection: "true"
-   priority_io: "high"
-   secure: "true"
-   journal: "true"
-allowVolumeExpansion: true
----
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:

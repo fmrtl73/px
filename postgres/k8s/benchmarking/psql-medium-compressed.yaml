@@ -1,19 +1,4 @@
-kind: StorageClass
-apiVersion: storage.k8s.io/v1beta1
-metadata:
-    name: psql-medium-compressed
-    namespace: portworx
-provisioner: kubernetes.io/portworx-volume
-parameters:
-   repl: "3"
-   io_profile: "db"
-   priority_io: "medium"
-   secure: "true"
-   journal: "true"
-   compressed: "true"
-allowVolumeExpansion: true
----
-kind: PersistentVolumeClaim
+kkind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
    name: px-postgres-pvc-medium-compressed
