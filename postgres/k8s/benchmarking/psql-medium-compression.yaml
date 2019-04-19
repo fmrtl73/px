@@ -1,4 +1,4 @@
-kkind: PersistentVolumeClaim
+kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
    name: px-postgres-pvc-medium-compressed
