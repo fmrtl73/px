@@ -1,7 +1,7 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
 metadata:
-    name: psql-high-compression
+    name: psql-high-compressed
     namespace: portworx
 provisioner: kubernetes.io/portworx-volume
 parameters:
@@ -72,7 +72,7 @@ allowVolumeExpansion: true
 kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
 metadata:
-    name: psql-medium-compression
+    name: psql-medium-compressed
     namespace: portworx
 provisioner: kubernetes.io/portworx-volume
 parameters:
