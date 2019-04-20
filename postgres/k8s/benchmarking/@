@@ -1,17 +1,15 @@
-#!/usr/bin/env bash 
-set -x
+#!/usr/bin/env bash -x
 for sc in $(kubectl get sc | grep -v NAME | awk '{print $1}')
 do
-  podname=`echo $sc | sed 's/psql-/postgres-/g'`
-  podname=`echo $podname | sed 's/compression/compressed/g'`
-  filename=`echo $sc | sed 's/compression/compressed/g'`
+  name=`echo $sc | sed 's/psql-/postgres-/g'`
+  name=`echo $name | sed 's/compression/compressed/g'`
   init=`echo $sc | sed 's/psql-/pgbench-init-/g'`
   run=`echo $sc | sed 's/psql-/pgbench-run-/g'`
 
   echo "Deploying psql for storage class $sc"
-  kubectl apply -f $filename.yaml
-  echo "Waiting for $podname pod to start, will timeout after 2 minutes"
-  pod=`kubectl get pod -n portworx | grep $podname | awk '{print $1}'`
+  kubectl apply -f $sc.yaml
+  echo "Waiting for $name pod to start, will timeout after 2 minutes"
+  pod=`kubectl get pod -n portworx | grep $name | awk '{print $1}'`
   kubectl -n portworx wait --for=condition=Ready po/$pod --timeout 2m
   if (( $? )); then
     echo "Failure" >&2
@@ -39,3 +37,4 @@ do
   kubectl -n portworx logs -f $pod
   echo "########## $run results end ###############"
 done
+
