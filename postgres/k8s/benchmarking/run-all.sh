@@ -1,6 +1,6 @@
 #!/usr/bin/env bash 
-set -x
-for sc in $(kubectl get sc | grep -v NAME | awk '{print $1}')
+#set -x
+for sc in $(kubectl get sc | grep -v psql | awk '{print $1}')
 do
   podname=`echo $sc | sed 's/psql-/postgres-/g'`
   podname=`echo $podname | sed 's/compression/compressed/g'`
@@ -19,6 +19,13 @@ do
   fi
   echo "Deploying pgbench init for storage class $sc"
   kubectl create -f $init.yaml
+  echo "waiting for $init pod to be ready, will timeout after 2 minutes"
+  pod=`kubectl get pod -n portworx | grep $init | awk '{print $1}'`
+  kubectl -n portworx wait --for=condition=Ready po/$pod --timeout 2m
+  if (( $? )); then
+    echo "Failure" >&2
+    exit 1
+  fi
   echo "waiting for $init to complete, will timeout after 5 minutes"
   kubectl -n portworx wait --for=condition=complete job/$init --timeout 5m
   if (( $? )); then
