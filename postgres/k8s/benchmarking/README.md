@@ -14,7 +14,15 @@ echo -n mysql123 > password.txt
 kubectl create secret generic postgres-pass --from-file=password.txt -n portworx
 ```
 
+Finally, you should create the storage classes before running the tests:
+
+```
+kubectl create -f storage-classes.yaml
+```
+
 For each test we will create a storage class with specific storage properties and then use it to create a PVC, service, and PostgreSQL deployment. The benchmark init and run steps are then deployed as client pods as part of a batch job that runs only once. The logs for the pod will contain the benchmark results.
+
+You can run all tests using the `run-all.sh` script then delete all the resources using the `clean-all.sh` script. You can also run individual test by following the below instructions.
 
 ## High Speed Device, no encryption
 Start the database:
