@@ -6,7 +6,7 @@ metadata:
 provisioner: kubernetes.io/portworx-volume
 parameters:
    repl: "3"
-   io_profile: "db"
+   io_profile: "sequential"
    priority_io: "high"
    secure: "true"
    journal: "true"
@@ -21,8 +21,7 @@ metadata:
 provisioner: kubernetes.io/portworx-volume
 parameters:
    repl: "1"
-   io_profile: "db"
-   disable_io_profile_protection: "true"
+   io_profile: "sequential"
    priority_io: "high"
    journal: "true"
 allowVolumeExpansion: true
@@ -35,7 +34,7 @@ metadata:
 provisioner: kubernetes.io/portworx-volume
 parameters:
    repl: "3"
-   io_profile: "db"
+   io_profile: "sequential"
    priority_io: "high"
    journal: "true"
 allowVolumeExpansion: true
@@ -48,8 +47,7 @@ metadata:
 provisioner: kubernetes.io/portworx-volume
 parameters:
    repl: "1"
-   io_profile: "db"
-   disable_io_profile_protection: "true"
+   io_profile: "sequential"
    priority_io: "high"
    secure: "true"
    journal: "true"
@@ -63,7 +61,7 @@ metadata:
 provisioner: kubernetes.io/portworx-volume
 parameters:
    repl: "3"
-   io_profile: "db"
+   io_profile: "sequential"
    priority_io: "high"
    secure: "true"
    journal: "true"
@@ -77,7 +75,7 @@ metadata:
 provisioner: kubernetes.io/portworx-volume
 parameters:
    repl: "3"
-   io_profile: "db"
+   io_profile: "sequential"
    priority_io: "medium"
    secure: "true"
    journal: "true"
@@ -92,7 +90,7 @@ metadata:
 provisioner: kubernetes.io/portworx-volume
 parameters:
    repl: "3"
-   io_profile: "db"
+   io_profile: "sequential"
    priority_io: "medium"
    secure: "true"
    journal: "true"
