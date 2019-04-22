@@ -1,10 +1,10 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-   name: px-postgres-pvc-high-no-encryption
+   name: SC_NAME-pvc
    namespace: portworx
    annotations:
-     volume.beta.kubernetes.io/storage-class: psql-high-no-encryption
+     volume.beta.kubernetes.io/storage-class: SC_NAME
 spec:
    accessModes:
      - ReadWriteOnce
@@ -15,11 +15,11 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: psql-high-no-encryption
+  name: SC_NAME-svc
   namespace: portworx
 spec:
   selector:
-    app: postgres-high-no-encryption
+    app: SC_NAME-app
   ports:
   - protocol: TCP
     port: 5434
@@ -28,7 +28,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: postgres-high-no-encryption
+  name: SC_NAME-app
   namespace: portworx
 spec:
   strategy:
@@ -40,7 +40,7 @@ spec:
   template:
     metadata:
       labels:
-        app: postgres-high-no-encryption
+        app: SC_NAME-app
     spec:
       schedulerName: stork
       securityContext:
@@ -73,4 +73,4 @@ spec:
       volumes:
       - name: postgredb
         persistentVolumeClaim:
-          claimName: px-postgres-pvc-high-no-encryption
+          claimName: SC_NAME-pvc

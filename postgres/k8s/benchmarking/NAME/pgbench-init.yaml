@@ -1,13 +1,13 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: pgbench-init-high-no-encryption-repl1
+  name: pgbench-init-$sc
   namespace: portworx
 spec:
   template:
     metadata:
       labels:
-        app: pgbench-init-high-no-encryption-repl1
+        app: pgbench-init-$sc
     spec:
       securityContext:
         runAsUser: 1000
@@ -32,5 +32,5 @@ spec:
         - name: PGBENCH_PASSWORD
           value: superpostgres
         command: ["/bin/sh"]
-        args: ["-c",  "export PGPASSWORD=$POSTGRES_PASSWORD; psql -h psql-high-no-encryption-repl1 -p $PSQL_HIGH_NO_ENCRYPTION_REPL1_SERVICE_PORT -U $POSTGRES_USER -c 'create database pxdemo;'; pgbench -h psql-high-no-encryption-repl1 -p $PSQL_HIGH_NO_ENCRYPTION_REPL1_SERVICE_PORT -U $POSTGRES_USER -i -s 50 pxdemo"]
+        args: ["-c",  "export PGPASSWORD=$POSTGRES_PASSWORD; psql -h psql-$sc -p $PSQL_$svcname_SERVICE_PORT -U $POSTGRES_USER -c 'create database pxdemo;'; pgbench -h psql-$sc -p $PSQL_$svcname_SERVICE_PORT -U $POSTGRES_USER -i -s 50 pxdemo"]
       restartPolicy: Never
