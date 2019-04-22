@@ -1,4 +1,4 @@
-#!/usr/bin/env bash 
+#!/usr/bin/env bash
 
 bench(){
   sc=$1
@@ -64,18 +64,14 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 if [ $1 == '--all' ]; then
-  if [ $# -ne 2 ]; then 
+  if [ $# -ne 2 ]; then
     display_usage
     exit 1
   fi
   for sc in $(kubectl get sc | grep $2 | awk '{print $1}')
   do
     bench $sc
-  done 
+  done
   exit 0
 fi
-for sc in $(kubectl get sc | grep $1 | awk '{print $1}')
-do
-  bench $sc
-done
-
+bench $sc
