@@ -74,4 +74,8 @@ if [ $1 == '--all' ]; then
   done 
   exit 0
 fi
-bench $1
+for sc in $(kubectl get sc | grep $1 | awk '{print $1}')
+do
+  bench $sc
+done
+
