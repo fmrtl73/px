@@ -22,12 +22,12 @@ kubectl create -f storage-classes.yaml
 
 For each test we will create a storage class with specific storage properties and then use it to create a PVC, service, and PostgreSQL deployment. The benchmark init and run steps are then deployed as client pods as part of a batch job that runs only once. The logs for the pod will contain the benchmark results.
 
-You can run all tests using the 
+You can run all tests using the psql prefixed storage classes:
 ```
 ./run.sh --all psql
-``` 
+```
 
-You can delete all resources created by running the following script:
+The files are created in a directory with the storage class name. You can delete all resources created by running the following script:
 ```
 ./clean.sh --all psql
 ```
@@ -36,4 +36,4 @@ You can run and clean individual storage class using the following commands:
 ```
 ./run.sh <storage-class-name>
 ./clean.sh <storage-class-name>
-``` 
+```
