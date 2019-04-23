@@ -35,6 +35,7 @@ spec:
           - "fio"
           - "--blocksize=256k"
           - "--filename=/mnt/fio.dat"
+          - "--ioengine=libaio"
           - "--readwrite=write"
           - "--size=10GiB"
           - "--name=test"
