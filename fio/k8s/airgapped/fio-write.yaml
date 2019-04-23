@@ -36,7 +36,7 @@ spec:
           - "--blocksize=256k"
           - "--filename=/mnt/fio.dat"
           - "--readwrite=write"
-          - "--size=1GiB"
+          - "--size=10GiB"
           - "--name=test"
           - "--direct=1"
           - "--iodepth=128"
