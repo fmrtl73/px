@@ -42,7 +42,7 @@ bench(){
     echo "Failure" >&2
     exit 1
   fi
-  echo " # Results for storage classe: $sc "
+  echo " # Results for storage class: $sc "
   kubectl -n portworx logs -f $pod | awk '{print "     " $0}'
   echo "        "
 }
