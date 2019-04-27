@@ -1,0 +1,141 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: psql-high-compressed
+    namespace: portworx
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "3"
+   io_profile: "db"
+   priority_io: "high"
+   secure: "true"
+   journal: "true"
+   compression: "true"
+allowVolumeExpansion: true
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: psql-high-no-encryption-repl1
+    namespace: portworx
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "1"
+   io_profile: "db"
+   disable_io_profile_protection: "true"
+   priority_io: "high"
+   journal: "true"
+allowVolumeExpansion: true
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: psql-high-no-encryption
+    namespace: portworx
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "3"
+   io_profile: "db"
+   priority_io: "high"
+   journal: "true"
+allowVolumeExpansion: true
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: psql-high-repl1
+    namespace: portworx
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "1"
+   io_profile: "db"
+   disable_io_profile_protection: "true"
+   priority_io: "high"
+   secure: "true"
+   journal: "true"
+allowVolumeExpansion: true
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: psql-high
+    namespace: portworx
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "3"
+   io_profile: "db"
+   priority_io: "high"
+   secure: "true"
+   journal: "true"
+allowVolumeExpansion: true
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: psql-medium-compressed
+    namespace: portworx
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "3"
+   io_profile: "db"
+   priority_io: "medium"
+   secure: "true"
+   journal: "true"
+   compression: "true"
+allowVolumeExpansion: true
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: psql-medium
+    namespace: portworx
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "3"
+   io_profile: "db"
+   priority_io: "medium"
+   secure: "true"
+   journal: "true"
+allowVolumeExpansion: true
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: psql-medium-no-encryption
+    namespace: portworx
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "3"
+   io_profile: "db"
+   priority_io: "medium"
+   journal: "true"
+allowVolumeExpansion: true
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: psql-medium-no-encryption-repl1
+    namespace: portworx
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "1"
+   io_profile: "db"
+   disable_io_profile_protection: "true"
+   priority_io: "medium"
+   journal: "true"
+allowVolumeExpansion: true
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: psql-medium-repl1
+    namespace: portworx
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "1"
+   io_profile: "db"
+   disable_io_profile_protection: "true"
+   priority_io: "medium"
+   journal: "true"
+   secure: "true"
+allowVolumeExpansion: true

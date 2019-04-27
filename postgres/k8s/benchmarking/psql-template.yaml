@@ -1,29 +1,35 @@
-kind: StorageClass
-apiVersion: storage.k8s.io/v1beta1
-metadata:
-  name: px-postgres-sc
-provisioner: kubernetes.io/portworx-volume
-parameters:
-  repl: "1"
-  priority_io: "high"
----
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: postgres-data
-  annotations:
-    volume.beta.kubernetes.io/storage-class: px-postgres-sc
+   name: SC_NAME-pvc
+   namespace: portworx
+   annotations:
+     volume.beta.kubernetes.io/storage-class: SC_NAME
 spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
+   accessModes:
+     - ReadWriteOnce
+   resources:
+     requests:
+       storage: 10Gi
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: SC_NAME-svc
+  namespace: portworx
+spec:
+  selector:
+    app: SC_NAME-app
+  ports:
+  - protocol: TCP
+    port: 5434
+    targetPort: 5432
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: postgres
+  name: SC_NAME-app
+  namespace: portworx
 spec:
   strategy:
     rollingUpdate:
@@ -34,9 +40,13 @@ spec:
   template:
     metadata:
       labels:
-        app: postgres
+        app: SC_NAME-app
     spec:
       schedulerName: stork
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 2000
+        runAsNonRoot: true
       containers:
       - name: postgres
         image: postgres:9.5
@@ -49,15 +59,18 @@ spec:
         - name: PGUSER
           value: pgbench
         - name: POSTGRES_PASSWORD
-          value: superpostgres
+          valueFrom:
+            secretKeyRef:
+              name: postgres-pass
+              key: password.txt
         - name: PGBENCH_PASSWORD
           value: superpostgres
         - name: PGDATA
           value: /var/lib/postgresql/data/pgdata
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
-          name: postgres-data
+          name: postgredb
       volumes:
-      - name: postgres-data
+      - name: postgredb
         persistentVolumeClaim:
-          claimName: postgres-data
+          claimName: SC_NAME-pvc

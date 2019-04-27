@@ -1,0 +1,51 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: SC_NAME-pvc
+  namespace: portworx
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 12Gi
+  storageClassName: SC_NAME
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fio-write-SC_NAME
+  namespace: portworx
+spec:
+  template:
+    spec:
+      schedulerName: stork
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 2000
+        runAsNonRoot: true
+      containers:
+      - name: fio-write
+        image: dmonakhov/alpine-fio
+        volumeMounts:
+        - mountPath: /mnt
+          name: test-volume
+        args:
+          - "fio"
+          - "--blocksize=256k"
+          - "--filename=/mnt/fio.dat"
+          - "--ioengine=libaio"
+          - "--readwrite=write"
+          - "--size=10GiB"
+          - "--name=test"
+          - "--direct=1"
+          - "--iodepth=128"
+          - "--buffer_compress_percentage=50"
+          - "--end_fsync=1"
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Never
+      volumes:
+      - name: test-volume
+        persistentVolumeClaim:
+          claimName: SC_NAME-pvc

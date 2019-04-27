@@ -1,0 +1,2 @@
+AccessKey=MyAccessKey
+SecretKey=MySecret

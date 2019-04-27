@@ -1,0 +1,13 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: fio-high-repl1-compressed
+    namespace: portworx
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "1"
+   io_profile: "sequential"
+   priority_io: "high"
+   compression: "true"
+   secure: "true"
+allowVolumeExpansion: true
