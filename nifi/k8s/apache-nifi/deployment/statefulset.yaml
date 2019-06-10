@@ -26,7 +26,9 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       containers:
         - name: nifi
-          image: tusharraut/nifi:latest
+          command: ["/bin/sh","-c"]
+          args: ['sed -e "s/^search/& $(dnsdomainname)/" /etc/resolv.conf > /tmp/resolv.conf;cat /tmp/resolv.conf  > /etc/resolv.conf; cd /opt/nifi && ./start_nifi.sh']
+          image: xemuliam/nifi:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -42,6 +44,8 @@ spec:
               mountPath: /opt/nifi/content_repository
             - name: provenancerepository
               mountPath: /opt/nifi/provenance_repository
+            - name: jars
+              mountPath: /opt/nifi/jars
           env:
             - name: ZK_NODES_LIST
               # Requires zookeeper running
@@ -80,6 +84,14 @@ spec:
       storageClassName: portworx-nifi-sc
   - metadata:
       name: provenancerepository
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Gi
+      storageClassName: portworx-nifi-sc
+  - metadata:
+      name: jars
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:

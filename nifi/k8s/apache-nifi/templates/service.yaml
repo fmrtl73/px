@@ -12,28 +12,25 @@ spec:
       port: 8080
       targetPort: 8080
       name: nifi
-
 ---
-
 kind: Service
 apiVersion: v1
 metadata:
   name: nifi
   namespace: nifi
+  labels:
+    app: nifi
 spec:
   clusterIP: None
-  selector:
-    app: nifi
   ports:
-    - protocol: TCP
+    - name: nifi-listen-http
       port: 8081
       targetPort: 8081
-      name: nifi-listen-http
-    - protocol: TCP
+    - name: nifi-site-protocol 
       port: 2881
       targetPort: 2881
-      name: nifi-site-protocol
-    - protocol: TCP
+    - name: nifi-node-protocol
       port: 2882
       targetPort: 2882
-      name: nifi-node-protocol
+  selector:
+    app: nifi

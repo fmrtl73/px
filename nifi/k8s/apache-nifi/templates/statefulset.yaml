@@ -26,6 +26,8 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       containers:
         - name: nifi
+          command: ["/bin/sh","-c"]
+          args: ['sed -e "s/^search/& $(dnsdomainname)/" /etc/resolv.conf > /tmp/resolv.conf;cat /tmp/resolv.conf  > /etc/resolv.conf; cd /opt/nifi && ./start_nifi.sh']
           image: {{.image}}
           imagePullPolicy: Always
           ports:
@@ -42,6 +44,8 @@ spec:
               mountPath: /opt/nifi/content_repository
             - name: provenancerepository
               mountPath: /opt/nifi/provenance_repository
+            - name: jars
+              mountPath: /opt/nifi/jars
           env:
             - name: ZK_NODES_LIST
               # Requires zookeeper running
@@ -52,7 +56,6 @@ spec:
               value: "yes"
             - name: BANNER_TEXT
               value: "Nifi Cluster"
-
   volumeClaimTemplates:
   - metadata:
       name: flowfilerepository
@@ -80,6 +83,14 @@ spec:
       storageClassName: {{.storageClass}}
   - metadata:
       name: provenancerepository
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Gi
+      storageClassName: {{.storageClass}}
+  - metadata:
+      name: jars
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
