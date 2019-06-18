@@ -27,7 +27,7 @@ spec:
       containers:
         - name: nifi
           command: ["/bin/sh","-c"]
-          args: ['sed -e "s/^search/& $(dnsdomainname)/" /etc/resolv.conf > /tmp/resolv.conf;cat /tmp/resolv.conf  > /etc/resolv.conf; cd /opt/nifi ; if [ ! -f ./conf/flow.xml.gz ]; then if [ -f ./conf/archive/*.gz ]; then cp conf/archive/`ls -rt *.gz | tail -n 1` conf/flow.xml.gz; fi; fi && ./start_nifi.sh']
+          args: ['sed -e "s/^search/& $(dnsdomainname)/" /etc/resolv.conf > /tmp/resolv.conf;cat /tmp/resolv.conf  > /etc/resolv.conf; cd /opt/nifi ; if [ ! -f ./conf/flow.xml.gz ]; then if [ -f ./conf/archive/*.gz ]; then cp `ls -rt conf/archive/*.gz | tail -n 1` conf/flow.xml.gz; fi; fi && ./start_nifi.sh']
           image: {{.image}}
           imagePullPolicy: Always
           ports:

@@ -12,6 +12,7 @@ rm -rf apache-nifi/deployment || true
 vortex --template apache-nifi/templates --output apache-nifi/deployment -varpath ./apache-nifi/environments/$ENV.yaml
 kubectl create ns nifi
 kubectl create -f apache-nifi/deployment/
+sleep 6
 kubectl -n nifi wait --for=condition=Ready po/nifi-0 --timeout 2m | awk '{print " # " $0}'
   if (( $? )); then
     echo "Failure" >&2
