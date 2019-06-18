@@ -18,3 +18,8 @@ kubectl -n nifi wait --for=condition=Ready po/nifi-0 --timeout 2m | awk '{print 
     exit 1
   fi
 kubectl cp jars nifi-0:/opt/nifi/lib -n nifi
+if kubectl get deployment -n kube-system stork -o yaml | grep migration-admin-namespace | wc -l &> /dev/null; then
+  echo "migration-admin-namespace already set" >&2
+  exit 1
+fi
+kubectl get deployment -n kube-system stork -o yaml | sed 's/- --health-monitor-interval=120/- --health-monitor-interval=120\n        - --migration-admin-namespace=nifi/g' | kubectl apply -f -
