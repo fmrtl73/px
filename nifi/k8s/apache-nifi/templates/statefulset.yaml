@@ -36,16 +36,18 @@ spec:
             - containerPort: 8443
             - containerPort: 2882
           volumeMounts:
-            - name: flowfilerepository
+            - name: flowfile
               mountPath: /opt/nifi/flowfile_repository
-            - name: databaserepository
+            - name: database
               mountPath: /opt/nifi/database_repository
-            - name: contentrepository
+            - name: content
               mountPath: /opt/nifi/content_repository
-            - name: provenancerepository
+            - name: provenance
               mountPath: /opt/nifi/provenance_repository
-            - name: jars
-              mountPath: /opt/nifi/jars
+            - name: jars 
+              mountPath: /opt/nifi/lib/jars
+            - name: conf-archive
+              mountPath: /opt/nifi/conf/archive
           env:
             - name: ZK_NODES_LIST
               # Requires zookeeper running
@@ -58,7 +60,7 @@ spec:
               value: "Nifi Cluster"
   volumeClaimTemplates:
   - metadata:
-      name: flowfilerepository
+      name: flowfile
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
@@ -66,7 +68,7 @@ spec:
           storage: 5Gi
       storageClassName: {{.storageClass}}
   - metadata:
-      name: databaserepository
+      name: database
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
@@ -74,7 +76,7 @@ spec:
           storage: 5Gi
       storageClassName: {{.storageClass}}
   - metadata:
-      name: contentrepository
+      name: content
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
@@ -82,7 +84,7 @@ spec:
           storage: 5Gi
       storageClassName: {{.storageClass}}
   - metadata:
-      name: provenancerepository
+      name: provenance
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
@@ -91,6 +93,14 @@ spec:
       storageClassName: {{.storageClass}}
   - metadata:
       name: jars
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Gi
+      storageClassName: {{.storageClass}}
+  - metadata:
+      name: conf-archive
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:

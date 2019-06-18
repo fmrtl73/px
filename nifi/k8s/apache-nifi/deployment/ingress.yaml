@@ -11,4 +11,4 @@ spec:
       - path: /
         backend:
           serviceName: nifi-http
-          servicePort: 8081
+          servicePort: 8080
