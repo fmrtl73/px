@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template encoding-version="1.2">
+    <description>activemq demo for kubernetes</description>
+    <groupId>6bcfc3d4-016b-1000-534d-35c6cee1ed3d</groupId>
+    <name>activemq</name>
+    <snippet>
+        <controllerServices>
+            <id>7a8f05c2-5424-3b6d-0000-000000000000</id>
+            <parentGroupId>c1b6f6f5-f26e-3ba7-0000-000000000000</parentGroupId>
+            <bundle>
+                <artifact>nifi-jms-processors-nar</artifact>
+                <group>org.apache.nifi</group>
+                <version>1.9.2</version>
+            </bundle>
+            <comments></comments>
+            <descriptors>
+                <entry>
+                    <key>cf</key>
+                    <value>
+                        <name>cf</name>
+                    </value>
+                </entry>
+                <entry>
+                    <key>cflib</key>
+                    <value>
+                        <name>cflib</name>
+                    </value>
+                </entry>
+                <entry>
+                    <key>broker</key>
+                    <value>
+                        <name>broker</name>
+                    </value>
+                </entry>
+                <entry>
+                    <key>SSL Context Service</key>
+                    <value>
+                        <identifiesControllerService>org.apache.nifi.ssl.SSLContextService</identifiesControllerService>
+                        <name>SSL Context Service</name>
+                    </value>
+                </entry>
+            </descriptors>
+            <name>JMSConnectionFactoryProvider</name>
+            <persistsState>false</persistsState>
+            <properties>
+                <entry>
+                    <key>cf</key>
+                    <value>org.apache.activemq.ActiveMQConnectionFactory</value>
+                </entry>
+                <entry>
+                    <key>cflib</key>
+                    <value>/opt/nifi/lib/jars</value>
+                </entry>
+                <entry>
+                    <key>broker</key>
+                    <value>tcp://px-amq-master.amq.svc.cluster.local:61616</value>
+                </entry>
+                <entry>
+                    <key>SSL Context Service</key>
+                </entry>
+            </properties>
+            <state>DISABLED</state>
+            <type>org.apache.nifi.jms.cf.JMSConnectionFactoryProvider</type>
+        </controllerServices>
+        <processors>
+            <id>d4fc85a3-20b3-3107-0000-000000000000</id>
+            <parentGroupId>c1b6f6f5-f26e-3ba7-0000-000000000000</parentGroupId>
+            <position>
+                <x>0.0</x>
+                <y>0.0</y>
+            </position>
+            <bundle>
+                <artifact>nifi-jms-processors-nar</artifact>
+                <group>org.apache.nifi</group>
+                <version>1.9.2</version>
+            </bundle>
+            <config>
+                <bulletinLevel>WARN</bulletinLevel>
+                <comments></comments>
+                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                <descriptors>
+                    <entry>
+                        <key>Connection Factory Service</key>
+                        <value>
+                            <identifiesControllerService>org.apache.nifi.jms.cf.JMSConnectionFactoryProviderDefinition</identifiesControllerService>
+                            <name>Connection Factory Service</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Destination Name</key>
+                        <value>
+                            <name>Destination Name</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Destination Type</key>
+                        <value>
+                            <name>Destination Type</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>User Name</key>
+                        <value>
+                            <name>User Name</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Password</key>
+                        <value>
+                            <name>Password</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Connection Client ID</key>
+                        <value>
+                            <name>Connection Client ID</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Session Cache size</key>
+                        <value>
+                            <name>Session Cache size</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>character-set</key>
+                        <value>
+                            <name>character-set</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Acknowledgement Mode</key>
+                        <value>
+                            <name>Acknowledgement Mode</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Durable subscription</key>
+                        <value>
+                            <name>Durable subscription</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Shared subscription</key>
+                        <value>
+                            <name>Shared subscription</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Subscription Name</key>
+                        <value>
+                            <name>Subscription Name</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Timeout</key>
+                        <value>
+                            <name>Timeout</name>
+                        </value>
+                    </entry>
+                </descriptors>
+                <executionNode>ALL</executionNode>
+                <lossTolerant>false</lossTolerant>
+                <penaltyDuration>30 sec</penaltyDuration>
+                <properties>
+                    <entry>
+                        <key>Connection Factory Service</key>
+                        <value>7a8f05c2-5424-3b6d-0000-000000000000</value>
+                    </entry>
+                    <entry>
+                        <key>Destination Name</key>
+                        <value>test</value>
+                    </entry>
+                    <entry>
+                        <key>Destination Type</key>
+                        <value>QUEUE</value>
+                    </entry>
+                    <entry>
+                        <key>User Name</key>
+                        <value>artemis</value>
+                    </entry>
+                    <entry>
+                        <key>Password</key>
+                    </entry>
+                    <entry>
+                        <key>Connection Client ID</key>
+                    </entry>
+                    <entry>
+                        <key>Session Cache size</key>
+                        <value>1</value>
+                    </entry>
+                    <entry>
+                        <key>character-set</key>
+                        <value>UTF-8</value>
+                    </entry>
+                    <entry>
+                        <key>Acknowledgement Mode</key>
+                        <value>2</value>
+                    </entry>
+                    <entry>
+                        <key>Durable subscription</key>
+                        <value>false</value>
+                    </entry>
+                    <entry>
+                        <key>Shared subscription</key>
+                        <value>false</value>
+                    </entry>
+                    <entry>
+                        <key>Subscription Name</key>
+                    </entry>
+                    <entry>
+                        <key>Timeout</key>
+                        <value>1 sec</value>
+                    </entry>
+                </properties>
+                <runDurationMillis>0</runDurationMillis>
+                <schedulingPeriod>1 sec</schedulingPeriod>
+                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                <yieldDuration>1 sec</yieldDuration>
+            </config>
+            <executionNodeRestricted>false</executionNodeRestricted>
+            <name>ConsumeJMS</name>
+            <relationships>
+                <autoTerminate>false</autoTerminate>
+                <name>success</name>
+            </relationships>
+            <state>STOPPED</state>
+            <style/>
+            <type>org.apache.nifi.jms.processors.ConsumeJMS</type>
+        </processors>
+    </snippet>
+    <timestamp>06/18/2019 18:40:52 GMT</timestamp>
+</template>
