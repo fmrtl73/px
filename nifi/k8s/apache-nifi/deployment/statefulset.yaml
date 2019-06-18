@@ -56,7 +56,6 @@ spec:
               value: "yes"
             - name: BANNER_TEXT
               value: "Nifi Cluster"
-
   volumeClaimTemplates:
   - metadata:
       name: flowfilerepository
