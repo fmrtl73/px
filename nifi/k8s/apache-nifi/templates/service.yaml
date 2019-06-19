@@ -4,7 +4,7 @@ metadata:
   name: nifi-http
   namespace: nifi
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: nifi
   ports:

@@ -98,9 +98,5 @@ provenancerepository-nifi-2   Bound     pvc-c01aec6b-4710-11e9-b1b0-42010a800055
 
 ## Nifi UI
 Assuming you have ingress properly configured on the cluster and added nifi.px to your /etc/hosts entry:
-```
-port=`kubectl get svc nifi-http -n nifi -o yaml | grep nodePort| awk '{printf $2}'`
-nifiURL="http://nifi.px:$port/nifi/"
-echo $nifiURL
-```
 
+http://nifi.px/nifi
