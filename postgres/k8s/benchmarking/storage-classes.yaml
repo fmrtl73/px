@@ -8,9 +8,8 @@ parameters:
    repl: "3"
    io_profile: "db"
    priority_io: "high"
-   secure: "true"
    journal: "true"
-   compression: "true"
+   compressed: "true"
 allowVolumeExpansion: true
 ---
 kind: StorageClass
@@ -79,9 +78,8 @@ parameters:
    repl: "3"
    io_profile: "db"
    priority_io: "medium"
-   secure: "true"
    journal: "true"
-   compression: "true"
+   compressed: "true"
 allowVolumeExpansion: true
 ---
 kind: StorageClass

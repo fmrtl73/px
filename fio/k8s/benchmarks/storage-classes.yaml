@@ -8,9 +8,8 @@ parameters:
    repl: "3"
    io_profile: "sequential"
    priority_io: "high"
-   secure: "true"
    journal: "true"
-   compression: "true"
+   compressed: "true"
 allowVolumeExpansion: true
 ---
 kind: StorageClass
@@ -77,9 +76,8 @@ parameters:
    repl: "3"
    io_profile: "sequential"
    priority_io: "medium"
-   secure: "true"
    journal: "true"
-   compression: "true"
+   compressed: "true"
 allowVolumeExpansion: true
 ---
 kind: StorageClass
@@ -106,6 +104,6 @@ parameters:
    repl: "1"
    io_profile: "sequential"
    priority_io: "high"
-   compression: "true"
+   compressed: "true"
    journal: "true"
 allowVolumeExpansion: true
