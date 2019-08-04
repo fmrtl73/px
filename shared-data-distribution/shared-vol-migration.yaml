@@ -1,0 +1,23 @@
+apiVersion: stork.libopenstorage.org/v1alpha1
+kind: SchedulePolicy
+metadata:
+  name: shared-vol-policy
+  namespace: default
+policy:
+  interval:
+    intervalMinutes: 5
+---
+apiVersion: stork.libopenstorage.org/v1alpha1
+kind: MigrationSchedule
+metadata:
+  name: shared-vol-migration
+  namespace: default
+spec:
+  template:
+    spec:
+      clusterPair: remotecluster-2
+      includeResources: true
+      startApplications: false
+      namespaces:
+      - default
+  schedulePolicyName: shared-vol-policy
