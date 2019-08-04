@@ -24,6 +24,7 @@ bash deploy-readonly.sh
 ```
 
 ### What you should see
+
 Every 10 seconds the script will look for the config map object which the migration will create.
 
 When it finds it, it will create a snapshot of the PVC referenced by the webapp deployment and clone this snapshot. 
@@ -35,3 +36,18 @@ It will then delete the config map object and go into a loop until the migration
 When this happens it will again snapshot the pvc, create a clone, and this time it will do a rolling update of the webapp-ro deployment using the new pvc clone.
 
 It will then cleanup the old snapshot and clone objects as well as the config map and start looping again.
+
+### How to test with changing data
+
+In your source cluster you can add data to the PVC using the following command:
+
+```while true; do echo `date` > index.html; POD=`kubectl get pods -l app=webapp | grep Running | head -n 1 | awk '{print $1}'`; kubectl cp index.html $POD:/usr/share/nginx/html/index.html; sleep 5; done;```
+
+You will see the date getting updated in the webapp by curling the webapp-svc endpoint:
+
+```while true; do IP=`kubectl get svc | grep webapp-svc | awk '{print $3}'` && curl $IP; sleep 5; done```
+
+Now, on your target cluster you can see the date updating every 5 minutes (that's the interval in set in the migration schedule.
+
+```while true; do IP=`kubectl get svc | grep webapp-svc-ro | awk '{print $3}'` && curl $IP; sleep 5; done```
+
