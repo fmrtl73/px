@@ -1,0 +1,72 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"extensions/v1beta1","kind":"Deployment","metadata":{"annotations":{},"name":"webapp","namespace":"default"},"spec":{"replicas":3,"template":{"metadata":{"labels":{"app":"webapp","group":"webapp"}},"spec":{"containers":[{"image":"nginx","name":"webapp","ports":[{"containerPort":80}],"volumeMounts":[{"mountPath":"/usr/share/nginx/html","name":"shared-data"}]}],"volumes":[{"name":"shared-data","persistentVolumeClaim":{"claimName":"px-shared-pvc"}}]}}}}
+  creationTimestamp: "2019-08-04T11:32:23Z"
+  generation: 1
+  labels:
+    app: webapp
+    group: webapp
+  name: webapp
+  namespace: default
+  resourceVersion: "104162"
+  selfLink: /apis/extensions/v1beta1/namespaces/default/deployments/webapp
+  uid: b241c648-b447-48e1-9360-1236e6c74e59
+spec:
+  progressDeadlineSeconds: 2147483647
+  replicas: 3
+  revisionHistoryLimit: 2147483647
+  selector:
+    matchLabels:
+      app: webapp
+      group: webapp
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webapp
+        group: webapp
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: webapp
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: shared-data
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: shared-data
+        persistentVolumeClaim:
+          claimName: px-shared-pvc
+status:
+  availableReplicas: 3
+  conditions:
+  - lastTransitionTime: "2019-08-04T11:32:26Z"
+    lastUpdateTime: "2019-08-04T11:32:26Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 1
+  readyReplicas: 3
+  replicas: 3
+  updatedReplicas: 3
