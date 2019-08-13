@@ -10,7 +10,7 @@ kubectl create -f webapp.yaml
 ### Create a config map in the source cluster
 
 ```
-kubectl create cm readonly --from-literal deploy=webapp --from-literal svc=bapp-svc --from-literal replicas=3
+kubectl create cm readonly --from-literal deploy=webapp --from-literal svc=webapp-svc --from-literal replicas=3
 ```
 
 ### Create the Migration Schedule 
