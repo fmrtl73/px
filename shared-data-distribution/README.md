@@ -54,6 +54,6 @@ while true; do IP=`kubectl get svc | grep webapp-svc | awk '{print $3}'` && curl
 Now, on your target cluster you can see the date updating every 5 minutes (that's the interval in set in the migration schedule.
 
 ```
-while true; do IP=`kubectl get svc | grep webapp-svc-ro | awk '{print $3}'` && curl $IP; sleep 5; done
+while true; do IP=`kubectl get svc | grep webapp-ro-svc | awk '{print $3}'` && curl $IP; sleep 5; done
 ```
 
