@@ -1,3 +1,27 @@
+* This is a copy of the 1.12 version of the Couchbase Autonomous Operator made to work with Portworx *
+
+### Step1: Create StorageClass
+
+```
+kubectl create -f sc.yaml
+```
+
+### Step2: Deploy the Operator
+
+```
+kubectl create -f operator-role.yaml
+kubectl create -f operator-role-binding.yaml
+kubectl create -f operator-service-account.yaml
+kubectl create -f crd.yaml
+kubectl apply -f operator-deployment.yaml
+```
+
+### Step 3: Deploy your cluster
+```
+kubectl create -f secret.yaml
+kc create -f couchbase-cluster.yaml
+```
+
 COUCHBASE AUTONOMOUS OPERATOR
 
 The Couchbase Autonomous Operator provides a native integration of Couchbase
