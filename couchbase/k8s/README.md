@@ -1,4 +1,6 @@
-* This is a copy of the 1.12 version of the Couchbase Autonomous Operator made to work with Portworx *
+# This is a copy of the 1.12 version of the Couchbase Autonomous Operator made to work with Portworx
+
+In order to deploy it you should have a working kubernetes cluster with Portworx installed and sufficient resources available to deploy (please see couchbase-cluster.yaml for resources requested). 
 
 ### Step1: Create StorageClass
 
