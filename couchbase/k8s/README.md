@@ -24,7 +24,7 @@ kubectl create -f secret.yaml
 kc create -f couchbase-cluster.yaml
 ```
 
-COUCHBASE AUTONOMOUS OPERATOR
+# COUCHBASE AUTONOMOUS OPERATOR
 
 The Couchbase Autonomous Operator provides a native integration of Couchbase
 Server with Kubernetes platforms. It enables you to automate the management of
