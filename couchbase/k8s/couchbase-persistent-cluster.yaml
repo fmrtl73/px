@@ -1,0 +1,75 @@
+apiVersion: couchbase.com/v1
+kind: CouchbaseCluster
+metadata:
+  name: px-couchbase
+spec:
+  baseImage: couchbase/server
+  version: enterprise-5.5.1
+  authSecret: cb-example-auth
+  exposeAdminConsole: false
+  adminConsoleServices:
+    - data
+  exposedFeatures:
+    - xdcr
+  cluster:
+    dataServiceMemoryQuota: 256
+    indexServiceMemoryQuota: 256
+    searchServiceMemoryQuota: 256
+    eventingServiceMemoryQuota: 256
+    analyticsServiceMemoryQuota: 1024
+    indexStorageSetting: memory_optimized
+    autoFailoverTimeout: 5 
+    autoFailoverMaxCount: 3
+    autoFailoverOnDataDiskIssues: true
+    autoFailoverOnDataDiskIssuesTimePeriod: 120
+    autoFailoverServerGroup: false
+  buckets:
+    - name: default
+      type: couchbase
+      memoryQuota: 128
+      replicas: 1
+      ioPriority: high
+      evictionPolicy: fullEviction
+      conflictResolution: seqno
+      enableFlush: true
+      enableIndexReplica: false
+  servers:
+    - size: 3 
+      name: data 
+      services:
+        - data
+      pod:
+        volumeMounts:
+          default: couchbase   # /opt/couchbase/var/lib/couchbase
+          data:  couchbase     # /mnt/data
+          index: couchbase     # /mnt/index
+    - size: 1 
+      name: index 
+      services:
+        - index
+      pod:
+        volumeMounts:
+          default: couchbase   # /opt/couchbase/var/lib/couchbase
+          index: couchbase     # /mnt/index
+    - size: 1
+      name: search 
+      services:
+        - query
+        - search
+      pod:
+        volumeMounts:
+          default: couchbase
+  securityContext:
+    fsGroup: 1000
+  volumeClaimTemplates:
+    - metadata:
+        name: couchbase
+        annotations:
+          volume.beta.kubernetes.io/storage-class: portworx-sc-repl2
+      spec:
+        storageClassName: "portworx-sc-repl2"
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 4Gi

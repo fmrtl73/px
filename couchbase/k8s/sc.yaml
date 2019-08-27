@@ -8,3 +8,4 @@ parameters:
   priority_io: "high"
   io_profile: "db"
   group: "couchbase_vg"
+  sticky: "true"
