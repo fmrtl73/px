@@ -8,7 +8,6 @@ parameters:
    repl: "3"
    io_profile: "sequential"
    priority_io: "high"
-   journal: "true"
    compressed: "true"
 allowVolumeExpansion: true
 ---
@@ -22,7 +21,6 @@ parameters:
    repl: "1"
    io_profile: "sequential"
    priority_io: "high"
-   journal: "true"
 allowVolumeExpansion: true
 ---
 kind: StorageClass
@@ -35,7 +33,6 @@ parameters:
    repl: "3"
    io_profile: "sequential"
    priority_io: "high"
-   journal: "true"
 allowVolumeExpansion: true
 ---
 kind: StorageClass
@@ -49,7 +46,6 @@ parameters:
    io_profile: "sequential"
    priority_io: "high"
    secure: "true"
-   journal: "true"
 allowVolumeExpansion: true
 ---
 kind: StorageClass
@@ -63,7 +59,6 @@ parameters:
    io_profile: "sequential"
    priority_io: "high"
    secure: "true"
-   journal: "true"
 allowVolumeExpansion: true
 ---
 kind: StorageClass
@@ -76,7 +71,6 @@ parameters:
    repl: "3"
    io_profile: "sequential"
    priority_io: "medium"
-   journal: "true"
    compressed: "true"
 allowVolumeExpansion: true
 ---
@@ -91,7 +85,6 @@ parameters:
    io_profile: "sequential"
    priority_io: "medium"
    secure: "true"
-   journal: "true"
 allowVolumeExpansion: true
 ---
 kind: StorageClass
@@ -105,5 +98,4 @@ parameters:
    io_profile: "sequential"
    priority_io: "high"
    compressed: "true"
-   journal: "true"
 allowVolumeExpansion: true
