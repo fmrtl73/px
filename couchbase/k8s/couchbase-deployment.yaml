@@ -65,9 +65,9 @@ spec:
     - metadata:
         name: couchbase
         annotations:
-          volume.beta.kubernetes.io/storage-class: portworx-sc-repl2
+          volume.beta.kubernetes.io/storage-class: px-couchbase-sc
       spec:
-        storageClassName: "portworx-sc-repl2"
+        storageClassName: "px-couchbase-sc"
         accessModes:
           - ReadWriteOnce
         resources:

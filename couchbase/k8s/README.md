@@ -21,7 +21,7 @@ kubectl apply -f operator-deployment.yaml
 ### Step 3: Deploy your cluster
 ```
 kubectl create -f secret.yaml
-kc create -f couchbase-cluster.yaml
+kc create -f couchbase-persistent-cluster.yaml
 ```
 
 # COUCHBASE AUTONOMOUS OPERATOR
