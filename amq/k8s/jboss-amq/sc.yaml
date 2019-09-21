@@ -4,7 +4,6 @@ metadata:
   name: px-amq-sc
 provisioner: kubernetes.io/portworx-volume
 parameters:
-  disable_io_profile_protection: "1"
   io_profile: db
   priority_io: high
-  repl: "1"
+  repl: "3"
