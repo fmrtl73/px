@@ -1,0 +1,191 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    application: test-broker
+  name: amq-util-claim
+  annotations:
+    volume.beta.kubernetes.io/storage-class: px-amq-sc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    application: test-broker
+  name: test-broker-px-amq-claim
+  annotations:
+    volume.beta.kubernetes.io/storage-class: px-amq-sc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    description: The broker's AMQP port.
+  labels:
+    application: px
+  name: px-amq-amqp
+spec:
+  ports:
+  - port: 5672
+    targetPort: 5672
+  selector:
+    deploymentConfig: px-amq
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    description: The broker's MQTT port.
+  labels:
+    application: px
+  name: px-amq-mqtt
+spec:
+  ports:
+  - port: 1883
+    targetPort: 1883
+  selector:
+    deploymentConfig: px-amq
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    description: The broker's STOMP port.
+  labels:
+    application: px
+  name: px-amq-stomp
+spec:
+  ports:
+  - port: 61613
+    targetPort: 61613
+  selector:
+    deploymentConfig: px-amq
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    description: The broker's OpenWire port.
+    service.alpha.openshift.io/dependencies: '[{"name": "px-amq-amqp",
+      "kind": "Service"},{"name": "px-amq-mqtt", "kind": "Service"},{"name":
+      "px-amq-stomp", "kind": "Service"}]'
+  labels:
+    application: px
+  name: px-amq-tcp
+spec:
+  ports:
+  - port: 61616
+    targetPort: 61616
+  selector:
+    deploymentConfig: px-amq
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    description: Supports node discovery for mesh formation.
+  labels:
+    application: px
+  name: px-amq-mesh
+spec:
+  clusterIP: None
+  ports:
+  - name: mesh
+    port: 61616
+  selector:
+    deploymentConfig: px-amq
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    application: px
+  name: px-amq
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        application: px
+      name: px-amq
+    spec:
+      schedulerName: stork
+      containers:
+      - env:
+        - name: AMQ_USER
+          value: admin
+        - name: AMQ_PASSWORD
+          value: admin
+        - name: AMQ_TRANSPORTS
+          value: openwire
+        - name: AMQ_QUEUES
+          value: FUSE.TEST.QUEUE
+        - name: AMQ_MESH_SERVICE_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: AMQ_STORAGE_USAGE_LIMIT
+          value: 5 Gb
+        - name: AMQ_QUEUE_MEMORY_LIMIT
+          value: 100mb
+        image: registry.access.redhat.com/jboss-amq-6/amq63-openshift
+        imagePullPolicy: Always
+        name: px-amq
+        ports:
+        - containerPort: 8778
+          name: jolokia
+          protocol: TCP
+        - containerPort: 5672
+          name: amqp
+          protocol: TCP
+        - containerPort: 1883
+          name: mqtt
+          protocol: TCP
+        - containerPort: 61613
+          name: stomp
+          protocol: TCP
+        - containerPort: 61616
+          name: tcp
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - /opt/amq/bin/readinessProbe.sh
+        volumeMounts:
+        - mountPath: /opt/amq/data
+          name: test-broker-px-amq
+        - mountPath: /opt/jboss/jboss-fuse/etc/users.properties
+          name: properties
+          subPath: users.properties
+        - mountPath: /opt/jboss/jboss-fuse/etc/activemq.xml
+          name: xml
+          subPath: activemq.xml
+        - mountPath: /tmp/utility
+          name: utility
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - name: test-broker-px-amq
+        persistentVolumeClaim:
+          claimName: test-broker-px-amq-claim
+      - name: utility
+        persistentVolumeClaim:
+          claimName: amq-util-claim
+      - name: properties
+        configMap:
+          name: active-mq-xml
+      - name: xml
+        configMap:
+          name: active-mq-xml
