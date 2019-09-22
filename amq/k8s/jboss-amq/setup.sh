@@ -6,4 +6,4 @@ if (( $? )); then
   echo "Failure" >&2
   exit 1
 fi
-kubectl cp amq-util $pod:/tmp/utility
+kubectl cp util $pod:/tmp/utility

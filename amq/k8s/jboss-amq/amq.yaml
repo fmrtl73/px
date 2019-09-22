@@ -167,10 +167,7 @@ spec:
         volumeMounts:
         - mountPath: /opt/amq/data
           name: test-broker-px-amq
-        - mountPath: /opt/jboss/jboss-fuse/etc/users.properties
-          name: properties
-          subPath: users.properties
-        - mountPath: /opt/jboss/jboss-fuse/etc/activemq.xml
+        - mountPath: /opt/amq/conf/activemq.xml
           name: xml
           subPath: activemq.xml
         - mountPath: /tmp/utility
@@ -183,9 +180,6 @@ spec:
       - name: utility
         persistentVolumeClaim:
           claimName: amq-util-claim
-      - name: properties
-        configMap:
-          name: active-mq-xml
       - name: xml
         configMap:
           name: active-mq-xml
