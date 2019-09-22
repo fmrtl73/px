@@ -121,7 +121,10 @@ spec:
       name: px-amq
     spec:
       schedulerName: stork
-      containers:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 2000
+        runAsNonRoot: truecontainers:
       - env:
         - name: AMQ_USER
           value: admin
