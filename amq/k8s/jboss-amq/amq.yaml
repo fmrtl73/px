@@ -124,7 +124,8 @@ spec:
       securityContext:
         runAsUser: 1000
         fsGroup: 2000
-        runAsNonRoot: truecontainers:
+        runAsNonRoot: true
+      containers:
       - env:
         - name: AMQ_USER
           value: admin

@@ -66,7 +66,7 @@ data:
     to any broker\n                (i.e. messageTTL=\"-1\") but create demand subscription
     only to the next connected\n                broker (i.e. consumerTTL=\"1\"). See
     AMQ-4607.\n            -->\n            <networkConnector userName=\"admin\" password=\"admin\"
-    uri=\"dns://test-broker-px-amq-mesh:61616/?transportType=tcp&amp;queryInterval=30\"
+    uri=\"dns://px-amq-mesh:61616/?transportType=tcp&amp;queryInterval=30\"
     messageTTL=\"-1\" consumerTTL=\"1\" />\n        </networkConnectors>\n\n        <!--\n
     \           Configure message persistence for the broker. The default persistence\n
     \           mechanism is the KahaDB store (identified by the kahaDB tag).\n            For
