@@ -26,7 +26,7 @@ spec:
   - ReadWriteMany
   resources:
     requests:
-      storage: 5Gi
+      storage: 40Gi
 ---
 apiVersion: v1
 kind: Service
@@ -140,9 +140,9 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: AMQ_STORAGE_USAGE_LIMIT
-          value: 5 Gb
+          value: 50 Gb
         - name: AMQ_QUEUE_MEMORY_LIMIT
-          value: 100mb
+          value: 500mb
         image: registry.access.redhat.com/jboss-amq-6/amq63-openshift
         imagePullPolicy: Always
         name: px-amq

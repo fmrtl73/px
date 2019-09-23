@@ -79,7 +79,7 @@ data:
     information, see:\n\n            http://activemq.apache.org/producer-flow-control.html\n
     \       -->\n        <systemUsage>\n            <systemUsage>\n                <memoryUsage>\n
     \                   <memoryUsage percentOfJvmHeap=\"70\" />\n                </memoryUsage>\n
-    \               <storeUsage>\n                    <storeUsage limit=\"5 gb\" />\n
+    \               <storeUsage>\n                    <storeUsage limit=\"50 gb\" />\n
     \               </storeUsage>\n                <tempUsage>\n                    <tempUsage
     limit=\"50 gb\" />\n                </tempUsage>\n            </systemUsage>\n
     \       </systemUsage>\n\n        <!--\n            The transport connectors expose
