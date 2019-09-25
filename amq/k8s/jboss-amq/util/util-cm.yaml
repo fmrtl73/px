@@ -1,0 +1,42 @@
+apiVersion: v1
+data:
+    amq-util.properties: |
+      actionType=PUTQ
+      numberOfThreads=10
+      transportType=tcp://
+      #Number of messages to consume or produce
+      numberOfMessages=1000
+
+      ###### Consumer Properties ######
+      consumerConnectionUrl=px-amq-tcp:61616
+      consumerJmsUsername=admin
+      consumerJmsPassword=admin
+      consumerQueueName=FUSE.TEST.QUEUE
+      prefetchSize=10
+      #Selector to use when consuming from Queue.  Required for moving PubSub messages. LEAVE BLANK IF NOT NEEDED!!
+      queueSelector=
+      outFile=test.txt
+
+      ###### Producer Properties ######
+      producerConnectionURL=px-amq-tcp:61616
+      producerJmsUsername=admin
+      producerJmsPassword=admin
+      producerQueueName=FUSE.TEST.QUEUE
+      producerTopicName=
+      #input file if producing messages with a custom payload.
+      inFile=
+      messageSize=8
+      messageSizeUnit=kb
+
+      #ssl key and trust store file name and password
+      consumerKeyStoreFile=
+      consumerKeyStorePass=
+      consumerTrustStoreFile=
+      consumerTrustStorePass=
+      producerKeyStoreFile=
+      producerKeyStorePass=
+      producerTrustStoreFile=
+      producerTrustStorePass=
+kind: ConfigMap
+metadata:
+  name: amq-util-properties

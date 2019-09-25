@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    application: px
+  name: amq-util
+  namespace: default
+spec:
+  containers:
+    - image: fmrtl73/amq-util:latest
+      imagePullPolicy: Always
+      name: amq-util
+      args: ["/tmp/amq-util.properties"]
+      volumeMounts:
+      - mountPath: /tmp/amq-util.properties
+        name: properties
+        subPath: amq-util.properties
+  terminationGracePeriodSeconds: 60
+  volumes:
+    - name: properties
+      configMap:
+        name: amq-util-properties
