@@ -1,8 +1,5 @@
 delete(){
-    kubectl delete -f $1/fio-write.yaml
-    kubectl delete -f $1/fio-read.yaml
-    kubectl delete -f $1/fio-rand-read.yaml
-    kubectl delete -f $1/fio-rand-write.yaml
+    kubectl delete -f $1
     rm -rf $sc
 }
 display_usage(){

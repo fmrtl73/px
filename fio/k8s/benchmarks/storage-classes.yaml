@@ -1,7 +1,7 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
 metadata:
-    name: fio-high-compressed
+    name: fio-compressed
     namespace: portworx
 provisioner: kubernetes.io/portworx-volume
 parameters:
@@ -14,7 +14,7 @@ allowVolumeExpansion: true
 kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
 metadata:
-    name: fio-high-no-encryption-repl1
+    name: fio-repl1
     namespace: portworx
 provisioner: kubernetes.io/portworx-volume
 parameters:
@@ -26,76 +26,11 @@ allowVolumeExpansion: true
 kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
 metadata:
-    name: fio-high-no-encryption
+    name: fio-repl3
     namespace: portworx
 provisioner: kubernetes.io/portworx-volume
 parameters:
    repl: "3"
    io_profile: "sequential"
    priority_io: "high"
-allowVolumeExpansion: true
----
-kind: StorageClass
-apiVersion: storage.k8s.io/v1beta1
-metadata:
-    name: fio-high-repl1
-    namespace: portworx
-provisioner: kubernetes.io/portworx-volume
-parameters:
-   repl: "1"
-   io_profile: "sequential"
-   priority_io: "high"
-   secure: "true"
-allowVolumeExpansion: true
----
-kind: StorageClass
-apiVersion: storage.k8s.io/v1beta1
-metadata:
-    name: fio-high
-    namespace: portworx
-provisioner: kubernetes.io/portworx-volume
-parameters:
-   repl: "3"
-   io_profile: "sequential"
-   priority_io: "high"
-   secure: "true"
-allowVolumeExpansion: true
----
-kind: StorageClass
-apiVersion: storage.k8s.io/v1beta1
-metadata:
-    name: fio-medium-compressed
-    namespace: portworx
-provisioner: kubernetes.io/portworx-volume
-parameters:
-   repl: "3"
-   io_profile: "sequential"
-   priority_io: "medium"
-   compressed: "true"
-allowVolumeExpansion: true
----
-kind: StorageClass
-apiVersion: storage.k8s.io/v1beta1
-metadata:
-    name: fio-medium
-    namespace: portworx
-provisioner: kubernetes.io/portworx-volume
-parameters:
-   repl: "3"
-   io_profile: "sequential"
-   priority_io: "medium"
-   secure: "true"
-allowVolumeExpansion: true
----
-kind: StorageClass
-apiVersion: storage.k8s.io/v1beta1
-metadata:
-    name: fio-high-repl1-compressed
-    namespace: portworx
-provisioner: kubernetes.io/portworx-volume
-parameters:
-   repl: "1"
-   io_profile: "sequential"
-   priority_io: "high"
-   compressed: "true"
 allowVolumeExpansion: true
