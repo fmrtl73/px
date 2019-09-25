@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 run_job(){
   sc=$1
+  kubectl apply -f configmap.yaml
   kubectl apply -f $sc/fio-job.yaml | awk '{print " # " $0}'
   echo " # Waiting for pod to start, will timeout after 2 minutes"
-  pod=`kubectl get pod -n portworx | grep fio-$sc | awk '{print $1}'`
+  pod=`kubectl get pod -n portworx | grep fio-job-$sc | awk '{print $1}'`
   kubectl -n portworx wait --for=condition=Ready po/$pod --timeout 2m | awk '{print " # " $0}'
   if (( $? )); then
     echo "Failure" >&2

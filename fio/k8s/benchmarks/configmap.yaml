@@ -4,39 +4,39 @@ data:
     ##making this fio file as place holder for new config
     [global]
     blocksize=64k
-    filename=/tmp/fio.dat
+    filename=/mnt/fio.dat
     ioengine=libaio
     size=10GiB
     name=test
     direct=1
     iodepth=128
-    [64k-write-ephemeral]
+    [64k-write]
     stonewall
     readwrite=write
     buffer_compress_percentage=50
     end_fsync=1
-    [64k-read-ephemeral]
+    [64k-read]
     stonewall
     readwrite=read
-    [64k-rand-write-ephemeral]
+    [64k-rand-write]
     stonewall
     readwrite=randwrite
     buffer_compress_percentage=50
     end_fsync=1
-    [64k-rand-read-ephemeral]
+    [64k-rand-read]
     stonewall
     readwrite=randread
-    [64k-mix-rand-50-50-ephemeral]
+    [64k-mix-rand-50-50]
     stonewall
     readwrite=randrw
     buffer_compress_percentage=50
     end_fsync=1
-    [64k-mix-rand-80-20-ephemeral]
+    [64k-mix-rand-80-20]
     stonewall
     readwrite=randrw
     buffer_compress_percentage=50
     end_fsync=1
-    [64k-mix-rand-20-80-ephemeral]
+    [64k-mix-rand-20-80]
     stonewall
     readwrite=randrw
     buffer_compress_percentage=50
