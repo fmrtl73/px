@@ -1,0 +1,1383 @@
+apiVersion: v1
+data:
+  fiojobs.fio: |-
+    ##making this fio file as place holder for new config
+
+    [global]
+    ioengine=libaio
+    size=1GiB
+    name=test
+    direct=1
+    iodepth=128
+
+    ##----Begin 4k Ephemeral tests-------
+
+    [4k-write-ephemeral]
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-read-ephemeral]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=read
+
+    [4k-rand-write-ephemeral]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-rand-read-ephemeral]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randread
+
+    [4k-mix-rand-50-50-ephemeral]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-mix-rand-80-20-ephemeral]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-mix-rand-20-80-ephemeral]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 4k portworx tests-------
+
+    [4k-write-portworx]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-read-portworx]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=read
+
+    [4k-rand-write-portworx]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-rand-read-portworx]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randread
+
+    [4k-mix-rand-50-50-portworx]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-mix-rand-80-20-portworx]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-mix-rand-20-80-portworx]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 16k Ephemeral tests-------
+
+    [16k-write-ephemeral]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-read-ephemeral]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=read
+
+    [16k-rand-write-ephemeral]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-rand-read-ephemeral]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randread
+
+    [16k-mix-rand-50-50-ephemeral]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-mix-rand-80-20-ephemeral]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-mix-rand-20-80-ephemeral]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 16k portworx tests-------
+
+    [16k-write-portworx]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-read-portworx]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=read
+
+    [16k-rand-write-portworx]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-rand-read-portworx]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randread
+
+    [16k-mix-rand-50-50-portworx]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-mix-rand-80-20-portworx]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-mix-rand-20-80-portworx]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 64k Ephemeral tests-------
+
+    [64k-write-ephemeral]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-read-ephemeral]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=read
+
+    [64k-rand-write-ephemeral]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-rand-read-ephemeral]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randread
+
+    [64k-mix-rand-50-50-ephemeral]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-mix-rand-80-20-ephemeral]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-mix-rand-20-80-ephemeral]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 64k portworx tests-------
+
+    [64k-write-portworx]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-read-portworx]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=read
+
+    [64k-rand-write-portworx]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-rand-read-portworx]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randread
+
+    [64k-mix-rand-50-50-portworx]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-mix-rand-80-20-portworx]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-mix-rand-20-80-portworx]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 256k Ephemeral tests-------
+
+    [256k-write-ephemeral]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-read-ephemeral]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=read
+
+    [256k-rand-write-ephemeral]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-rand-read-ephemeral]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randread
+
+    [256k-mix-rand-50-50-ephemeral]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-mix-rand-80-20-ephemeral]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-mix-rand-20-80-ephemeral]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 256k portworx tests-------
+
+    [256k-write-portworx]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-read-portworx]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=read
+
+    [256k-rand-write-portworx]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-rand-read-portworx]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randread
+
+    [256k-mix-rand-50-50-portworx]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-mix-rand-80-20-portworx]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-mix-rand-20-80-portworx]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 4k Ephemeral tests Run 2-------
+
+    [4k-write-ephemeral-run-2]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-read-ephemeral-run-2]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=read
+
+    [4k-rand-write-ephemeral-run-2]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-rand-read-ephemeral-run-2]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randread
+
+    [4k-mix-rand-50-50-ephemeral-run-2]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-mix-rand-80-20-ephemeral-run-2]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-mix-rand-20-80-ephemeral-run-2]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 4k portworx tests run 2-------
+
+    [4k-write-portworx-run-2]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-read-portworx-run-2]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=read
+
+    [4k-rand-write-portworx-run-2]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-rand-read-portworx-run-2]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randread
+
+    [4k-mix-rand-50-50-portworx-run-2]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-mix-rand-80-20-portworx-run-2]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-mix-rand-20-80-portworx-run-2]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 16k Ephemeral tests run 2-------
+
+    [16k-write-ephemeral-run-2]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-read-ephemeral-run-2]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=read
+
+    [16k-rand-write-ephemeral-run-2]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-rand-read-ephemeral-run-2]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randread
+
+    [16k-mix-rand-50-50-ephemeral-run-2]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-mix-rand-80-20-ephemeral-run-2]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-mix-rand-20-80-ephemeral-run-2]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 16k portworx tests run 2-------
+
+    [16k-write-portworx-run-2]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-read-portworx-run-2]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=read
+
+    [16k-rand-write-portworx-run-2]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-rand-read-portworx-run-2]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randread
+
+    [16k-mix-rand-50-50-portworx-run-2]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-mix-rand-80-20-portworx-run-2]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-mix-rand-20-80-portworx-run-2]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 64k Ephemeral tests run 2-------
+
+    [64k-write-ephemeral-run-2]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-read-ephemeral-run-2]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=read
+
+    [64k-rand-write-ephemeral-run-2]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-rand-read-ephemeral-run-2]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randread
+
+    [64k-mix-rand-50-50-ephemeral-run-2]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-mix-rand-80-20-ephemeral-run-2]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-mix-rand-20-80-ephemeral-run-2]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 64k portworx tests run 2-------
+
+    [64k-write-portworx-run-2]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-read-portworx-run-2]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=read
+
+    [64k-rand-write-portworx-run-2]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-rand-read-portworx-run-2]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randread
+
+    [64k-mix-rand-50-50-portworx-run-2]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-mix-rand-80-20-portworx-run-2]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-mix-rand-20-80-portworx-run-2]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 256k Ephemeral tests run 2-------
+
+    [256k-write-ephemeral-run-2]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-read-ephemeral-run-2]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=read
+
+    [256k-rand-write-ephemeral-run-2]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-rand-read-ephemeral-run-2]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randread
+
+    [256k-mix-rand-50-50-ephemeral-run-2]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-mix-rand-80-20-ephemeral-run-2]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-mix-rand-20-80-ephemeral-run-2]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 256k portworx tests run 2-------
+
+    [256k-write-portworx-run-2]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-read-portworx-run-2]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=read
+
+    [256k-rand-write-portworx-run-2]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-rand-read-portworx-run-2]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randread
+
+    [256k-mix-rand-50-50-portworx-run-2]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-mix-rand-80-20-portworx-run-2]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-mix-rand-20-80-portworx-run-2]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 4k Ephemeral tests Run 3-------
+
+    [4k-write-ephemeral-run-3]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-read-ephemeral-run-3]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=read
+
+    [4k-rand-write-ephemeral-run-3]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-rand-read-ephemeral-run-3]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randread
+
+    [4k-mix-rand-50-50-ephemeral-run-3]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-mix-rand-80-20-ephemeral-run-3]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-mix-rand-20-80-ephemeral-run-3]
+    stonewall
+    blocksize=4k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 4k portworx tests run 3-------
+
+    [4k-write-portworx-run-3]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-read-portworx-run-3]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=read
+
+    [4k-rand-write-portworx-run-3]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-rand-read-portworx-run-3]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randread
+
+    [4k-mix-rand-50-50-portworx-run-3]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-mix-rand-80-20-portworx-run-3]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [4k-mix-rand-20-80-portworx-run-3]
+    stonewall
+    blocksize=4k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 16k Ephemeral tests run 3-------
+
+    [16k-write-ephemeral-run-3]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-read-ephemeral-run-3]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=read
+
+    [16k-rand-write-ephemeral-run-3]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-rand-read-ephemeral-run-3]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randread
+
+    [16k-mix-rand-50-50-ephemeral-run-3]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-mix-rand-80-20-ephemeral-run-3]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-mix-rand-20-80-ephemeral-run-3]
+    stonewall
+    blocksize=16k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 16k portworx tests run 3-------
+
+    [16k-write-portworx-run-3]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-read-portworx-run-3]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=read
+
+    [16k-rand-write-portworx-run-3]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-rand-read-portworx-run-3]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randread
+
+    [16k-mix-rand-50-50-portworx-run-3]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-mix-rand-80-20-portworx-run-3]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [16k-mix-rand-20-80-portworx-run-3]
+    stonewall
+    blocksize=16k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 64k Ephemeral tests run 3-------
+
+    [64k-write-ephemeral-run-3]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-read-ephemeral-run-3]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=read
+
+    [64k-rand-write-ephemeral-run-3]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-rand-read-ephemeral-run-3]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randread
+
+    [64k-mix-rand-50-50-ephemeral-run-3]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-mix-rand-80-20-ephemeral-run-3]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-mix-rand-20-80-ephemeral-run-3]
+    stonewall
+    blocksize=64k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 64k portworx tests run 3-------
+
+    [64k-write-portworx-run-3]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-read-portworx-run-3]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=read
+
+    [64k-rand-write-portworx-run-3]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-rand-read-portworx-run-3]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randread
+
+    [64k-mix-rand-50-50-portworx-run-3]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-mix-rand-80-20-portworx-run-3]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [64k-mix-rand-20-80-portworx-run-3]
+    stonewall
+    blocksize=64k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 256k Ephemeral tests run 3-------
+
+    [256k-write-ephemeral-run-3]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-read-ephemeral-run-3]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=read
+
+    [256k-rand-write-ephemeral-run-3]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-rand-read-ephemeral-run-3]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randread
+
+    [256k-mix-rand-50-50-ephemeral-run-3]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-mix-rand-80-20-ephemeral-run-3]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-mix-rand-20-80-ephemeral-run-3]
+    stonewall
+    blocksize=256k
+    filename=/data/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    ##----Begin 256k portworx tests run 3-------
+
+    [256k-write-portworx-run-3]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-read-portworx-run-3]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=read
+
+    [256k-rand-write-portworx-run-3]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randwrite
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-rand-read-portworx-run-3]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randread
+
+    [256k-mix-rand-50-50-portworx-run-3]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=50
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-mix-rand-80-20-portworx-run-3]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=80
+    buffer_compress_percentage=50
+    end_fsync=1
+
+    [256k-mix-rand-20-80-portworx-run-3]
+    stonewall
+    blocksize=256k
+    filename=/mnt/fio.dat
+    readwrite=randrw
+    rwmixread=20
+    buffer_compress_percentage=50
+    end_fsync=1
+
+kind: ConfigMap
+metadata:
+  name: fiocfg
+  namespace: portworx
