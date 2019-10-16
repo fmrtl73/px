@@ -29,6 +29,8 @@ spec:
           name: test-volume
         - mountPath: /fiocfg
           name: fiocfg
+        - mountPath: /data
+          name: data-volume
         args:
           - "fio"
           - "/fiocfg/fiojobs.fio"
@@ -41,3 +43,9 @@ spec:
       - name: fiocfg
         configMap:
           name: fiocfg
+      - name: data-volume
+        hostPath:
+          # directory location on host
+          path: /data
+          # this field is optional
+          type: Directory
