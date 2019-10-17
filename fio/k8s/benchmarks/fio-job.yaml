@@ -33,6 +33,7 @@ spec:
           name: data-volume
         args:
           - "fio"
+          - "--output-format=json"
           - "/fiocfg/fiojobs.fio"
         imagePullPolicy: IfNotPresent
       restartPolicy: Never
