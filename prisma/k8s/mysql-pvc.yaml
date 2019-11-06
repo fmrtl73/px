@@ -1,0 +1,13 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: database-disk
+  namespace: prisma
+  annotations:
+    volume.beta.kubernetes.io/storage-class: px-postgres-sc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi

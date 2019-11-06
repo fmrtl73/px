@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: prisma
+  namespace: prisma
+spec:
+  rules:
+  - host: prisma.px
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: prisma
+          servicePort: 4466
