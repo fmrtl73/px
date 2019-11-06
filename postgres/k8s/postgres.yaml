@@ -62,3 +62,15 @@ spec:
       - name: postgres-data
         persistentVolumeClaim:
           claimName: postgres-data
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+  - protocol: TCP
+    port: 5434
+    targetPort: 5432
