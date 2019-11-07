@@ -19,17 +19,17 @@ spec:
         app: prisma
     spec:
       containers:
-        - name: prisma
-          image: 'prismagraphql/prisma:1.8'
-          ports:
-            - name: prisma-4466
-              containerPort: 4466
-          env:
-            - name: PRISMA_CONFIG
-              valueFrom:
-                configMapKeyRef:
-                  name: prisma-configmap
-                  key: PRISMA_CONFIG
+      - name: prisma
+        image: 'prismagraphql/prisma:1.8'
+        ports:
+          - name: prisma-4466
+            containerPort: 4466
+        env:
+        - name: PRISMA_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              name: prisma-configmap
+              key: PRISMA_CONFIG
 ---
 apiVersion: v1
 kind: Service

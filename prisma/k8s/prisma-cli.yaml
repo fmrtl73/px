@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: prisma-cli
+  namespace: prisma
+  labels:
+    stage: production
+    name: prisma-cli
+    app: prisma-cli
+spec:
+  template:
+    metadata:
+      labels:
+        stage: production
+        name: prisma-cli
+        app: prisma-cli
+    spec:
+      containers:
+      - name: prismacli
+        image: longlivechief/prisma
+        env:
+        - name: workdir 
+          value: /tmp/prisma
+        volumeMounts:
+        - mountPath: /tmp/prisma/prisma.yaml
+          name: prisma-workdir-yaml
+          subPath: prisma.yaml
+        - mountPath: /tmp/prisma/datamodel.prisma
+          name: prisma-workdir-datamodel
+          subPath: datamodel.prisma
+        command: ["/bin/sh"]
+        args: ["-c", "cd /tmp/prisma && export DEBUG=\"*\"  && prisma deploy -p /tmp/prisma/prisma.yaml"]
+      restartPolicy: Never
+      volumes:
+      - name: prisma-workdir-yaml
+        configMap:
+          name: prisma-configmap
+      - name: prisma-workdir-datamodel
+        configMap:
+          name: prisma-configmap
