@@ -1,5 +1,7 @@
 This project is meant to help in running a set of benchmarks, defined in the config map in standard fio format, agains one or more storage classes. The run.sh script uses the fio-job.yaml file as a template and generates a job for each storage class that runs in sequential order. 
 
+The benchmarks are meant to compare results from using a volume created using a storage class and the use of hostpath volume. The benchmark settings are contained in a fiojobs.fio file that is contained in the configmap.yaml file. Notice that it uses /mnt for the Portworx storage class and /data for the hostpath tests.
+
 ### Setup
 
 Before you start, if you want to test secure storage class performance make sure you have a functioning Portworx cluster and configure it for encryption:
@@ -53,6 +55,9 @@ The results of the benchmark are available in the job's container logs and will 
 ./create-csv.sh <storage-class-name>
 ```
 
-This will create a CSV with ephemeral results first followed by portworx results.
+This will create a CSV with hostpath results first followed by portworx PVC results. The results will include the following columns: 
+
+workload-name,Group ID,	Average READ IOPS (k), Average WRITE IOPS (k), Average READ Latency (microseconds), Average WRITE Latency (microseconds),	Average READ Bandwidth (Kb/s), Average WRITE Bandwidth (Kb/s)		
+
 
 
