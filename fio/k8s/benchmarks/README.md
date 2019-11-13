@@ -1,6 +1,8 @@
 This project is meant to help in running a set of benchmarks, defined in the config map in standard fio format, agains one or more storage classes. The run.sh script uses the fio-job.yaml file as a template and generates a job for each storage class that runs in sequential order. 
 
-Before you start, make sure you have a functioning Portworx cluster and configure it for encryption:
+### Setup
+
+Before you start, if you want to test secure storage class performance make sure you have a functioning Portworx cluster and configure it for encryption:
 ```
 kubectl -n portworx create secret generic px-vol-encryption \
   --from-literal=cluster-wide-secret-key=Il0v3Portw0rX
@@ -13,6 +15,8 @@ You should create the storage classes before running the tests:
 ```
 kubectl create -f storage-classes.yaml
 ```
+
+### Running the benchmark
 
 For each storage class the script will create a PVC, and fio container as a job. The fio container uses the fiojobs.fio file contained in the configmap.yaml file.
 
@@ -32,4 +36,16 @@ You can run and clean individual storage class using the following commands:
 ./clean.sh <storage-class-name>
 ```
 
-The results of the benchmark are available in the job's container logs and will be outputed in JSON format. To convert the job's results to CSV you can use the create-csv.sh script.
+### Processing the JSON Results
+
+This requires that you install jq.
+
+The results of the benchmark are available in the job's container logs and will be outputed in JSON format. To convert the job's results to CSV you can use the create-csv.sh script:
+
+```
+./create-csv.sh <storage-class-name>
+```
+
+This will create a CSV with ephemeral results first followed by portworx results.
+
+
