@@ -16,6 +16,13 @@ You should create the storage classes before running the tests:
 kubectl create -f storage-classes.yaml
 ```
 
+The test will run in the Portworx Namespace. The example fiojobs.fio file in configmap.yaml clears caches between each job using the following command: 
+```
+exec_prerun=sh -c "echo 3  >/proc/sys/vm/drop_caches"
+```
+
+This will require priviled access to be allowed to the fio-job.yaml POD. 
+
 ### Running the benchmark
 
 For each storage class the script will create a PVC, and fio container as a job. The fio container uses the fiojobs.fio file contained in the configmap.yaml file.
