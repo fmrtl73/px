@@ -4,6 +4,8 @@ The benchmarks are meant to compare results from using a volume created using a 
 
 ### Setup
 
+Hostpath is used as the baseline for the tests. It is configured to use /data as the path. You will need to create a /data folder mounted on the same type of drive used by Portworx in order to have a fair comparison of performance between the two. This folder should exist on all worker nodes where the test may run.  
+
 Before you start, if you want to test secure storage class performance make sure you have a functioning Portworx cluster and configure it for encryption:
 ```
 kubectl -n portworx create secret generic px-vol-encryption \
