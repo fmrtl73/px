@@ -1,4 +1,4 @@
-There are four tests defined (high, high-compressed, medium, medium-compressed) defined to test performance on two different storage pools (high,medium) with and without compression. It deploys the database and benchmark jobs for each in the portworx namespace.
+This project is meant to help in running a set of benchmarks, defined in the config map in standard fio format, agains one or more storage classes. The run.sh script uses the fio-job.yaml file as a template and generates a job for each storage class that runs in sequential order. 
 
 Before you start, make sure you have a functioning Portworx cluster and configure it for encryption:
 ```
@@ -14,9 +14,9 @@ You should create the storage classes before running the tests:
 kubectl create -f storage-classes.yaml
 ```
 
-For each test we will create a storage class with specific storage properties and then use it to create a PVC, and fio container as a job. There are two jobs, a fio-write job and a fio-read job that the run.sh script runs in that order.
+For each storage class the script will create a PVC, and fio container as a job. The fio container uses the fiojobs.fio file contained in the configmap.yaml file.
 
-You can run all tests using the fio prefixed storage classes:
+You can run all tests using the storage classes which starts with fio:
 ```
 ./run.sh --all fio
 ```
@@ -31,3 +31,5 @@ You can run and clean individual storage class using the following commands:
 ./run.sh <storage-class-name>
 ./clean.sh <storage-class-name>
 ```
+
+The results of the benchmark are available in the job's container logs and will be outputed in JSON format. To convert the job's results to CSV you can use the create-csv.sh script.
