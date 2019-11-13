@@ -37,6 +37,8 @@ spec:
           - "/fiocfg/fiojobs.fio"
         imagePullPolicy: IfNotPresent
       restartPolicy: Never
+      securityContext:
+        privileged: true
       volumes:
       - name: test-volume
         persistentVolumeClaim:
