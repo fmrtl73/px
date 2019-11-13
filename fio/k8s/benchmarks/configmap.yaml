@@ -9,6 +9,9 @@ data:
     size=10GiB
     name=test
     direct=1
+    invalidate=1
+    exec_prerun=sh -c "echo 3  >/proc/sys/vm/drop_caches"
+    
     iodepth=128
     [64k-write]
     stonewall
