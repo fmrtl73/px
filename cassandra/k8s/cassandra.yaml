@@ -38,6 +38,13 @@ spec:
           name: jmx
         - containerPort: 9042
           name: cql
+        resources:
+          limits:
+            cpu: "500m"
+            memory: 1Gi
+          requests:
+           cpu: "500m"
+           memory: 1Gi
         securityContext:
           capabilities:
             add:
@@ -81,8 +88,6 @@ spec:
         # but not exactly because the names need to match exactly one of
         # the stateful pod volumes.
         volumeMounts:
-        - name: cassandra-config
-          mountPath: /cassandra_config
         - name: cassandra-data
           mountPath: /cassandra_data
   # These are converted to volume claims by the controller
@@ -91,20 +96,7 @@ spec:
   - metadata:
       name: cassandra-data
       annotations:
-        volume.beta.kubernetes.io/storage-class: px-data
-      labels:
-        type: data
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 1Gi
-  - metadata:
-      name: cassandra-config
-      annotations:
-        volume.beta.kubernetes.io/storage-class: px-config
-      labels:
-        type: config
+        volume.beta.kubernetes.io/storage-class: px-storageclass
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
