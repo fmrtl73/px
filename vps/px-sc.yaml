@@ -6,7 +6,7 @@ provisioner: kubernetes.io/portworx-volume
 parameters:
    repl: "1"
    io_priority: "high"
-   volumePlacementStrategy: "statefulset-data"
+   placement_strategy: "statefulset-data"
 ---
 kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
@@ -16,4 +16,4 @@ provisioner: kubernetes.io/portworx-volume
 parameters:
    repl: "1"
    io_priority: "low"
-   volumePlacementStrategy: "statefulset-config"
+   placement_strategy: "statefulset-config"
