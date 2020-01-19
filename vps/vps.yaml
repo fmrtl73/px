@@ -15,6 +15,7 @@ spec:
         operator: In
         values: 
         - "data"
+      enforcement: "preferred"
 ---
 apiVersion: portworx.io/v1beta2
 kind: VolumePlacementStrategy
@@ -33,3 +34,4 @@ spec:
         operator: In
         values:
         - "config"
+      enforcement: "preferred"
