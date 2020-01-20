@@ -1,0 +1,278 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: mongo-rs-mongo-node-0-rc
+  name: mongo-rs-mongo-node-0-rc
+  namespace: mongo-rs
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: mongo-rs-mongo-node-0
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        environment: mongo-rs
+        name: mongo-rs-mongo-node-0
+        role: mongo
+    spec:
+      schedulerName: stork
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - node-1-1
+      containers:
+      - args:
+        - --replSet
+        - mongo-rs
+        - --bind_ip_all
+        image: mongo:4.1.5
+        imagePullPolicy: IfNotPresent
+        name: mongo-rs-mongo-node-0
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-rs-mongo-node-0-db
+        - mountPath: /app/config/mongo/
+          name: mongo-rs-mongo-node-0-config
+        - mountPath: /opt/config
+          name: config-volume
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - args:
+        - -c
+        - cp /opt/config/keyfile /app/config/mongo; chown 999:999 /app/config/mongo/keyfile;
+          chmod 400 /app/config/mongo/keyfile; ls -lah /app/config/mongo/
+        command:
+        - sh
+        image: busybox
+        imagePullPolicy: Always
+        name: init-myservice
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /app/config/mongo/
+          name: mongo-rs-mongo-node-0-config
+        - mountPath: /opt/config
+          name: config-volume
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: mongo
+      serviceAccountName: mongo
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: mongo-rs-mongo-node-0-db
+        persistentVolumeClaim:
+          claimName: mongo-db-0
+      - name: mongo-rs-mongo-node-0-config
+        persistentVolumeClaim:
+          claimName: mongo-config-0
+      - name: config-volume
+        secret:
+          defaultMode: 256
+          secretName: mongo-key
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: mongo-rs-mongo-node-1-rc
+  name: mongo-rs-mongo-node-1-rc
+  namespace: mongo-rs
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: mongo-rs-mongo-node-1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        environment: mongo-rs
+        name: mongo-rs-mongo-node-1
+        role: mongo
+    spec:
+      schedulerName: stork
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - node-1-2
+      containers:
+      - args:
+        - --replSet
+        - mongo-rs
+        - --bind_ip_all
+        image: mongo:4.1.5
+        imagePullPolicy: IfNotPresent
+        name: mongo-rs-mongo-node-1
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-rs-mongo-node-1-db
+        - mountPath: /app/config/mongo/
+          name: mongo-rs-mongo-node-1-config
+        - mountPath: /opt/config
+          name: config-volume
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - args:
+        - -c
+        - cp /opt/config/keyfile /app/config/mongo; chown 999:999 /app/config/mongo/keyfile;
+          chmod 400 /app/config/mongo/keyfile; ls -lah /app/config/mongo/
+        command:
+        - sh
+        image: busybox
+        imagePullPolicy: Always
+        name: init-myservice
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /app/config/mongo/
+          name: mongo-rs-mongo-node-1-config
+        - mountPath: /opt/config
+          name: config-volume
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: mongo
+      serviceAccountName: mongo
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: mongo-rs-mongo-node-1-db
+        persistentVolumeClaim:
+          claimName: mongo-db-1
+      - name: mongo-rs-mongo-node-1-config
+        persistentVolumeClaim:
+          claimName: mongo-config-1
+      - name: config-volume
+        secret:
+          defaultMode: 256
+          secretName: mongo-key
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: mongo-rs-mongo-node-2-rc
+  name: mongo-rs-mongo-node-2-rc
+  namespace: mongo-rs
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: mongo-rs-mongo-node-2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        environment: mongo-rs
+        name: mongo-rs-mongo-node-2
+        role: mongo
+    spec:
+      schedulerName: stork
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - node-1-3
+      containers:
+      - args:
+        - --replSet
+        - mongo-rs
+        - --bind_ip_all
+        image: mongo:4.1.5
+        imagePullPolicy: IfNotPresent
+        name: mongo-rs-mongo-node-2
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-rs-mongo-node-2-db
+        - mountPath: /app/config/mongo/
+          name: mongo-rs-mongo-node-2-config
+        - mountPath: /opt/config
+          name: config-volume
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - args:
+        - -c
+        - cp /opt/config/keyfile /app/config/mongo; chown 999:999 /app/config/mongo/keyfile;
+          chmod 400 /app/config/mongo/keyfile; ls -lah /app/config/mongo/
+        command:
+        - sh
+        image: busybox
+        imagePullPolicy: Always
+        name: init-myservice
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /app/config/mongo/
+          name: mongo-rs-mongo-node-2-config
+        - mountPath: /opt/config
+          name: config-volume
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: mongo
+      serviceAccountName: mongo
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: mongo-rs-mongo-node-2-db
+        persistentVolumeClaim:
+          claimName: mongo-db-2
+      - name: mongo-rs-mongo-node-2-config
+        persistentVolumeClaim:
+          claimName: mongo-config-2
+      - name: config-volume
+        secret:
+          defaultMode: 256
+          secretName: mongo-key
+---

@@ -1,0 +1,103 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mongo-rs
+  name: mongo-rs
+  namespace: mongo-rs
+spec:
+  clusterIP: None
+  ports:
+    - port: 27017
+  selector:
+    app: mongo-rs
+---
+apiVersion: "apps/v1"
+kind: StatefulSet
+metadata:
+  name: mongo-rs
+  namespace: mongo-rs
+spec:
+  serviceName: mongo-rs
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongo-rs
+  template:
+    metadata:
+      labels:
+        app: mongo-rs
+    spec:
+      # Use the stork scheduler to enable more efficient placement of the pods
+      schedulerName: stork
+      containers:
+      - args:
+        - --replSet
+        - mongo-rs
+        - --bind_ip_all
+        image: mongo:4.1.5
+        imagePullPolicy: IfNotPresent
+        name: mongo-rs-mongo-node-2
+        ports:
+        - containerPort: 27017
+          protocol: TCP
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-rs-data
+        - mountPath: /app/config/mongo/
+          name: mongo-rs-config
+        - mountPath: /opt/config
+          name: config-volume
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - args:
+        - -c
+        - cp /opt/config/keyfile /app/config/mongo; chown 999:999 /app/config/mongo/keyfile;
+          chmod 400 /app/config/mongo/keyfile; ls -lah /app/config/mongo/
+        command:
+        - sh
+        image: busybox
+        imagePullPolicy: Always
+        name: init-myservice
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /app/config/mongo/
+          name: mongo-rs-config
+        - mountPath: /opt/config
+          name: config-volume
+      restartPolicy: Always
+      serviceAccount: mongo
+      serviceAccountName: mongo
+      volumes: 
+      - name: config-volume
+        secret:
+          defaultMode: 256
+          secretName: mongo-key      
+  # These are converted to volume claims by the controller
+  # and mounted at the paths mentioned above.
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-rs-data
+      annotations:
+        volume.beta.kubernetes.io/storage-class: px-data
+      labels:
+        type: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 30Gi
+  - metadata:
+      name: mongo-rs-config
+      annotations:
+        volume.beta.kubernetes.io/storage-class: px-config
+      labels:
+        type: config
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi

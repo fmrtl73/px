@@ -1,0 +1,19 @@
+
+apiVersion: v1
+data:
+  repl_set_initiate.js: |-
+    rs.initiate(
+    {_id: "mongo-rs",
+    members:
+    [
+    { _id : 0, host : "mongo-rs-0.mongo-rs.mongo-rs.svc.cluster.local:27017"},
+    { _id : 1, host : "mongo-rs-1.mongo-rs.mongo-rs.svc.cluster.local:27017"},
+    { _id : 2, host : "mongo-rs-2.mongo-rs.mongo-rs.svc.cluster.local:27017"}
+    ]
+    }
+    );
+kind: ConfigMap
+metadata:
+  name: mongo-rs
+  namespace: mongo-rs
+
