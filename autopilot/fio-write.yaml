@@ -18,7 +18,7 @@ data:
     blocksize=64k
     filename=/mnt/fio.dat
     ioengine=libaio
-    size=2000GiB
+    size=100GiB
     name=test
     direct=1
     invalidate=1
