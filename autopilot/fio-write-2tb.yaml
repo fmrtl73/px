@@ -1,0 +1,79 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+    name: fio-repl3
+    namespace: portworx
+provisioner: kubernetes.io/portworx-volume
+parameters:
+   repl: "3"
+   io_profile: "sequential"
+   priority_io: "high"
+allowVolumeExpansion: true
+---
+apiVersion: v1
+data:
+  fiojobs.fio: |-
+    ##making this fio file as place holder for new config
+    [global]
+    blocksize=64k
+    filename=/mnt/fio.dat
+    ioengine=libaio
+    size=2000GiB
+    name=test
+    direct=1
+    invalidate=1
+    
+    iodepth=128
+    [64k-write]
+    stonewall
+    readwrite=write
+    buffer_compress_percentage=50
+    end_fsync=1
+kind: ConfigMap
+metadata:
+  name: fiocfg
+  namespace: portworx
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: fio-pvc
+  namespace: portworx
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 2000Gi
+  storageClassName: fio-repl3
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fio-job
+  namespace: portworx
+spec:
+  template:
+    spec:
+      schedulerName: stork
+      containers:
+      - name: fio-write-repl3-2tb
+        image: dmonakhov/alpine-fio
+        volumeMounts:
+        - mountPath: /mnt
+          name: test-volume
+        - mountPath: /fiocfg
+          name: fiocfg
+        args:
+          - "fio"
+          - "/fiocfg/fiojobs.fio"
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Never
+      volumes:
+      - name: test-volume
+        persistentVolumeClaim:
+          claimName: fio-pvc
+      - name: fiocfg
+        configMap:
+          name: fiocfg
