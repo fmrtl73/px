@@ -2,7 +2,6 @@ kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
 metadata:
     name: fio-repl3
-    namespace: portworx
 provisioner: kubernetes.io/portworx-volume
 parameters:
    repl: "3"
@@ -32,13 +31,13 @@ data:
 kind: ConfigMap
 metadata:
   name: fiocfg
-  namespace: portworx
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: fio-pvc
-  namespace: portworx
+  labels:
+    type: ephemeral
 spec:
   accessModes:
     - ReadWriteOnce
@@ -52,7 +51,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: fio-job
-  namespace: portworx
 spec:
   template:
     spec:
