@@ -1,0 +1,10 @@
+apiVersion: stork.libopenstorage.org/v1alpha1
+kind: ApplicationRestore
+metadata:
+  name: restore
+spec:
+  backupName: postgres-backup
+  backupLocation: postgres-backup-location
+  namespaceMapping:
+    postgres: postgres
+  replacePolicy: Delete
