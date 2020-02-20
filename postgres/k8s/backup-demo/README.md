@@ -10,7 +10,7 @@ kubectl apply -f postgres.yaml
 Exec into the Postgres POD
 ```
 POD=`kubectl get po -n postgres | grep -v NAME | awk '{print $1}'`
-kubectl exec -it $POD -n postgres
+kubectl exec -it $POD -n postgres bash
 ```
 Start a psql session
 ```
