@@ -2,8 +2,9 @@ apiVersion: stork.libopenstorage.org/v1alpha1
 kind: ApplicationRestore
 metadata:
   name: restore
+  namespace: postgres
 spec:
-  backupName: postgres-backup
+  backupName: BACKUP_NAME
   backupLocation: postgres-backup-location
   namespaceMapping:
     postgres: postgres
