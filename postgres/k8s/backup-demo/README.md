@@ -59,6 +59,11 @@ backup=`kubectl get applicationbackups -n postgres | grep postgres-backup | awk 
 sed "s/BACKUP_NAME/$backup/g" postgres-restore.yaml > postgres-restore-backup.yaml
 kubectl apply -f postgres-restore-backup.yaml 
 ```
+Check the status of the restore operation
+```
+kubectl describe applicationrestore -n postgres
+kubectl get all -n postgres
+```
 ### Verify the data has been recovered
 ```
 POD=`kubectl get po -n postgres | grep -v NAME | awk '{print $1}'`
