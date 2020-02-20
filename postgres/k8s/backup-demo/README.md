@@ -62,7 +62,7 @@ kubectl apply -f postgres-restore-backup.yaml
 ### Verify the data has been recovered
 ```
 POD=`kubectl get po -n postgres | grep -v NAME | awk '{print $1}'`
-kubectl exec -it $POD -n postgres
+kubectl exec -it $POD -n postgres bash
 psql pxdemo
 select count(*) from pgbench_accounts;
 \q
