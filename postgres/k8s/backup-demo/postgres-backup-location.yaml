@@ -1,14 +1,16 @@
 apiVersion: stork.libopenstorage.org/v1alpha1
 kind: BackupLocation
 metadata:
-  name: postgres-backup-location
-  namespace: postgres
+  name: mysql
+  namespace: mysql-app
   annotations:
-    stork.libopenstorage.ord/skipresource: "true"
+    stork.libopenstorage.org/skipresource: "true"
 location:
-  type: azure
-  path: "postgres"
-  sync: true
-  azureConfig:
-    storageAccountName: portworx
-    storageAccountKey: /qwM84aGMMptbuSWciCHgtb4qUCfVn1Jc1lga8qgCLcRs9zBeLAkNIxXYu4+yFH8SdprnX1WqjLqW50SRTGLDw==
+  type: s3
+  path: "bucket-name"
+  s3Config:
+    region: us-east-1
+    accessKeyID: ABCDEF1234567890
+    secretAccessKey: ABCDEF1234567890ABCDEF1234567890ABCDEF1234567890
+    endpoint: "https://bucketEndpoint.com"
+    disableSSL: false
