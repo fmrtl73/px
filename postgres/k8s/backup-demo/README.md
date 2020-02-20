@@ -16,16 +16,10 @@ Start a psql session
 ```
 psql
 ```
-Create pxdemo database
+Create pxdemo database, list it to confirm it was created, and quit psql
 ```
 create database pxdemo;
-```
-List database
-```
 \l
-```
-Exit psql
-```
 \q
 ```
 Create 800 MB of data using pgbench utility
@@ -40,13 +34,9 @@ select count(*) from pgbench_accounts;
 exit
 ```
 ### Create backup credentials and location
-Modify the s3-credentials.yaml credentials to point to an S3 compatible objectstore.
+Modify the postgres-backup-location.yaml file to point to an S3 compatible objectstore with the correct credentials.
 ```
-kubectl apply -f s3-credentials.yaml
-```
-Create a Backup Location using the backup-location.yaml
-```
-kubectl apply -f backup-location.yaml
+kubectl apply -f postgres-backup-location.yaml
 ```
 ### Take a backup of the postgres namespace
 Create a on-demand application backup using the ApplicationBackup CRD
