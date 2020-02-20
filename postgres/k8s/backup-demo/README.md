@@ -1,3 +1,4 @@
+# Deploy Postgres and Insert Data
 ### Create Namespace
 ```
 kubectl create namespace postgres
@@ -33,6 +34,7 @@ select count(*) from pgbench_accounts;
 \q
 exit
 ```
+# Create Namespace Backup
 ### Create backup credentials and location
 Modify the postgres-backup-location.yaml file to point to an S3 compatible objectstore with the correct credentials.
 ```
@@ -43,6 +45,8 @@ Create a on-demand application backup using the ApplicationBackup CRD
 ```
 kubectl apply -f postgres-backup.yaml
 ```
+
+# Restore Namespace
 ### Delete the postgres namespace and restore it from your backup
 Delete the namespace
 ```
