@@ -48,9 +48,16 @@ Delete the namespace
 ```
 kubectl delete ns postgres
 ```
+Create the namespace again and create the backup location as well
+```
+kubectl create namespace postgres
+kubectl create -f postgres-backup-location.yaml
+```
 Restore the namespace from the backup using the ApplicationRestore CRD
 ```
-kubectl apply -f postgres-restore.yaml 
+backup=`kubectl get applicationbackups -n postgres | grep postgres-backup | awk '{print $1}'`
+sed "s/BACKUP_NAME/$backup/g" postgres-restore.yaml > postgres-restore-backup.yaml
+kubectl apply -f postgres-restore-backup.yaml 
 ```
 ### Verify the data has been recovered
 ```
