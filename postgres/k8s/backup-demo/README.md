@@ -34,8 +34,7 @@ pgbench -i -s 50 pxdemo
 ```
 Verify the data has been inserted
 ```
-kubectl exec -it $POD -n postgres
-psql
+psql pxdemo
 select count(*) from pgbench_accounts;
 \q
 exit
@@ -67,7 +66,7 @@ kubectl apply -f postgres-restore.yaml
 ```
 POD=`kubectl get po -n postgres | grep -v NAME | awk '{print $1}'`
 kubectl exec -it $POD -n postgres
-psql
+psql pxdemo
 select count(*) from pgbench_accounts;
 \q
 exit
