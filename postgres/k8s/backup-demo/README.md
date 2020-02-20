@@ -10,22 +10,16 @@ kubectl apply -f postgres.yaml
 Exec into the Postgres POD
 ```
 POD=`kubectl get po -n postgres | grep -v NAME | awk '{print $1}'`
-kubectl exec -it $POD -n postgres
+kubectl exec -it $POD -n postgres bash
 ```
 Start a psql session
 ```
 psql
 ```
-Create pxdemo database
+Create pxdemo database, list it to confirm it was created, and quit psql
 ```
 create database pxdemo;
-```
-List database
-```
 \l
-```
-Exit psql
-```
 \q
 ```
 Create 800 MB of data using pgbench utility
@@ -34,20 +28,15 @@ pgbench -i -s 50 pxdemo
 ```
 Verify the data has been inserted
 ```
-kubectl exec -it $POD -n postgres
-psql
+psql pxdemo
 select count(*) from pgbench_accounts;
 \q
 exit
 ```
 ### Create backup credentials and location
-Modify the s3-credentials.yaml credentials to point to an S3 compatible objectstore.
+Modify the postgres-backup-location.yaml file to point to an S3 compatible objectstore with the correct credentials.
 ```
-kubectl apply -f s3-credentials.yaml
-```
-Create a Backup Location using the backup-location.yaml
-```
-kubectl apply -f backup-location.yaml
+kubectl apply -f postgres-backup-location.yaml
 ```
 ### Take a backup of the postgres namespace
 Create a on-demand application backup using the ApplicationBackup CRD
@@ -59,15 +48,22 @@ Delete the namespace
 ```
 kubectl delete ns postgres
 ```
+Create the namespace again and create the backup location as well
+```
+kubectl create namespace postgres
+kubectl create -f postgres-backup-location.yaml
+```
 Restore the namespace from the backup using the ApplicationRestore CRD
 ```
-kubectl apply -f postgres-restore.yaml 
+backup=`kubectl get applicationbackups -n postgres | grep postgres-backup | awk '{print $1}'`
+sed "s/BACKUP_NAME/$backup/g" postgres-restore.yaml > postgres-restore-backup.yaml
+kubectl apply -f postgres-restore-backup.yaml 
 ```
 ### Verify the data has been recovered
 ```
 POD=`kubectl get po -n postgres | grep -v NAME | awk '{print $1}'`
-kubectl exec -it $POD -n postgres
-psql
+kubectl exec -it $POD -n postgres bash
+psql pxdemo
 select count(*) from pgbench_accounts;
 \q
 exit
