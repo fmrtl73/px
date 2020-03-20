@@ -1,0 +1,87 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+  name: px-repl2-sc
+provisioner: kubernetes.io/portworx-volume
+parameters:
+  repl: "2"
+  priority_io: "high"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: filemanager-data-1
+  annotations:
+    volume.beta.kubernetes.io/storage-class: px-repl2-sc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: filemanager-data-2
+  annotations:
+    volume.beta.kubernetes.io/storage-class: px-repl2-sc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filemanager
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: filemanager
+  template:
+    metadata:
+      labels:
+        app: filemanager
+    spec:
+      schedulerName: stork
+      containers:
+      - name: filemanager
+        image: puteulanus/tinyfilemanager
+        imagePullPolicy: "IfNotPresent"
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /web/pvc-1
+          name: data-1
+        - mountPath: /web/pvc-2
+          name: data-2
+      volumes:
+      - name: data-1
+        persistentVolumeClaim:
+          claimName: filemanager-data-1
+      - name: data-2
+        persistentVolumeClaim:
+          claimName: filemanager-data-2
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: filemanager
+spec:
+  selector:
+    app: filemanager
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+    nodePort: 31598
+  type: NodePort
