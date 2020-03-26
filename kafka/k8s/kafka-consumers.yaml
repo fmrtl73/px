@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka-consumer
+  labels:
+    app: kafka-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-consumer
+  serviceName: kafka-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-consumer
+    spec:
+      containers:
+      - name: kafka
+        image: solsson/kafka:2.4.1
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+        command:
+          - sh
+          - -c
+          - "/opt/scripts/run-consumer.sh"
+        volumeMounts:
+        - mountPath: /opt/scripts/run-consumer.sh
+          name: scripts
+          subPath: run-consumer.sh
+      volumes:
+      - name: scripts
+        configMap:
+          name: kafka-scripts
+          defaultMode: 0777
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-consumer
+  labels:
+    app: kafka-consumer
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: kafka-consumer

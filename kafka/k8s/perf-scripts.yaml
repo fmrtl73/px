@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-scripts
+data:
+    run-producer.sh: |
+      POD_ID=`echo ${MY_POD_NAME} | cut -d- -f3`
+      TOPIC=test-${POD_ID}
+      /opt/kafka/bin/kafka-topics.sh \
+        --zookeeper zk-headless:2181 \
+        --create \
+        --topic ${TOPIC} \
+        --partitions 6 \
+        --replication-factor 3
+      /opt/kafka/bin/kafka-producer-perf-test.sh \
+        --topic ${TOPIC} \
+        --num-records 50000000 \
+        --record-size 100 \
+        --throughput -1 \
+        --producer-props acks=1 \
+        bootstrap.servers=kafka-broker:9092 \
+        buffer.memory=67108864 \
+        batch.size=8196
+    run-consumer.sh: |
+      POD_ID=`echo ${MY_POD_NAME} | cut -d- -f3`
+      TOPIC=test-${POD_ID}
+
+      cnt=$(/opt/kafka/bin/kafka-topics.sh --zookeeper zk-headless:2181 --list | grep ${TOPIC} | wc -l )
+
+      while [ $cnt -le 0 ]; do
+          cnt=$(/opt/kafka/bin/kafka-topics.sh --zookeeper zk-headless:2181 --list | grep ${TOPIC} | wc -l )
+          if [ $cnt -gt 0 ]; then
+              break
+          fi
+      done
+      /opt/kafka/bin/kafka-consumer-perf-test.sh \
+        --broker-list kafka-broker:9092 \
+        --messages 50000000 \
+        --topic ${TOPIC} \
+        --threads 1

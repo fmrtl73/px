@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka-producer
+  labels:
+    app: kafka-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-producer
+  serviceName: kafka-producer
+  template:
+    metadata:
+      labels:
+        app: kafka-producer
+    spec:
+      containers:
+      - name: kafka
+        image: solsson/kafka:2.4.1
+        env:
+          - name: MY_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          - name: MY_POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+        command:
+          - sh
+          - -c
+          - "/opt/scripts/run-producer.sh"
+        volumeMounts:
+        - mountPath: /opt/scripts/run-producer.sh
+          name: scripts
+          subPath: run-producer.sh
+      volumes:
+      - name: scripts
+        configMap:
+          name: kafka-scripts
+          defaultMode: 0777
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-producer
+  labels:
+    app: kafka-producer
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: kafka-producer
