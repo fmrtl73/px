@@ -11,7 +11,7 @@ data:
         --create \
         --topic ${TOPIC} \
         --partitions 6 \
-        --replication-factor 3
+        --replication-factor 2 
       /opt/kafka/bin/kafka-producer-perf-test.sh \
         --topic ${TOPIC} \
         --num-records 50000000 \
