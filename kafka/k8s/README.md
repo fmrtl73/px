@@ -18,7 +18,7 @@ kubectl scale sts kafka --replicas=3
 ```
 ### Wait for Kafka to finish initializing
 ```
-kubectl wait --for=condition=Ready po/kafka-3 --timeout 5m
+kubectl wait --for=condition=Ready po/kafka-2 --timeout 5m
 ```
 
 ### Deploy the perfomance benchmark scripts using a config map
