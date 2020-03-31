@@ -1,7 +1,7 @@
 ##
 These instructions assume that you have the greenplum docker images loaded on all your worker nodes.
 
-Refer to the [Greenplum on Kubernetes Documentation](https://greenplum-kubernetes.docs.pivotal.io/1-12/installing.html) for instrcutions on how to get the docker images on to the nodes, you can also push the images to the registry and then edit the files in this repo to use your registry or follow the documentation to use helm to deploy the operator.
+Refer to the [Greenplum on Kubernetes Documentation](https://greenplum-kubernetes.docs.pivotal.io/1-12/installing.html) for instrcutions on how to get the docker images on to the nodes, you can also push the images to the registry and then edit the files in this repo to use your registry or follow the documentation to use helm to deploy the operator. These instructions do not use HELM.
 
 ### Deploy Greenplum Operator
 ```
