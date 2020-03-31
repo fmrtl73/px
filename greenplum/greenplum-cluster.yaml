@@ -1,0 +1,25 @@
+apiVersion: "greenplum.pivotal.io/v1"
+kind: "GreenplumCluster"
+metadata:
+  name: gp-cluster
+  namepsace: greenplum
+spec:
+  masterAndStandby:
+    hostBasedAuthentication: |
+      # host   all   gpadmin   1.2.3.4/32   trust
+      # host   all   gpuser    0.0.0.0/0   md5
+    memory: "800Mi"
+    cpu: "0.5"
+    storageClassName: gp-master-sc
+    storage: 1G
+    antiAffinity: "no"
+    workerSelector: {}
+  segments:
+    primarySegmentCount: 3
+    memory: "800Mi"
+    cpu: "0.5"
+    storageClassName: gp-segment-sc
+    storage: 2G
+    antiAffinity: "no"
+    mirrors: "no"
+    workerSelector: {}

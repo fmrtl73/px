@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greenplum-operator
+  namespace: greenplum
+  labels:
+    app: greenplum-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: greenplum-operator
+  template:
+    metadata:
+      labels:
+        app: greenplum-operator
+    spec:
+      serviceAccountName: greenplum-operator-service-account
+      containers:
+      - name: greenplum-operator
+        image: greenplum-operator:v1.12.0
+        command: ["greenplum-operator", "--logLevel", "info" ]
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: GREENPLUM_IMAGE_REPO
+          value: greenplum-for-kubernetes
+        - name: GREENPLUM_IMAGE_TAG
+          value: v1.12.0
+        - name: OPERATOR_IMAGE_REPO
+          value: greenplum-operator
+        - name: OPERATOR_IMAGE_TAG
+          value: v1.12.0
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 443
+            scheme: HTTPS
+          initialDelaySeconds: 1
+          periodSeconds: 5
+      imagePullSecrets:
+        - name: regsecret
