@@ -30,4 +30,4 @@ kubectl patch sts segment-a -p '{"spec":{"template":{"spec": {"schedulerName": "
 ```
 kubectl get po -n greenplum -o wide
 ```
-Each segment should run on it's own node because the storage class defines a group label and the scheduler is stork.
+You will see 3 segments running. Because the storage class defines 2 replicas and a group name you need 6 nodes to run a highly available 3 segment cluster. If you have 6 nodes, each segment should run on it's own node because the storage class defines a group label and the scheduler is stork. 
