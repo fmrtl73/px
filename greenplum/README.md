@@ -25,3 +25,9 @@ kubectl apply -f greenplum-cluster.yaml -n greenplum
 ```
 kubectl patch sts segment-a -p '{"spec":{"template":{"spec": {"schedulerName": "stork"}}}}' -n greenplum
 ```
+
+### Check that all the segments are running 
+```
+kubectl get po -n greenplum -o wide
+```
+Each segment should run on it's own node because the storage class defines a group label and the scheduler is stork.
