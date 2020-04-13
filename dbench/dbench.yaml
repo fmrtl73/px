@@ -22,6 +22,7 @@ metadata:
 spec:
   template:
     spec:
+      schedulerName: stork
       containers:
       - name: dbench
         image: fmrtl73/dbench:0.1
