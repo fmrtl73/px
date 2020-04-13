@@ -1,0 +1,12 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+  name: px-repl1-sc
+parameters:
+  priority_io: high
+  repl: "1"
+  sharedv4: "true"
+provisioner: kubernetes.io/portworx-volume
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
