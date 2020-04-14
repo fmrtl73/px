@@ -22,6 +22,7 @@ metadata:
 spec:
   template:
     spec:
+      schedulerName: stork
       containers:
       - name: dbench
         image: fmrtl73/dbench:0.1
@@ -44,7 +45,7 @@ spec:
       volumes:
       - name: dbench-pv
         persistentVolumeClaim:
-          claimName: dbench-pv-claim
+          claimName: JOB_NAME
       imagePullSecrets:
       - name: regcred
   backoffLimit: 4
