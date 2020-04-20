@@ -23,6 +23,24 @@ spec:
   template:
     spec:
       schedulerName: stork
+      initContainers:
+      - name: dbench
+        image: fmrtl73/dbench:0.1
+        imagePullPolicy: Always
+        args:
+        - "fio"
+        - "--blocksize=64k"
+        - "--filename=/data/fiotest"
+        - "--ioengine=libaio"
+        - "--readwrite=write"
+        - "--size=2G"
+        - "--name=write"
+        - "--direct=1"
+        - "--iodepth=128"
+        - "--end_fsync=1"
+       volumeMounts:
+        - name: dbench-pv
+          mountPath: /data
       containers:
       - name: dbench
         image: fmrtl73/dbench:0.1
