@@ -23,7 +23,6 @@ spec:
   template:
     spec:
       schedulerName: stork
-<<<<<<< HEAD
       initContainers:
       - name: dbench-init
         image: dmonakhov/alpine-fio
@@ -42,8 +41,6 @@ spec:
         volumeMounts:
         - name: dbench-pv
           mountPath: /data
-=======
->>>>>>> e544a00b260863181c8c0361e7a643e15b6bc01e
       containers:
       - name: dbench
         image: fmrtl73/dbench:0.8
