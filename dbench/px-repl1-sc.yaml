@@ -7,6 +7,7 @@ parameters:
   priority_io: high
   repl: "1"
   sharedv4: "true"
+  cow_ondemand: "true"
 provisioner: kubernetes.io/portworx-volume
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
