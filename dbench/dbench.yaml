@@ -43,7 +43,7 @@ spec:
           mountPath: /data
       containers:
       - name: dbench
-        image: fmrtl73/dbench:0.8
+        image: fmrtl73/dbench:0.10
         imagePullPolicy: Always
         env:
           - name: DBENCH_MOUNTPOINT
