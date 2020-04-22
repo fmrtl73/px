@@ -1,4 +1,6 @@
-This is to test concurrent fio jobs running on a set of nodes. THe scenario below is to run 10 jobs, notice that stork is set as the scheduler in the job to make sure that data locality provides better results. It uses the fmrtl73/dbench:0.10 docker image which features this docker-entrypoint.sh file in this folder.
+This is to test concurrent fio jobs running on a set of nodes. THe scenario below is to run 10 jobs, notice that stork is set as the scheduler in the job to make sure that data locality provides better results. It uses the fmrtl73/dbench:0.10 docker image which features this docker-entrypoint.sh file in this folder. 
+
+The tests are run using a job defined in dbench.yaml and which uses the above mentioned container as well as an init container which lays out a 4GB fiotest file so that the job measures IOPS on existing data. 
 
 ### Create the storageclass
 This storage class is a sharedv4 repl1 volume. You can change the storageclass to test different configurations.
