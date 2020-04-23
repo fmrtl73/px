@@ -3,12 +3,7 @@ apiVersion: v1
 metadata:
   name: JOB_NAME
 spec:
-  storageClassName: px-repl1-sc
-  # storageClassName: gp2
-  # storageClassName: local-storage
-  # storageClassName: ibmc-block-bronze
-  # storageClassName: ibmc-block-silver
-  # storageClassName: ibmc-block-gold
+  storageClassName: px-dbench-sc
   accessModes:
     - ReadWriteOnce
   resources:
@@ -43,13 +38,15 @@ spec:
           mountPath: /data
       containers:
       - name: dbench
-        image: fmrtl73/dbench:0.11
+        image: fmrtl73/dbench:0.12
         imagePullPolicy: Always
         securityContext:
           privileged: true
         env:
           - name: DBENCH_MOUNTPOINT
             value: /data
+          - name: RUN_TIME
+            value: "60"
           # - name: DBENCH_QUICK
           #   value: "yes"
           # - name: FIO_SIZE
@@ -61,11 +58,16 @@ spec:
         volumeMounts:
         - name: dbench-pv
           mountPath: /data
+        - name: dbench-sync
+          mountPath: /tmp/sync
       restartPolicy: Never
       volumes:
       - name: dbench-pv
         persistentVolumeClaim:
           claimName: JOB_NAME
+      - name: dbench-sync
+        persistentVolumeClaim:
+          claimName: dbench-sync
       imagePullSecrets:
       - name: regcred
   backoffLimit: 4
