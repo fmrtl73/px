@@ -56,7 +56,7 @@ if [ "$1" = 'fio' ]; then
   echo Waiting for Synchronized Start Time
 
   echo Testing Read Sequential Speed...
-  synchronize("read_sequential", 60)
+  synchronize "read_sequential" 60
   echo drop caches
   echo 3  >/proc/sys/vm/drop_caches
   READ_SEQ=$(fio --randrepeat=0 --verify=0 --ioengine=libaio --direct=$FIO_DIRECT --gtod_reduce=1 --name=read_seq --filename=$DBENCH_MOUNTPOINT/fiotest --bs=4k --iodepth=16 --size=$FIO_SIZE --readwrite=read --time_based --ramp_time=2s --runtime=${RUN_TIME}s --thread --numjobs=4 --offset_increment=$FIO_OFFSET_INCREMENT --group_reporting)
@@ -65,7 +65,7 @@ if [ "$1" = 'fio' ]; then
   echo
 
   echo Testing Read Latency...
-  synchronize("read_latency", 60)
+  synchronize "read_latency" 60
   echo drop caches
   echo 3  >/proc/sys/vm/drop_caches
   READ_LATENCY=$(fio --randrepeat=0 --verify=0 --ioengine=libaio --direct=$FIO_DIRECT --name=read_latency --filename=$DBENCH_MOUNTPOINT/fiotest --bs=4K --iodepth=4 --size=$FIO_SIZE --readwrite=randread --time_based --ramp_time=2s --runtime=${RUN_TIME}s)
@@ -75,7 +75,7 @@ if [ "$1" = 'fio' ]; then
   echo
 
   echo Testing Read IOPS...
-  synchronize("read_iops", 60)
+  synchronize "read_iops" 60
   echo drop caches
   echo 3  >/proc/sys/vm/drop_caches
   READ_IOPS=$(fio --randrepeat=0 --verify=0 --ioengine=libaio --direct=$FIO_DIRECT --gtod_reduce=1 --name=read_iops --filename=$DBENCH_MOUNTPOINT/fiotest --bs=4K --iodepth=64 --size=$FIO_SIZE --readwrite=randread --time_based --ramp_time=2s --runtime=${RUN_TIME}s)
@@ -85,7 +85,7 @@ if [ "$1" = 'fio' ]; then
   echo
 
   echo Testing Read Bandwidth...
-  synchronize("read_bandwidth", 60)
+  synchronize "read_bandwidth" 60
   echo drop caches
   echo 3  >/proc/sys/vm/drop_caches
   READ_BW=$(fio --randrepeat=0 --verify=0 --ioengine=libaio --direct=$FIO_DIRECT --gtod_reduce=1 --name=read_bw --filename=$DBENCH_MOUNTPOINT/fiotest --bs=4K --iodepth=64 --size=$FIO_SIZE --readwrite=randread --time_based --ramp_time=2s --runtime=${RUN_TIME}s)
@@ -95,7 +95,7 @@ if [ "$1" = 'fio' ]; then
   echo
 
   echo Testing Write IOPS...
-  synchronize("write_iops", 60)
+  synchronize "write_iops" 60
   echo drop caches
   echo 3  >/proc/sys/vm/drop_caches
   WRITE_IOPS=$(fio --randrepeat=0 --verify=0 --ioengine=libaio --direct=$FIO_DIRECT --gtod_reduce=1 --name=write_iops --filename=$DBENCH_MOUNTPOINT/fiotest --bs=4K --iodepth=64 --size=$FIO_SIZE --readwrite=randwrite --time_based --ramp_time=2s --runtime=${RUN_TIME}s)
@@ -105,7 +105,7 @@ if [ "$1" = 'fio' ]; then
   echo
 
   echo Testing Write Bandwidth...
-  synchronize("write_bandwidth", 60)
+  synchronize "write_bandwidth" 60
   echo drop caches
   echo 3  >/proc/sys/vm/drop_caches
   WRITE_BW=$(fio --randrepeat=0 --verify=0 --ioengine=libaio --direct=$FIO_DIRECT --gtod_reduce=1 --name=write_bw --filename=$DBENCH_MOUNTPOINT/fiotest --bs=4K --iodepth=64 --size=$FIO_SIZE --readwrite=randwrite --time_based --ramp_time=2s --runtime=${RUN_TIME}s)
@@ -115,7 +115,7 @@ if [ "$1" = 'fio' ]; then
   echo
 
   echo Testing Write Latency...
-  synchronize("write_latency", 60)
+  synchronize "write_latency" 60
   echo drop caches
   echo 3  >/proc/sys/vm/drop_caches
   WRITE_LATENCY=$(fio --randrepeat=0 --verify=0 --ioengine=libaio --direct=$FIO_DIRECT --name=write_latency --filename=$DBENCH_MOUNTPOINT/fiotest --bs=4K --iodepth=4 --size=$FIO_SIZE --readwrite=randwrite --time_based --ramp_time=2s --runtime=${RUN_TIME}s)
@@ -125,7 +125,7 @@ if [ "$1" = 'fio' ]; then
   echo
 
   echo Testing Write Sequential Speed...
-  synchronize("write_sequential", 60)
+  synchronize "write_sequential" 60
   echo drop caches
   echo 3  >/proc/sys/vm/drop_caches
   WRITE_SEQ=$(fio --randrepeat=0 --verify=0 --ioengine=libaio --direct=$FIO_DIRECT --gtod_reduce=1 --name=write_seq --filename=$DBENCH_MOUNTPOINT/fiotest --bs=4k --iodepth=16 --size=$FIO_SIZE --readwrite=write --time_based --ramp_time=2s --runtime=${RUN_TIME}s --thread --numjobs=4 --offset_increment=$FIO_OFFSET_INCREMENT --group_reporting)
@@ -135,7 +135,7 @@ if [ "$1" = 'fio' ]; then
   echo
 
   echo Testing Read/Write Mixed...
-  synchronize("readwrite_mix", 60)
+  synchronize "readwrite_mix" 60
   echo drop caches
   echo 3  >/proc/sys/vm/drop_caches
   RW_MIX=$(fio --randrepeat=0 --verify=0 --ioengine=libaio --direct=$FIO_DIRECT --gtod_reduce=1 --name=rw_mix --filename=$DBENCH_MOUNTPOINT/fiotest --bs=4k --iodepth=64 --size=$FIO_SIZE --readwrite=randrw --rwmixread=75 --time_based --ramp_time=2s --runtime=${RUN_TIME}s)
