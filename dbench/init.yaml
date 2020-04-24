@@ -2,7 +2,7 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   annotations:
-  name: px-repl1-sc
+  name: px-dbench-sc
 provisioner: kubernetes.io/portworx-volume
 parameters:
   priority_io: high
