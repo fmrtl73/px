@@ -38,9 +38,9 @@ if [ "$1" = 'fio' ]; then
       exit 0
     fi
   else
-    echo "setting start time for 30 seconds from now"
+    echo "setting start time for 60 seconds from now"
     now=`date +%s`
-    starttime=`expr $now + 30`
+    starttime=`expr $now + 60`
     mkdir -p /tmp/sync
     touch /tmp/sync/starttime
     echo $starttime > /tmp/sync/starttime
@@ -57,7 +57,7 @@ if [ "$1" = 'fio' ]; then
 
   echo waiting to sync next fio run
   now=`date +%s`
-  starttime=`expr $starttime + $RUN_TIME + 10`
+  starttime=`expr $starttime + $RUN_TIME + 60`
   sleep `expr $starttime - $now`
   echo Testing Read Latency...
   echo drop caches
@@ -69,7 +69,7 @@ if [ "$1" = 'fio' ]; then
   echo
   echo waiting to sync next fio run
   now=`date +%s`
-  starttime=`expr $starttime + $RUN_TIME + 10`
+  starttime=`expr $starttime + $RUN_TIME + 60`
   sleep `expr $starttime - $now`
   echo Testing Read IOPS...
   echo drop caches
@@ -81,7 +81,7 @@ if [ "$1" = 'fio' ]; then
   echo
   echo waiting to sync next fio run
   now=`date +%s`
-  starttime=`expr $starttime + $RUN_TIME + 10`
+  starttime=`expr $starttime + $RUN_TIME + 60`
   sleep `expr $starttime - $now`
   echo Testing Read Bandwidth...
   echo drop caches
@@ -93,7 +93,7 @@ if [ "$1" = 'fio' ]; then
   echo
   echo waiting to sync next fio run
   now=`date +%s`
-  starttime=`expr $starttime + $RUN_TIME + 10`
+  starttime=`expr $starttime + $RUN_TIME + 60`
   sleep `expr $starttime - $now`
   echo Testing Write IOPS...
   echo drop caches
@@ -105,7 +105,7 @@ if [ "$1" = 'fio' ]; then
   echo
   echo waiting to sync next fio run
   now=`date +%s`
-  starttime=`expr $starttime + $RUN_TIME + 10`
+  starttime=`expr $starttime + $RUN_TIME + 60`
   sleep `expr $starttime - $now`
   echo Testing Write Bandwidth...
   echo drop caches
@@ -117,7 +117,7 @@ if [ "$1" = 'fio' ]; then
   echo
   echo waiting to sync next fio run
   now=`date +%s`
-  starttime=`expr $starttime + $RUN_TIME + 10`
+  starttime=`expr $starttime + $RUN_TIME + 60`
   sleep `expr $starttime - $now`
 
   echo Testing Write Latency...
@@ -130,7 +130,7 @@ if [ "$1" = 'fio' ]; then
   echo
   echo waiting to sync next fio run
   now=`date +%s`
-  starttime=`expr $starttime + $RUN_TIME + 10`
+  starttime=`expr $starttime + $RUN_TIME + 60`
   sleep `expr $starttime - $now`
   echo Testing Write Sequential Speed...
   echo drop caches
@@ -142,7 +142,7 @@ if [ "$1" = 'fio' ]; then
   echo
   echo waiting to sync next fio run
   now=`date +%s`
-  starttime=`expr $starttime + $RUN_TIME + 10`
+  starttime=`expr $starttime + $RUN_TIME + 60`
   sleep `expr $starttime - $now`
   echo Testing Read/Write Mixed...
   echo drop caches
@@ -155,7 +155,7 @@ if [ "$1" = 'fio' ]; then
   echo
   echo waiting to sync next fio run
   now=`date +%s`
-  starttime=`expr $starttime + $RUN_TIME + 10`
+  starttime=`expr $starttime + $RUN_TIME + 60`
   sleep `expr $starttime - $now`
   echo All tests complete.
   echo
