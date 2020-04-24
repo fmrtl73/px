@@ -27,5 +27,5 @@ for i in 1 2 3 4 5 6 7 8 9 10 ; do echo ++++++++++++ ; kubectl get po | grep dbe
 ### Cleanup
 ```
 kubectl delete pvc dbench-sync
-for i in 1 2 3 4 5 6 7 8 9 10; do kubectl delete job dbench-$i ; kubectl delete pvc dbench-$i  done
+for i in 1 2 3 4 5 6 7 8 9 10; do kubectl delete job dbench-$i ; kubectl delete pvc dbench-$i; done
 ```
