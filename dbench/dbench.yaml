@@ -36,6 +36,7 @@ spec:
         volumeMounts:
         - name: dbench-pv
           mountPath: /data
+      restartPolicy: Never
       containers:
       - name: dbench
         image: fmrtl73/dbench:0.11
