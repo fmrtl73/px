@@ -2,6 +2,9 @@ kind: StorageClass
 apiVersion: storage.k8s.io/v1beta1
 metadata:
   name: px-postgres-sc
+  namespace: postgres
+  labels:
+    app: postgres
 provisioner: kubernetes.io/portworx-volume
 parameters:
   repl: "3"
@@ -12,6 +15,9 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: postgres-data
+  namespace: postgres
+  labels:
+    app: postgres
   annotations:
     volume.beta.kubernetes.io/storage-class: px-postgres-sc
 spec:
@@ -25,6 +31,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
+  namespace: postgres
+  labels: 
+    app: postgres
 spec:
   strategy:
     rollingUpdate:
@@ -70,6 +79,9 @@ kind: Service
 apiVersion: v1
 metadata:
   name: postgres
+  namespace: postgres
+  labels:
+    app: postgres
 spec:
   selector:
     app: postgres
