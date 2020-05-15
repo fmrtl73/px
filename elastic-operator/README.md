@@ -13,7 +13,7 @@ kubectl apply -f sc.yaml
 ```
 ### Deploy Elastic Search Cluster
 ```
-kubectl apply -f elastic
+kubectl apply -f elastic.yaml
 ```
 ## Monitor the Elastic Search Status, PVCs, and PODs
 Watch until you see the HEALTH of elasticsearch turn to green, you will see 3 PVCs and 3 PODS launch as it moves from phase to phase.
