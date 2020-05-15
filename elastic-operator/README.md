@@ -39,4 +39,12 @@ Watch until you see the HEALTH of kibana turn to green, you will see a single ki
 ```
 watch kubectl get kibana,po -n elastic
 ```
-
+## Deploy Ingress
+## On AWS
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/aws/deploy.yaml
+```
+## deploy ingress for kibana
+```
+kubectl apply -f ingress.yaml
+```
