@@ -20,17 +20,14 @@ Watch until you see the HEALTH of elasticsearch turn to green, you will see 3 PV
 ```
 watch kubectl get elasticsearch,pvc,po -n elastic
 ```
-## Get Elastic Password
-```
-PASSWORD=$(kubectl get secret elastic-es-elastic-user -n elastic -o go-template='{{.data.elastic | base64decode}}')
-echo $PASSWORD
-```
 ## Get cluster details from the endpoint
 ```
+PASSWORD=$(kubectl get secret elastic-es-elastic-user -n elastic -o go-template='{{.data.elastic | base64decode}}')
 ELASTIC_IP=$(kubectl get svc elastic-es-http -n elastic -o jsonpath='{.spec.clusterIP}')
 curl -u "elastic:$PASSWORD" -k "https://$ELASTIC_IP:9200"
 ```
 ### Deploy Kibana
+This configuration uses a NodePort service type. You can edit the kibana.yaml file to change to LoadBalancer, or ClusterIP as you see fit.
 ```
 kubectl apply -f kibana.yaml
 ```
@@ -39,12 +36,16 @@ Watch until you see the HEALTH of kibana turn to green, you will see a single ki
 ```
 watch kubectl get kibana,po -n elastic
 ```
-## Deploy Ingress
-## On AWS
+## Login to Kibana
+Assuming you used a NodePort service type you will be able to login at the url these command will output:
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/aws/deploy.yaml
+nodeip=$(kubectl get nodes --selector=kubernetes.io/role!=master -o jsonpath={.items[0].status.addresses[?\(@.type==\"InternalIP\"\)].address})
+nodeport=$(kubectl get svc kibana-kb-http -n elastic -o jsonpath='{.spec.ports[0].nodePort}')
+echo "https://$nodeip:$nodeport"
 ```
-## deploy ingress for kibana
+You will get a certificate error, just proceed and login with the following username and password:
 ```
-kubectl apply -f ingress.yaml
+username=elastic
+password=$(kubectl get secret elastic-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 --decode)
+echo "username: $username, password: $password"
 ```
