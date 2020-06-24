@@ -1,0 +1,23 @@
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+data:
+  config.yaml: |-
+    providers:
+       - name: default
+         type: prometheus
+         params: url=http://px-prometheus.px-central.svc:9090
+    min_poll_interval: 2
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"config.yaml":"providers:\n   - name: default\n     type: prometheus\n     params: url=http://prometheus:9090\nmin_poll_interval: 2"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"autopilot-config","namespace":"kube-system"}}
+  creationTimestamp: "2020-05-29T13:50:24Z"
+  name: autopilot-config
+  namespace: kube-system
+  resourceVersion: "335"
+  selfLink: /api/v1/namespaces/kube-system/configmaps/autopilot-config
+  uid: bf3cafe7-6acd-491e-a4de-57f4acad1178
