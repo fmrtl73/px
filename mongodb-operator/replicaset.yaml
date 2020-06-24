@@ -1,0 +1,28 @@
+apiVersion: mongodb.com/v1
+kind: MongoDB
+metadata:
+  name: my-replica-set
+spec:
+  members: 3
+  version: 4.2.2-ent
+  opsManager:
+    configMapRef:
+      name: opsman
+  credentials: api-key
+  type: ReplicaSet
+  persistent: true
+  podSpec:
+    persistence:
+      multiple:
+        data:
+          storage: 16G
+          storageClass: px-ha
+        journal:
+          storage: 1G
+          storageClass: px-ha
+        logs:
+          storage: 1G
+          storageClass: px-repl1
+    podTemplate:
+      spec:
+        schedulerName: stork
