@@ -28,7 +28,27 @@ data:
       - generator: javascript-client
         output: ./generated/prisma-client/
   datamodel.prisma: |
-    type User {
-      id: ID! @unique
-      name: String!
+    type HumanBeing{
+	sex: String
+    }
+    type relationship{
+	type: String
+	participants: [HumanBeing]
+    }
+    type interest{
+	name: String!
+	description: String
+	subjects: [subject!]
+    }
+    type subject{
+	name: String
+    }
+    type object{
+	name: String
+    }
+    type category{
+	members: [object]
+    }
+    schema{
+	query: category
     }
