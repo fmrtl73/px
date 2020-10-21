@@ -1,0 +1,23 @@
+apiVersion: stork.libopenstorage.org/v1alpha1
+kind: SchedulePolicy
+metadata:
+  name: 5min-policy
+  namespace: kube-system
+policy:
+  interval:
+    intervalMinutes: 5
+---
+apiVersion: stork.libopenstorage.org/v1alpha1
+kind: MigrationSchedule
+metadata:
+  name: postgresmigrationschedule
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      clusterPair: gcp
+      includeResources: true
+      startApplications: false
+      namespaces:
+      - postgres
+  schedulePolicyName: 5min-policy
