@@ -25,12 +25,7 @@
 - [About](#about)
 - [Getting Started](#getting_started)
 - [Deployment](#deployment)
-- [Usage](#usage)
-- [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
+
 
 ## 🧐 About <a name = "about"></a>
 
@@ -38,7 +33,29 @@ The scripts should all have a usage print out, for example, running the followin
 ```
 kubectl pxc script ds.py
 ```
+
+## 🏁 Getting Started <a name = "getting_started"></a>
+
+Just git clone the repo and change directories to px/pxc to run the scripts. For example, list volumes by datastore using ds.py:
+
+```
+kubectl pxc script ds.py list
+```
+Describe a PVC with name test-vol:
+```
+kubectl pxc volume describe test-vol
+```
+Move replicas for PVC test-vol from datastore ds1 to datasotre ds2:
+```
+kubectl pxc volume move test-vol ds1 ds2
+```
+Move all PVC replicas from datastore ds1 to datastore ds2:
+```
+kubectl pxc volume move all ds1 ds2
+```
 The ds.py script is for migrating volumes from one VSPhere Datastore to another. It assumes your cluster is setup to use different datastores on different nodes. For example you can achieve this by creating multiple daemonsets with different datastore settings:
+
+## 🏁 Deployment <a name = "deployment"></a>
 
 First label your worker nodes:
 ```
@@ -230,95 +247,4 @@ Moving volume test-vol-3 from datastore sn1-x70-f06-27-vc01-ds01 to datastore sn
    - removing replica from node: node-1-2
    - adding replica to node node-1-5
 ```
-## 🏁 Getting Started <a name = "getting_started"></a>
 
-Just git clone the repo and change directories to px/pxc to run the scripts. For example, list volumes by datastore using ds.py:
-
-```
-kubectl pxc script ds.py list
-```
-Describe a PVC with name test-vol:
-```
-kubectl pxc volume describe test-vol
-```
-Move replicas for PVC test-vol from datastore ds1 to datasotre ds2:
-```
-kubectl pxc volume move test-vol ds1 ds2
-```
-Move all PVC replicas from datastore ds1 to datastore ds2:
-```
-kubectl pxc volume move all ds1 ds2
-```
-
-### Prerequisites
-
-What things you need to install the software and how to install them.
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo.
-
-## 🔧 Running the tests <a name = "tests"></a>
-
-Explain how to run the automated tests for this system.
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## 🎈 Usage <a name="usage"></a>
-
-Add notes about how to use the system.
-
-## 🚀 Deployment <a name = "deployment"></a>
-
-Add additional notes about how to deploy this on a live system.
-
-## ⛏️ Built Using <a name = "built_using"></a>
-
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
-
-## ✍️ Authors <a name = "authors"></a>
-
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
-
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
-
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
-
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
