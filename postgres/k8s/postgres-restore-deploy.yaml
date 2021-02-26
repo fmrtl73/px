@@ -1,9 +1,12 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres-snap
   namespace: postgres
 spec:
+  selector:
+    matchLabels:
+      postgres-snap
   strategy:
     rollingUpdate:
       maxSurge: 1

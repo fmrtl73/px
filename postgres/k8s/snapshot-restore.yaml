@@ -1,0 +1,8 @@
+apiVersion: stork.libopenstorage.org/v1alpha1
+kind: VolumeSnapshotRestore
+metadata:
+  name: postgres-snap-restore
+  namespace: postgres
+spec:
+  sourceName: px-postgres-snapshot
+  sourceNamespace: postgres
