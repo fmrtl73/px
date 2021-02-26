@@ -4,5 +4,5 @@ metadata:
   name: clone-postgres
   namespace: kube-system
 spec:
-  sourceNamespace: postgres
-  destinationNamespace: clone-postgres
+  sourceNamespace: petclinic
+  destinationNamespace: clone-petclinic

@@ -19,5 +19,5 @@ spec:
       includeResources: true
       startApplications: false
       namespaces:
-      - postgres
+      - petclinic
   schedulePolicyName: 5min-policy
