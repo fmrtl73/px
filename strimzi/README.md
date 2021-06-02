@@ -25,7 +25,8 @@ kubectl apply -f register-strimzi-operator.yaml
 Go to cluster-2 and create the operator with a modification to allow scale to 0 by stork
 ```
 kubectl create -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
-kubectl patch 
+kubectl patch customresourcedefinition kafkas.kafka.strimzi.io --type='json' -p='[{"op": "replace", "path": "/spec/versions/0/schema/openAPIV3Schema/properties/spec/properties/kafka/properties/replicas/minimum", "value":0}]'
+kubectl patch customresourcedefinition kafkas.kafka.strimzi.io --type='json' -p='[{"op": "replace", "path": "/spec/versions/0/schema/openAPIV3Schema/properties/spec/properties/zookeeper/properties/replicas/minimum", "value":0}]'
 ```
 Start migration (requires cluster-2 clusterpair object to be created and initialized successfully):
 ```
