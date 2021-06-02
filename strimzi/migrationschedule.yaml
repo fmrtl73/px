@@ -1,0 +1,23 @@
+apiVersion: stork.libopenstorage.org/v1alpha1
+kind: SchedulePolicy
+metadata:
+  name: 5min-policy
+  namespace: kube-system
+policy:
+  interval:
+    intervalMinutes: 5
+---
+apiVersion: stork.libopenstorage.org/v1alpha1
+kind: MigrationSchedule
+metadata:
+  name: kafka
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      clusterPair: cluster-2
+      includeResources: true
+      startApplications: false
+      namespaces:
+      - kafka
+  schedulePolicyName: 5min-policy

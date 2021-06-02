@@ -1,0 +1,58 @@
+apiVersion: stork.libopenstorage.org/v1alpha1
+kind: ApplicationRegistration
+metadata:
+  name: strimzi
+resources:
+- PodsPath: ""
+  group: kafka.strimzi.io
+  version: v1beta2
+  kind: Kafka
+  keepStatus: false #cassandra datacenter status will not be migrated
+  suspendOptions:
+    path: spec.kafka.replicas-1
+    type: int
+- PodsPath: ""
+  group: kafka.strimzi.io
+  version: v1beta2
+  kind: KafkaUser
+  keepStatus: false #cassandra datacenter status will not be migrated
+- PodsPath: ""
+  group: kafka.strimzi.io
+  version: v1beta2
+  kind: KafkaRebalance
+  keepStatus: false #cassandra datacenter status will not be migrated
+- PodsPath: ""
+  group: kafka.strimzi.io
+  version: v1beta2
+  kind: KafkaMirrorMaker2 
+  keepStatus: false #cassandra datacenter status will not be migrated
+- PodsPath: ""
+  group: kafka.strimzi.io
+  version: v1beta2
+  kind: KafkaTopic
+  keepStatus: false #cassandra datacenter status will not be migrated
+- PodsPath: ""
+  group: kafka.strimzi.io
+  version: v1beta2
+  kind: KafkaBridge
+  keepStatus: false #cassandra datacenter status will not be migrated
+- PodsPath: ""
+  group: kafka.strimzi.io
+  version: v1beta2
+  kind: KafkaConnector
+  keepStatus: false #cassandra datacenter status will not be migrated
+- PodsPath: ""
+  group: kafka.strimzi.io
+  version: v1beta2
+  kind: KafkaConnectS2I
+  keepStatus: false #cassandra datacenter status will not be migrated
+- PodsPath: ""
+  group: kafka.strimzi.io
+  version: v1beta2
+  kind: KafkaConnect
+  keepStatus: false #cassandra datacenter status will not be migrated
+- PodsPath: ""
+  group: kafka.strimzi.io
+  version: v1beta2
+  kind: KafkaMirrorMaker
+  keepStatus: false #cassandra datacenter status will not be migrated
