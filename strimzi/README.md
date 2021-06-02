@@ -22,9 +22,14 @@ Register Strimzi custom resources with Stork:
 ```
 kubectl apply -f register-strimzi-operator.yaml
 ```
-Go to cluster-2 and create the operator with a modification to allow scale to 0 by stork
+Go to cluster-2 and create the operator and scale it to 0. 
 ```
 kubectl create -f 'https://strimzi.io/install/latest?namespace=kafka' -n kafka
+kubectl scale deploy strimzi-cluster-operator -n kafka --replicas=0
+```
+
+Modify the custom resource for strimzi to allow scale to 0 by stork
+```
 kubectl patch customresourcedefinition kafkas.kafka.strimzi.io --type='json' -p='[{"op": "replace", "path": "/spec/versions/0/schema/openAPIV3Schema/properties/spec/properties/kafka/properties/replicas/minimum", "value":0}]'
 kubectl patch customresourcedefinition kafkas.kafka.strimzi.io --type='json' -p='[{"op": "replace", "path": "/spec/versions/0/schema/openAPIV3Schema/properties/spec/properties/zookeeper/properties/replicas/minimum", "value":0}]'
 ```
