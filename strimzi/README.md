@@ -10,7 +10,7 @@ kubectl apply -f kafka-cluster.yaml
 
 Create a producer:
 ```
-kubectl -n kafka run kafka-producer -ti --image=quay.io/strimzi/kafka:0.23.0-kafka-2.8.0 --rm=true --restart=Never -- bin/kafka-console-producer.sh --broker-list my-cluster-kafka-bootstrap:9092 --topic my-topic
+kubectl -n kafka run kafka-producer -ti --image=quay.io/strimzi/kafka:0.23.0-kafka-2.8.0 --rm=true --restart=Never -- sh
 ```
 
 Publish a timestamp every 10 seconds
